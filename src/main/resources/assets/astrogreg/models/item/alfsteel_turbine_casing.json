@@ -1,3 +1,3 @@
 {
-"parent": "astrogreg:block/generators/machine_casing_turbine_alfsteel"
+  "parent": "astrogreg:block/generators/machine_casing_turbine_alfsteel"
 }

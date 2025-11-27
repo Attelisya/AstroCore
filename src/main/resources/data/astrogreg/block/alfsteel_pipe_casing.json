@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "astrogreg:alfsteel_turbine_casing"
+          "name": "astrogreg:alfsteel_pipe_casing"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "astrogreg:generators/alfsteel_turbine_casing"
+  "random_sequence": "astrogreg:block/generators/alfsteel_pipe_casing"
 }

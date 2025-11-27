@@ -44,9 +44,9 @@ public class AstroCore {
                     builder -> builder
                             .displayItems(new GTCreativeModeTabs.RegistrateDisplayItemsGenerator(AstroCore.MOD_ID,
                                     REGISTRATE))
-                            .title(REGISTRATE.addLang("itemGroup", AstroCore.id("creative_tab"),
+                            .title(REGISTRATE.addLang("itemGroup", AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
                                     "AstroGreg"))
-                            // .icon(Class.ITEM_NAME::asStack)
+//                             .icon(Class.ITEM_NAME::asStack)
                             .build())
             .register();
 

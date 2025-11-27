@@ -3,7 +3,8 @@ package com.astro.core.datagen;
 import com.astro.core.datagen.lang.AstroLangHandler;
 import com.tterrag.registrate.providers.ProviderType;
 
-import static com.gregtechceu.gtceu.common.registry.GTRegistration.REGISTRATE;
+import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
+
 
 public class AstroDatagen {
 
