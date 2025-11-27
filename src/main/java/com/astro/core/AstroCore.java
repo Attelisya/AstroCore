@@ -45,14 +45,14 @@ public class AstroCore {
                             .title(REGISTRATE.addLang("itemGroup",
                                     AstroCore.id("creative_tab"),
                                     "AstroGreg"))
-                            .icon(AstroBlocks.FIREBOX_ALFSTEEL::asStack)
+                            .icon(AstroBlocks.FIREBOX_MANASTEEL::asStack)
                             .build())
             .register();
 
     public static void init() {
         AstroConfigs.init();
         REGISTRATE.registerRegistrate();
-        AstroBlocks.init();
+        //AstroBlocks.init();
         AstroItems.init();
         AstroMaterialFlags.init();
         AstroDatagen.init();

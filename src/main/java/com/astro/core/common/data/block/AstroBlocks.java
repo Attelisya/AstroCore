@@ -2,6 +2,7 @@ package com.astro.core.common.data.block;
 
 import com.gregtechceu.gtceu.api.block.ActiveBlock;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
+import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.models.GTModels;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 
@@ -14,9 +15,6 @@ import net.minecraft.world.level.block.Blocks;
 import com.astro.core.AstroCore;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 
@@ -70,10 +68,10 @@ public class AstroBlocks {
                 .item(BlockItem::new)
                 .build()
                 .register();
-        ALL_FIREBOXES.put(type, block);
+        GTBlocks.ALL_FIREBOXES.put(type, block);
         return block;
     }
 
-    public static final Map<BoilerFireboxType, BlockEntry<ActiveBlock>> ALL_FIREBOXES = new HashMap<>();
-    public static final BlockEntry<ActiveBlock> FIREBOX_ALFSTEEL = createFireboxCasing(MANASTEEL_FIREBOX);
+    //public static final Map<BoilerFireboxType, BlockEntry<ActiveBlock>> ALL_FIREBOXES = new HashMap<>();
+    public static final BlockEntry<ActiveBlock> FIREBOX_MANASTEEL = createFireboxCasing(MANASTEEL_FIREBOX);
 }
