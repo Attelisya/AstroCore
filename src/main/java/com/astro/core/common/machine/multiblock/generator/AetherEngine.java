@@ -6,17 +6,14 @@ import com.astro.core.common.data.block.AstroBlocks;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 
+import static com.astro.core.common.machine.multiblock.generator.AstroTurbines.registerAstroTurbine;
 import static com.gregtechceu.gtceu.common.data.machines.GTMachineUtils.registerLargeTurbine;
 
 @SuppressWarnings("unused")
 
 public class AetherEngine {
 
-    static{
-
-    }
-
-    public static final MultiblockMachineDefinition AETHER_ENGINE = registerLargeTurbine(
+    public static final MultiblockMachineDefinition AETHER_ENGINE = registerAstroTurbine(
             "aether_turbine",
             GTValues.EV,
             AstroRecipeTypes.AETHER_ENGINE_RECIPES,
