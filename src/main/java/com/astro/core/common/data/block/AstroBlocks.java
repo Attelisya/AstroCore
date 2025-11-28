@@ -49,6 +49,10 @@ public class AstroBlocks {
             "§dAlfsteel§r Pipe Casing", "alfsteel_pipe_casing",
             "generators/machine_casing_pipe_alfsteel", BlockItem::new);
 
+    public static final BlockEntry<Block> ALFSTEEL_GEARBOX_CASING = createSidedCasingBlock(
+            "§dAlfsteel§r Gearbox", "alfsteel_gearbox_casing",
+            "generators/machine_casing_gearbox_alfsteel", BlockItem::new);
+
     public static final BlockEntry<Block> TERRASTEEL_MACHINE_CASING = createSidedCasingBlock(
             "§2Terrasteel§r Machine Casing", "solid_terrasteel_machine_casing",
             "generators/terrasteel_casing", BlockItem::new);
