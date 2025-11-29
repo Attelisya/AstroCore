@@ -4,7 +4,9 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
+
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
+
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.*;
 
 public class AstroRecipeTypes {
@@ -19,5 +21,4 @@ public class AstroRecipeTypes {
                 .setSound(GTSoundEntries.TURBINE)
                 .setEUIO(IO.OUT);
     }
-
 }

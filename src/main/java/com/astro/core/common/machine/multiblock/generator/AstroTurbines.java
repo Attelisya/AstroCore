@@ -1,6 +1,5 @@
 package com.astro.core.common.machine.multiblock.generator;
 
-import com.astro.core.common.registry.AstroRegistry;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
@@ -15,11 +14,15 @@ import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.common.data.GTMaterialItems;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.machine.multiblock.generator.LargeTurbineMachine;
+
 import com.lowdragmc.lowdraglib.utils.BlockInfo;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+
+import com.astro.core.common.registry.AstroRegistry;
 
 import java.util.function.Supplier;
 
@@ -28,13 +31,13 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
 
 public class AstroTurbines {
 
-
     public static MultiblockMachineDefinition registerAstroTurbine(String name, int tier, GTRecipeType recipeType,
                                                                    Supplier<? extends Block> casing,
                                                                    Supplier<? extends Block> gear,
                                                                    ResourceLocation casingTexture,
                                                                    ResourceLocation overlayModel) {
-        return registerAstroTurbine(AstroRegistry.REGISTRATE, name, tier, recipeType, casing, gear, casingTexture, overlayModel);
+        return registerAstroTurbine(AstroRegistry.REGISTRATE, name, tier, recipeType, casing, gear, casingTexture,
+                overlayModel);
     }
 
     public static MultiblockMachineDefinition registerAstroTurbine(GTRegistrate registrate,
@@ -53,7 +56,8 @@ public class AstroTurbines {
                                                                    ResourceLocation casingTexture,
                                                                    ResourceLocation overlayModel,
                                                                    boolean needsMuffler) {
-        return registerAstroTurbine(AstroRegistry.REGISTRATE, name, tier, recipeType, casing, gear, casingTexture, overlayModel,
+        return registerAstroTurbine(AstroRegistry.REGISTRATE, name, tier, recipeType, casing, gear, casingTexture,
+                overlayModel,
                 needsMuffler);
     }
 
@@ -64,7 +68,6 @@ public class AstroTurbines {
                                                                    ResourceLocation casingTexture,
                                                                    ResourceLocation overlayModel,
                                                                    boolean needsMuffler) {
-
         return registrate.multiblock(name, holder -> new LargeTurbineMachine(holder, tier))
                 .rotationState(RotationState.ALL)
                 .recipeType(recipeType)
@@ -107,5 +110,4 @@ public class AstroTurbines {
                         Component.translatable("gtceu.multiblock.turbine.efficiency_tooltip", VNF[tier]))
                 .register();
     }
-
 }

@@ -1,14 +1,11 @@
 package com.astro.core;
 
-import com.astro.core.common.data.AstroRecipeTypes;
-import com.astro.core.common.machine.multiblock.generator.AetherEngine;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.api.sound.SoundEntry;
 import com.gregtechceu.gtceu.common.data.GTCreativeModeTabs;
 
@@ -23,16 +20,17 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import com.astro.core.common.data.AstroItems;
+import com.astro.core.common.data.AstroRecipeTypes;
 import com.astro.core.common.data.block.AstroBlocks;
 import com.astro.core.common.data.configs.AstroConfigs;
 import com.astro.core.common.data.materials.AstroMaterialFlags;
+import com.astro.core.common.machine.multiblock.generator.AetherEngine;
 import com.astro.core.datagen.AstroDatagen;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
-
 
 @SuppressWarnings("removal")
 @Mod(AstroCore.MOD_ID)
@@ -47,14 +45,14 @@ public class AstroCore {
                             .displayItems(new GTCreativeModeTabs.RegistrateDisplayItemsGenerator(AstroCore.MOD_ID,
                                     REGISTRATE))
                             .title(REGISTRATE.addLang("itemGroup", AstroCore.id("creative_tab"), "AstroGreg"))
-                             .icon(AstroBlocks.FIREBOX_MANASTEEL::asStack)
+                            .icon(AstroBlocks.FIREBOX_MANASTEEL::asStack)
                             .build())
             .register();
 
     public static void init() {
         AstroConfigs.init();
         REGISTRATE.registerRegistrate();
-//        AstroBlocks.init();
+        // AstroBlocks.init();
         AstroItems.init();
         AstroMaterialFlags.init();
         AstroDatagen.init();
@@ -118,7 +116,6 @@ public class AstroCore {
     private void modifyMaterials(PostMaterialEvent event) {
         // CustomMaterials.modify();
     }
-
 
     private void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
         AstroRecipeTypes.init();

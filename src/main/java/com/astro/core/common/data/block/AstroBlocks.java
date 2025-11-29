@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import com.astro.core.AstroCore;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
+
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 
 @SuppressWarnings("unused")
@@ -69,27 +70,23 @@ public class AstroBlocks {
             "§bManasteel§r Pipe Casing", "manasteel_pipe_casing",
             "generators/machine_casing_pipe_manasteel", BlockItem::new);
 
-
     public static final BoilerFireboxType MANASTEEL_FIREBOX = new BoilerFireboxType(
             "manasteel_firebox",
             AstroCore.id("block/generators/machine_casing_manasteel_plated_bricks"),
             AstroCore.id("block/generators/machine_casing_manasteel_plated_bricks"),
-            AstroCore.id("block/generators/machine_casing_firebox_manasteel")
-    );
+            AstroCore.id("block/generators/machine_casing_firebox_manasteel"));
 
     public static final BoilerFireboxType TERRASTEEL_FIREBOX = new BoilerFireboxType(
             "terrasteel_firebox",
             AstroCore.id("block/generators/machine_casing_solid_terrasteel"),
             AstroCore.id("block/generators/machine_casing_solid_terrasteel"),
-            AstroCore.id("block/generators/machine_casing_firebox_terrasteel")
-    );
+            AstroCore.id("block/generators/machine_casing_firebox_terrasteel"));
 
     public static final BoilerFireboxType ALFSTEEL_FIREBOX = new BoilerFireboxType(
             "alfsteel_firebox",
             AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
             AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
-            AstroCore.id("block/generators/machine_casing_firebox_alfsteel")
-    );
+            AstroCore.id("block/generators/machine_casing_firebox_alfsteel"));
 
     private static BlockEntry<ActiveBlock> createFireboxCasing(@SuppressWarnings("SameParameterValue") BoilerFireboxType type) {
         var block = REGISTRATE
