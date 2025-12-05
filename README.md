@@ -5,6 +5,13 @@
 This mod adds features specifically intended for the AstroGreg:Exsilium mod pack, 
 mostly for our high quality Botania integration.
 
+### Is it compatible with other projects?
+It isn't advisable, but with some of your own KubeJS work to give the casings and other items their
+own recipes you *could* make it work. Currently there aren't any mixins or anything crazy like that
+but overall it still isn't intended for use in other projects.
+If you would like specific features to be made into a "standalone" GT addon, you can always request
+it from our team for consideration.
+
 ### Credits
 Written by the collective AstroGreg Team. This mod currently contains examples from [Screcret](https://github.com/screret)
 and [JuiceyBean's](https://github.com/JuiceyBeans) [GT Addon Template](https://github.com/GregTechCEu/GregTech-Addon-Template?tab=readme-ov-file).

@@ -20,7 +20,7 @@ public class AstroMaterials {
                 .ingot()
                 .ore()
                 .dust()
-                .color(0xD35400).iconSet(MaterialIconSet.METALLIC)
+                .color(0xd35400).iconSet(MaterialIconSet.METALLIC)
                 .buildAndRegister();
 
         OSTRUM = new Material.Builder(
@@ -28,7 +28,7 @@ public class AstroMaterials {
                 .ingot()
                 .dust()
                 .ore()
-                .color(0x8c2938).iconSet(MaterialIconSet.METALLIC)
+                .color(0xa76b72).iconSet(MaterialIconSet.METALLIC)
                 .buildAndRegister();
 
         CALORITE = new Material.Builder(
