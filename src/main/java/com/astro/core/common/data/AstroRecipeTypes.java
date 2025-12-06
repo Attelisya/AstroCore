@@ -7,7 +7,7 @@ import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 
-import com.astro.core.client.AstroClient.AstroGuiTextures;
+import com.astro.core.client.AstroClient.AstroGUITextures;
 
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.*;
 import static com.lowdragmc.lowdraglib.gui.texture.ProgressTexture.FillDirection.DOWN_TO_UP;
@@ -27,7 +27,7 @@ public class AstroRecipeTypes {
 
         MANA_BOILER_RECIPES = register("mana_boiler", MULTIBLOCK)
                 .setMaxIOSize(1, 0, 1, 1)
-                .setProgressBar(AstroGuiTextures.PROGRESS_BAR_BOILER_FUEL_MANA, DOWN_TO_UP)
+                .setProgressBar(AstroGUITextures.PROGRESS_BAR_BOILER_FUEL_MANA, DOWN_TO_UP)
                 .setMaxTooltips(1)
                 .setSound(GTSoundEntries.FURNACE);
     }

@@ -1,0 +1,1 @@
+com.astro.core.integration.kubejs.AstroKubeJSPlugin

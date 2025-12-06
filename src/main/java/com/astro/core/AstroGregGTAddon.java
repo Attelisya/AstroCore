@@ -27,7 +27,6 @@ public class AstroGregGTAddon implements IGTAddon {
     @Override
     public void initializeAddon() {
         AstroBlocks.init();
-        // AstroRecipeTypes.init();
     }
 
     @Override
