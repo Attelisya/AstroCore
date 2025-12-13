@@ -13,9 +13,6 @@ public class AstroElements {
     public static final Element E = createAndRegister(-1, -1, -1, null, "electrolyte", "⚡", false);
     public static final Element SS = createAndRegister(-1, -1, -1, null, "sky_stone", "✨", false);
     public static final Element MN = createAndRegister(-1, -1, -1, null, "mana", "✨", false);
-    public static final Element TR = createAndRegister(-1, -1, -1, null, "terra", "✨", false);
-    public static final Element EL = createAndRegister(-1, -1, -1, null, "elementium", "✨", false);
-    public static final Element GA = createAndRegister(-1, -1, -1, null, "gaia", "✨", false);
 
     public static Element createAndRegister(long protons, long neutrons, long halfLifeSeconds, String decayTo,
                                             String name, String symbol, boolean isIsotope) {

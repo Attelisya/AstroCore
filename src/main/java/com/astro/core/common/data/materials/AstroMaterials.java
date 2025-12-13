@@ -1,22 +1,20 @@
 package com.astro.core.common.data.materials;
 
-import com.astro.core.common.GTVoltage;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.BlastProperty;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 
-
-
 import appeng.core.definitions.AEItems;
 import com.astro.core.AstroCore;
+import com.astro.core.common.GTVoltage;
 import com.drd.ad_extendra.common.registry.ModBlocks;
 import earth.terrarium.adastra.common.registry.ModItems;
+import org.zeith.botanicadds.init.ItemsBA;
 import owmii.powah.block.Blcks;
 import owmii.powah.item.Itms;
 import vazkii.botania.common.item.BotaniaItems;
-import org.zeith.botanicadds.init.ItemsBA;
 
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 
@@ -187,35 +185,32 @@ public class AstroMaterials {
                 .flags(MaterialFlags.GENERATE_FRAME, MaterialFlags.GENERATE_DENSE,
                         MaterialFlags.GENERATE_PLATE, MaterialFlags.GENERATE_ROD, MaterialFlags.MORTAR_GRINDABLE)
                 .color(0x228cc9).secondaryColor(0x000000).iconSet(MaterialIconSet.SHINY)
-                .element(AstroElements.MN)
-                .formula("*Fe*")
+//                .formula("*Fe*")
                 .buildAndRegister();
 
         TERRASTEEL = new Material.Builder(
                 AstroCore.id("terrasteel"))
                 .langValue("Terrasteel")
-                    .dust()
-                    .ingot()
-                    .fluid()
-                    .blastTemp(1700, BlastProperty.GasTier.LOW, (int)GTVoltage.VA.MV, 800)
-                    .flags(MaterialFlags.GENERATE_FRAME, MaterialFlags.GENERATE_DENSE,
-                           MaterialFlags.GENERATE_PLATE, MaterialFlags.GENERATE_ROD, MaterialFlags.MORTAR_GRINDABLE)
-                    .color(0x159e1e).secondaryColor(0x000000).iconSet(MaterialIconSet.SHINY)
-                    .element(AstroElements.TR)
-                    .formula("**Fe**")
-                    .buildAndRegister();
+                .dust()
+                .ingot()
+                .fluid()
+                .blastTemp(1700, BlastProperty.GasTier.LOW, (int) GTVoltage.VA.MV, 800)
+                .flags(MaterialFlags.GENERATE_FRAME, MaterialFlags.GENERATE_DENSE,
+                        MaterialFlags.GENERATE_PLATE, MaterialFlags.GENERATE_ROD, MaterialFlags.MORTAR_GRINDABLE)
+                .color(0x159e1e).secondaryColor(0x000000).iconSet(MaterialIconSet.SHINY)
+//                .formula("**Fe**")
+                .buildAndRegister();
         ELEMENTIUM = new Material.Builder(
                 AstroCore.id("elementium"))
                 .langValue("Elementium")
                 .dust()
                 .ingot()
                 .fluid()
-                .blastTemp(3500, BlastProperty.GasTier.MID, (int)GTVoltage.VA.IV, 1600)
+                .blastTemp(3500, BlastProperty.GasTier.MID, (int) GTVoltage.VA.IV, 1600)
                 .flags(MaterialFlags.GENERATE_FRAME, MaterialFlags.GENERATE_DENSE,
                         MaterialFlags.GENERATE_PLATE, MaterialFlags.GENERATE_ROD, MaterialFlags.MORTAR_GRINDABLE)
                 .color(0xed64d4).secondaryColor(0x000000).iconSet(MaterialIconSet.SHINY)
-                .element(AstroElements.EL)
-                .formula("EL")
+//                .formula("El")
                 .buildAndRegister();
         GAIASTEEL = new Material.Builder(
                 AstroCore.id("gaiasteel"))
@@ -223,18 +218,15 @@ public class AstroMaterials {
                 .dust()
                 .ingot()
                 .fluid()
-                .blastTemp(7100, BlastProperty.GasTier.HIGH, (int)GTVoltage.VA.ZPM, 2400)
+                .blastTemp(7100, BlastProperty.GasTier.HIGH, (int) GTVoltage.VA.ZPM, 2400)
                 .flags(MaterialFlags.GENERATE_FRAME, MaterialFlags.GENERATE_DENSE,
                         MaterialFlags.GENERATE_PLATE, MaterialFlags.GENERATE_ROD, MaterialFlags.MORTAR_GRINDABLE)
                 .color(0x8c2929).secondaryColor(0x000000).iconSet(MaterialIconSet.SHINY)
-                .element(AstroElements.GA)
-                .formula("***Fe***")
+//                .formula("***Fe***")
                 .buildAndRegister();
     }
 
-
-
-public static void init() {
+    public static void init() {
         rawOre.setIgnored(AstroMaterials.DESH, ModItems.RAW_DESH);
         rawOreBlock.setIgnored(AstroMaterials.DESH, ModItems.RAW_DESH_BLOCK);
         block.setIgnored(AstroMaterials.DESH, ModItems.DESH_BLOCK);
@@ -272,18 +264,13 @@ public static void init() {
         dust.setIgnored(AstroMaterials.MANASTEEL, () -> BotaniaItems.manaPowder);
 
         ingot.setIgnored(AstroMaterials.TERRASTEEL, () -> BotaniaItems.terrasteel);
-        nugget.setIgnored(AstroMaterials.TERRASTEEL,() -> BotaniaItems.terrasteelNugget);
+        nugget.setIgnored(AstroMaterials.TERRASTEEL, () -> BotaniaItems.terrasteelNugget);
 
         ingot.setIgnored(AstroMaterials.ELEMENTIUM, () -> BotaniaItems.elementium);
         nugget.setIgnored(AstroMaterials.ELEMENTIUM, () -> BotaniaItems.elementium);
 
-        ingot.setIgnored(AstroMaterials.GAIASTEEL, ItemsBA.GAIASTEEL_INGOT);
+        ingot.setIgnored(AstroMaterials.GAIASTEEL, () -> BotaniaItems.gaiaIngot);
 
         nugget.setIgnored(AstroMaterials.GAIASTEEL, () -> BotaniaItems.gaiaIngot);
-
-
-
-
-
     }
 }
