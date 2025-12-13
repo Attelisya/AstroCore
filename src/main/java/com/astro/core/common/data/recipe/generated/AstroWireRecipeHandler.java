@@ -23,21 +23,14 @@ import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.*;
 
 /**
- * Guide to the GregTech CE: Unofficial Cable Processing.
+ * Guide to Astro Core Cable Processing.
  * <br>
  * Cable Covering Fluids:
- * - Rubber: This can be used for any cable EV-tier or lower. After that it is unavailable.
- * <br>
- * - Silicone Rubber: This can be used for any cable tier, saving the amount of fluid needed. However, at IV,
- * it will require a Foil of the cable material as well, making it undesirable.
- * <br>
- * - Styrene-Butadiene Rubber (SBR): This can be used for any cable tier, and is the most optimal cable-covering
- * fluid available.
+ * - Polyamide-Imide: This can be used for any cable tier, saving the amount of fluid needed. However, at UV (?), it will be required.
  * <br>
  * Extra Materials for Cable Covering:
  * - Polyphenylene Sulfide (PPS): At LuV, this foil is required to cover cables. Lower tiers will not use it.
  * <br>
- * - Material Foil: At IV, an extra foil of the Material is needed to make the cable with SiR.
  */
 public final class AstroWireRecipeHandler {
 
