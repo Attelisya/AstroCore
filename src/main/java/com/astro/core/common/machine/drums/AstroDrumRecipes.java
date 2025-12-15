@@ -3,7 +3,6 @@ package com.astro.core.common.machine.drums;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 
 import java.util.function.Consumer;
 
