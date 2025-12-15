@@ -56,7 +56,6 @@ public class AstroCore {
 
     public static void init() {
         AstroConfigs.init();
-        REGISTRATE.registerRegistrate();
         AstroItems.init();
         AstroMaterialFlags.init();
         AstroDatagen.init();
