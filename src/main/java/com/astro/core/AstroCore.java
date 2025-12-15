@@ -1,5 +1,6 @@
 package com.astro.core;
 
+import com.astro.core.common.data.AstroDrums;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
@@ -138,6 +139,7 @@ public class AstroCore {
         }
         ManaBoilers.init();
         AetherEngine.init();
+        AstroDrums.init();
     }
 
     /**

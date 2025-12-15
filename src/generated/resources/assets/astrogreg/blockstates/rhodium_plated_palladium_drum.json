@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "astrogreg:block/machine/rhodium_plated_palladium_drum"
+    }
+  }
+}
