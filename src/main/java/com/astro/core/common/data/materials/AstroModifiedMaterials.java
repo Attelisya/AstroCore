@@ -25,37 +25,31 @@ public class AstroModifiedMaterials {
             { "nickel", new MaterialFlag[] { GENERATE_FOIL, GENERATE_RING, GENERATE_ROD, GENERATE_BOLT_SCREW } }
     };
 
-
-
     private static void applyFluidPipeProperties() {
         setFluidPipe(
                 GTMaterials.RhodiumPlatedPalladium,
                 5000, 300,
-                true, true, true, false
-        );
+                true, true, true, false);
 
         setFluidPipe(
                 GTMaterials.NaquadahAlloy,
                 10000, 500,
-                true, true, true, true
-        );
+                true, true, true, true);
 
         setFluidPipe(
                 GTMaterials.Darmstadtium,
                 50000, 1_000,
-                true, true, true, true
-        );
+                true, true, true, true);
     }
 
     private static void setFluidPipe(
-            Material material,
-            int capacity,
-            int temperature,
-            boolean gas,
-            boolean acid,
-            boolean plasma,
-            boolean cryogenic
-    ) {
+                                     Material material,
+                                     int capacity,
+                                     int temperature,
+                                     boolean gas,
+                                     boolean acid,
+                                     boolean plasma,
+                                     boolean cryogenic) {
         material.setProperty(
                 PropertyKey.FLUID_PIPE,
                 new FluidPipeProperties(
@@ -64,14 +58,10 @@ public class AstroModifiedMaterials {
                         gas,
                         acid,
                         plasma,
-                        cryogenic
-                )
-        );
+                        cryogenic));
     }
 
-
-
-        private static Material getMaterialByName(String name) {
+    private static Material getMaterialByName(String name) {
         return switch (name.toLowerCase()) {
             case "titanium" -> GTMaterials.Titanium;
             case "neutronium" -> GTMaterials.Neutronium;
@@ -99,9 +89,11 @@ public class AstroModifiedMaterials {
             }
         }
     }
+
     private static final Object[][] PERIODIC_ELEMENTS = {
             { "neptunium", new String[] { "ingot", "fluid" } }
     };
+
     private static void modifyPeriodicElements() {
         for (Object[] element : PERIODIC_ELEMENTS) {
             String name = (String) element[0];
@@ -146,5 +138,4 @@ public class AstroModifiedMaterials {
         addMaterialFlags();
         applyFluidPipeProperties();
     }
-
 }
