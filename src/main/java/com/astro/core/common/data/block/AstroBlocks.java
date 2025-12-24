@@ -18,7 +18,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("all")
 public class AstroBlocks {
 
     public static void init() {}

@@ -454,6 +454,13 @@ public class AstroMaterials {
         block.setIgnored(ANDESITE_ALLOY, () -> AllBlocks.ANDESITE_ALLOY_BLOCK.get());
 
         // ad astra/extendra
+        rock.setIgnored(PLUTO_STONE, ModBlocks.PLUTO_STONE);
+        rock.setIgnored(JUPITER_STONE, ModBlocks.JUPITER_STONE);
+        rock.setIgnored(CERES_STONE, ModBlocks.CERES_STONE);
+        rock.setIgnored(SATURN_STONE, ModBlocks.SATURN_STONE);
+        rock.setIgnored(NEPTUNE_STONE, ModBlocks.NEPTUNE_STONE);
+        rock.setIgnored(URANUS_STONE, ModBlocks.URANUS_STONE);
+
         rawOre.setIgnored(DESH, ModItems.RAW_DESH);
         rawOreBlock.setIgnored(DESH, ModItems.RAW_DESH_BLOCK);
         block.setIgnored(DESH, ModItems.DESH_BLOCK);
