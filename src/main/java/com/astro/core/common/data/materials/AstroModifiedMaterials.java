@@ -5,18 +5,14 @@ import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.*;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 
+import static com.astro.core.common.data.materials.AstroMaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
-import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_BOLT_SCREW;
-import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_FOIL;
-import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_RING;
-import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_ROD;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.Netherite;
 
 public class AstroModifiedMaterials {
 
     private static final Object[][] MATERIAL_MODIFIERS = {
-            { "titanium", new MaterialFlag[] { GENERATE_DENSE } },
-            { "neutronium", new MaterialFlag[] { GENERATE_DENSE } },
+            { "titanium", new MaterialFlag[] { GENERATE_DENSE, GENERATE_SLEEVE } },
+            { "neutronium", new MaterialFlag[] { GENERATE_DENSE, GENERATE_SLEEVE } },
             { "iron", new MaterialFlag[] { GENERATE_FOIL } },
             { "potin", new MaterialFlag[] { GENERATE_FOIL, GENERATE_RING } },
             { "brass", new MaterialFlag[] { GENERATE_FOIL, GENERATE_RING } },
@@ -26,7 +22,14 @@ public class AstroModifiedMaterials {
             { "nickel", new MaterialFlag[] { GENERATE_FOIL, GENERATE_RING, GENERATE_ROD, GENERATE_BOLT_SCREW } },
             { "netherite",
                     new MaterialFlag[] { GENERATE_BOLT_SCREW, GENERATE_ROUND, GENERATE_DENSE, GENERATE_ROD,
-                            GENERATE_PLATE, GENERATE_GEAR, DISABLE_DECOMPOSITION } }
+                            GENERATE_PLATE, GENERATE_GEAR, GENERATE_LONG_ROD, DISABLE_DECOMPOSITION } },
+            {"tin", new MaterialFlag[] { GENERATE_SLEEVE } },
+            {"steel", new MaterialFlag[] { GENERATE_SLEEVE } },
+            {"stainless_steel", new MaterialFlag[] { GENERATE_SLEEVE } },
+            {"tungsten_carbide", new MaterialFlag[] { GENERATE_SLEEVE } },
+            {"hsse", new MaterialFlag[] { GENERATE_SLEEVE } },
+            {"osmiridium", new MaterialFlag[] { GENERATE_SLEEVE } },
+            {"tritanium", new MaterialFlag[] { GENERATE_SLEEVE } }
     };
 
     private static void applyFluidPipeProperties() {
@@ -78,6 +81,13 @@ public class AstroModifiedMaterials {
             case "nickel" -> GTMaterials.Nickel;
             case "neptunium" -> GTMaterials.Neptunium;
             case "netherite" -> GTMaterials.Netherite;
+            case "tin" -> GTMaterials.Tin;
+            case "steel" -> GTMaterials.Steel;
+            case "stainless_steel" -> GTMaterials.StainlessSteel;
+            case "tungsten_carbide" -> GTMaterials.TungstenCarbide;
+            case "hsse" -> GTMaterials.HSSE;
+            case "osmiridium" -> GTMaterials.Osmiridium;
+            case "tritanium" -> GTMaterials.Tritanium;
             default -> null;
         };
     }

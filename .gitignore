@@ -2,8 +2,9 @@
 run/*
 
 #include run in src
-!src/main/java/com/astro/core/common/data/recipe/run/
 !src/main/java/com/astro/core/common/data/recipe/run/**
+
+
 # gradle
 
 .gradle/
@@ -34,7 +35,6 @@ bin/
 
 *.DS_Store
 
-run/
 run-data/
 /src/generated/resources/.cache/*
 
