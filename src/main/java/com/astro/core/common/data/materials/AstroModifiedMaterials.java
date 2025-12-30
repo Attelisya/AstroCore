@@ -12,7 +12,7 @@ public class AstroModifiedMaterials {
 
     private static final Object[][] MATERIAL_MODIFIERS = {
             { "titanium", new MaterialFlag[] { GENERATE_DENSE } },
-            { "neutronium", new MaterialFlag[] { GENERATE_DENSE, GENERATE_SLEEVE } },
+            { "neutronium", new MaterialFlag[] { GENERATE_DENSE, GENERATE_SLEEVE, GENERATE_SMALL_GEAR } },
             { "iron", new MaterialFlag[] { GENERATE_FOIL } },
             { "potin", new MaterialFlag[] { GENERATE_FOIL, GENERATE_RING } },
             { "brass", new MaterialFlag[] { GENERATE_FOIL, GENERATE_RING } },
@@ -31,7 +31,9 @@ public class AstroModifiedMaterials {
             { "duranium", new MaterialFlag[] { GENERATE_SLEEVE } },
             { "tritanium", new MaterialFlag[] { GENERATE_SLEEVE, GENERATE_ROTOR } },
             { "graphene", new MaterialFlag[] { GENERATE_FINE_WIRE } },
-            { "ultimet", new MaterialFlag[] { GENERATE_SLEEVE } }
+            { "ultimet", new MaterialFlag[] { GENERATE_SLEEVE } },
+            { "rtan", new MaterialFlag[] { GENERATE_FINE_WIRE } }
+
     };
 
     private static void applyFluidPipeProperties() {
@@ -92,6 +94,7 @@ public class AstroModifiedMaterials {
             case "tritanium" -> GTMaterials.Tritanium;
             case "graphene" -> GTMaterials.Graphene;
             case "ultimet" -> GTMaterials.Ultimet;
+            case "rtan" -> GTMaterials.RutheniumTriniumAmericiumNeutronate;
             default -> null;
         };
     }

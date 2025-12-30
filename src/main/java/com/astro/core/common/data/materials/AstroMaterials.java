@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.BlastProperty;
+import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
 
 import net.minecraft.world.item.Items;
@@ -25,6 +26,7 @@ import owmii.powah.item.Itms;
 import vazkii.botania.common.block.BotaniaBlocks;
 import vazkii.botania.common.item.BotaniaItems;
 
+import static com.astro.core.common.data.materials.AstroMaterialSet.DULL_MAGNETIC;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
@@ -70,6 +72,8 @@ public class AstroMaterials {
     public static Material DEIONIZED_WATER;
     public static Material DIVINYLBENZENE;
     public static Material DIETHYLBENZENE;
+    public static Material MAGNETIC_NEUTRONIUM;
+    public static Material ABYSSALLOY239;
     public static Material ASTEROID_STONE;
     public static Material MERCURY_STONE;
     public static Material VENUS_STONE;
@@ -214,9 +218,12 @@ public class AstroMaterials {
                 AstroCore.id("electrolyte"))
                 .langValue("Electrolyte")
                 .ingot()
-                .plasma(11656)
+                // .plasma(11656)
                 .liquid(4556)
-                .color(0x6fd422).iconSet(RADIOACTIVE)
+                .flags(GENERATE_FINE_WIRE, GENERATE_ROUND, GENERATE_LONG_ROD,
+                        GENERATE_ROTOR, GENERATE_RING)
+                .cableProperties(2097152, 128, 0, true)
+                .color(0xfad64a).secondaryColor(0x752802).iconSet(SHINY)
                 .element(AstroElements.E).formula("⚡")
                 .buildAndRegister();
 
@@ -397,7 +404,8 @@ public class AstroMaterials {
                 .liquid(1600)
                 .dust()
                 .ingot()
-                .flags(GENERATE_PLATE, GENERATE_ROD, GENERATE_FRAME, GENERATE_FOIL)
+                .flags(GENERATE_PLATE, GENERATE_ROD, GENERATE_FRAME,
+                        GENERATE_FOIL, GENERATE_RING)
                 // .toolStats(new ToolProperty(10.0F, 10.0F, 4096, 5,
                 // new GTToolType[] {GTToolType.SOFT_MALLET, GTToolType.PLUNGER}))
                 .fluidPipeProperties(1400, 1000, true, true, true, true)
@@ -451,7 +459,7 @@ public class AstroMaterials {
                 .liquid(450)
                 .flags(DISABLE_DECOMPOSITION)
                 .color(0xf0ee92)
-                .components( Carbon, 10, Hydrogen, 14 )
+                .components(Carbon, 10, Hydrogen, 14)
                 .buildAndRegister();
 
         DIVINYLBENZENE = new Material.Builder(
@@ -459,7 +467,33 @@ public class AstroMaterials {
                 .dust()
                 .flags(DISABLE_DECOMPOSITION)
                 .color(0xebe99d).secondaryColor(0x96943f)
-                .components( Carbon, 10, Hydrogen, 10 )
+                .components(Carbon, 10, Hydrogen, 10)
+                .buildAndRegister();
+
+        MAGNETIC_NEUTRONIUM = new Material.Builder(
+                AstroCore.id("magnetic_neutronium"))
+                .ingot()
+                .color(0xFFFFFF).secondaryColor(0x000000)
+                .flags(GENERATE_ROD, IS_MAGNETIC, GENERATE_LONG_ROD)
+                .components(Neutronium, 1)
+                .ingotSmeltInto(Neutronium)
+                .arcSmeltInto(Neutronium)
+                .macerateInto(Neutronium)
+                .iconSet(DULL_MAGNETIC)
+                .buildAndRegister();
+        Neutronium.getProperty(PropertyKey.INGOT).setMagneticMaterial(MAGNETIC_NEUTRONIUM);
+
+        ABYSSALLOY239 = new Material.Builder(
+                AstroCore.id("abyssalloy_239"))
+                .langValue("Abyssalloy-239")
+                .ingot()
+                .liquid(5760)
+                .flags(GENERATE_PLATE, GENERATE_ROD, GENERATE_GEAR, GENERATE_ROTOR,
+                        GENERATE_SMALL_GEAR, GENERATE_FOIL, GENERATE_BOLT_SCREW)
+                .components(Netherite, 6, Plutonium239, 5, NaquadahAlloy, 8)
+                .blastTemp(10800, BlastProperty.GasTier.HIGHEST, 1966080, 2400)
+                .color(0x61524d).secondaryColor(0xfc6f03)
+                .iconSet(RADIOACTIVE)
                 .buildAndRegister();
 
         // Planet Gases
@@ -468,7 +502,7 @@ public class AstroMaterials {
                 .langValue("Plutonian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_PLUTO_AIR = new Material.Builder(
@@ -476,7 +510,7 @@ public class AstroMaterials {
                 .langValue("Liquid Plutonian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         NEPTUNE_AIR = new Material.Builder(
@@ -484,7 +518,7 @@ public class AstroMaterials {
                 .langValue("Neptunian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_NEPTUNE_AIR = new Material.Builder(
@@ -492,7 +526,7 @@ public class AstroMaterials {
                 .langValue("Liquid Neptunian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         URANUS_AIR = new Material.Builder(
@@ -500,7 +534,7 @@ public class AstroMaterials {
                 .langValue("Uranian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_URANUS_AIR = new Material.Builder(
@@ -508,23 +542,23 @@ public class AstroMaterials {
                 .langValue("Uranus Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         SATURN_AIR = new Material.Builder(
                 AstroCore.id("saturn_air"))
-                .langValue("Saturnian Air")
+                .langValue("Kronian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_SATURN_AIR = new Material.Builder(
                 AstroCore.id("liquid_saturn_air"))
-                .langValue("Saturnian Air")
+                .langValue("Liquid Kronian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         JUPITER_AIR = new Material.Builder(
@@ -532,7 +566,7 @@ public class AstroMaterials {
                 .langValue("Jovian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_JUPITER_AIR = new Material.Builder(
@@ -540,7 +574,7 @@ public class AstroMaterials {
                 .langValue("Jovian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         CERES_AIR = new Material.Builder(
@@ -548,7 +582,7 @@ public class AstroMaterials {
                 .langValue("Cererian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_CERES_AIR = new Material.Builder(
@@ -556,7 +590,7 @@ public class AstroMaterials {
                 .langValue("Liquid Cererian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         MARS_AIR = new Material.Builder(
@@ -564,7 +598,7 @@ public class AstroMaterials {
                 .langValue("Martian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_MARS_AIR = new Material.Builder(
@@ -572,7 +606,7 @@ public class AstroMaterials {
                 .langValue("Liquid Martian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         MOON_AIR = new Material.Builder(
@@ -580,7 +614,7 @@ public class AstroMaterials {
                 .langValue("Lunar Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_MOON_AIR = new Material.Builder(
@@ -588,7 +622,7 @@ public class AstroMaterials {
                 .langValue("Liquid Lunar Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         VENUS_AIR = new Material.Builder(
@@ -596,7 +630,7 @@ public class AstroMaterials {
                 .langValue("Venusian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_VENUS_AIR = new Material.Builder(
@@ -604,7 +638,7 @@ public class AstroMaterials {
                 .langValue("Venusian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         MERCURY_AIR = new Material.Builder(
@@ -612,7 +646,7 @@ public class AstroMaterials {
                 .langValue("Mercurian Air")
                 .gas(new FluidBuilder().customStill())
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         LIQUID_MERCURY_AIR = new Material.Builder(
@@ -620,7 +654,7 @@ public class AstroMaterials {
                 .langValue("Liquid Mercurian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
-//                .components()
+                // .components()
                 .buildAndRegister();
 
         createComponentDusts();
