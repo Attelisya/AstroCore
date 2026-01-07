@@ -106,7 +106,7 @@ public class AstroCore {
     }
 
     private void modifyMaterials(PostMaterialEvent event) {
-        // Netherite.setElements(AstroElements.NH);
+        // Netherite.setElement(AstroElements.NH);
         GraniteRed.setMaterialARGB(0xb84a3b);
         Blackstone.setMaterialARGB(0x383c42);
         AstroMaterialFlagAddition.register();

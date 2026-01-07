@@ -18,6 +18,7 @@ public class AstroMaterialFlags {
             .materialAmount(GTValues.M * 2)
             .unificationEnabled(true)
             .generateItem(true)
+            .enableRecycling()
             .materialIconType(AstroMaterialSet.SLEEVE)
             .generationCondition(mat -> mat.hasFlag(AstroMaterialFlags.GENERATE_SLEEVE));
 

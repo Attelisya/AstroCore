@@ -10,18 +10,18 @@ public class AGEMultiMachines {
     // .recipeTypes(AstroRecipeTypes.DEIONIZATION_RECIPES, GTRecipeTypes.DISTILLERY_RECIPES)
     // .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT_SUBTICK, GTRecipeModifiers.BATCH_MODE,
     // GTRecipeModifiers.PARALLEL_HATCH)
-    // .appearanceBlock(GTBlocks.CASING_PTFE_INERT)
+    // .appearanceBlock(CASING_PTFE_INERT)
     // .partAppearance((controller, part, side) -> {
     // if(part instanceof ItemBusPartMachine itemBus && itemBus.getInventory().canCapOutput()) {
     // return CASING_STAINLESS_CLEAN.getDefaultState();
     // }
-    // if(part instanceof FluidHatchPartMachine check && cast.getIO.supports(IO.IN)) {
+    // if(part instanceof FluidHatchPartMachine fluidHatch && fluidHatch.getIO().supports(IO.IN)) {
     // return CASING_STAINLESS_CLEAN.getDefaultState();
     // }
     // return CASING_PTFE_INERT.getDefaultState();
     // })
     // .pattern(definition -> {
-    // var pcasing = blocks(GTBlocks.CASING_PTFE_INERT.get());
+    // var pcasing = blocks(CASING_PTFE_INERT.get());
     // var scasing = blocks(CASING_STAINLESS_CLEAN.get());
     // return FactoryBlockPattern.start()
     // .aisle("SSSFFF", "SGSCCC", "SGSCCC", "SSSCCC", "###CCC")
@@ -37,10 +37,10 @@ public class AGEMultiMachines {
     // .or(Predicates.abilities(PartAbility.EXPORT_ITEMS)).setMaxGlobalLimited(1)
     // .or(Predicates.abilities(PartAbility.MAINTENANCE)).setExactLimit(1)
     // .or(Predicates.abilities(PartAbility.INPUT_ENERGY)).setExactLimit(1))
-    // .where('P', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_PIPE.get()))
-    // .where('F', Predicates.blocks(GTBlocks.FIREBOX_TUNGSTENSTEEL.get()))
-    // .where('G', Predicates.blocks(GTBlocks.CASING_LAMINATED_GLASS.get()))
-    // .where('H', Predicates.blocks(GTBlocks.HERMETIC_CASING_IV.get()))
+    // .where('P', blocks(GTBlocks.CASING_TUNGSTENSTEEL_PIPE.get()))
+    // .where('F', blocks(GTBlocks.FIREBOX_TUNGSTENSTEEL.get()))
+    // .where('G', blocks(GTBlocks.CASING_LAMINATED_GLASS.get()))
+    // .where('H', blocks(GTBlocks.HERMETIC_CASING_IV.get()))
     // .build();
     // })
     // .model(GTMachineModels.createWorkableCasingMachineModel(

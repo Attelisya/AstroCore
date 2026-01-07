@@ -15,6 +15,8 @@ plugins {
     id "maven-publish"
     id 'net.neoforged.moddev.legacyforge' version '2.0.91'
     id 'com.diffplug.spotless' version '7.0.2'
+//    id 'net.minecraftforge.gradle' version '5.1.+'
+//    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 sourceSets {
@@ -232,7 +234,8 @@ dependencies {
     modImplementation("botanicadds:BotanicAdditions:${minecraft_version}-${botanicadditions_version}")
     modImplementation("hammerlib:HammerLib-${minecraft_version}-${hammerlib_version}")
 
-
+//    Apply Mixin AP
+//    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 // See com.example.examplemod.mixin.DummyMixin for information about mixins

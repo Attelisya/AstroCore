@@ -20,19 +20,21 @@ public class AstroModifiedMaterials {
             { "red_alloy", new MaterialFlag[] { GENERATE_RING } },
             { "zinc", new MaterialFlag[] { GENERATE_BOLT_SCREW } },
             { "nickel", new MaterialFlag[] { GENERATE_FOIL, GENERATE_RING, GENERATE_ROD, GENERATE_BOLT_SCREW } },
-            { "netherite",
-                    new MaterialFlag[] { GENERATE_BOLT_SCREW, GENERATE_ROUND, GENERATE_DENSE, GENERATE_ROD,
-                            GENERATE_PLATE, GENERATE_GEAR, GENERATE_LONG_ROD, DISABLE_DECOMPOSITION } },
+            { "netherite", new MaterialFlag[] { GENERATE_BOLT_SCREW, GENERATE_ROUND,
+                    GENERATE_DENSE, GENERATE_ROD, GENERATE_PLATE, GENERATE_GEAR,
+                    GENERATE_LONG_ROD, DISABLE_DECOMPOSITION, GENERATE_SLEEVE } },
             { "tin", new MaterialFlag[] { GENERATE_SLEEVE } },
             { "steel", new MaterialFlag[] { GENERATE_SLEEVE } },
             { "stainless_steel", new MaterialFlag[] { GENERATE_SLEEVE } },
-            { "tungsten_carbide", new MaterialFlag[] { GENERATE_SLEEVE } },
-            { "hsss", new MaterialFlag[] { GENERATE_SLEEVE } },
+            { "tungsten_carbide", new MaterialFlag[] { GENERATE_SLEEVE, GENERATE_ROUND } },
             { "duranium", new MaterialFlag[] { GENERATE_SLEEVE } },
             { "tritanium", new MaterialFlag[] { GENERATE_SLEEVE, GENERATE_ROTOR } },
             { "graphene", new MaterialFlag[] { GENERATE_FINE_WIRE } },
-            { "ultimet", new MaterialFlag[] { GENERATE_SLEEVE } },
-            { "rtan", new MaterialFlag[] { GENERATE_FINE_WIRE } }
+            { "ultimet", new MaterialFlag[] { GENERATE_SLEEVE, GENERATE_ROUND } },
+            { "rtan", new MaterialFlag[] { GENERATE_FINE_WIRE } },
+            { "kanthal", new MaterialFlag[] { GENERATE_FINE_WIRE } },
+            { "uranium_triplatinum", new MaterialFlag[] { GENERATE_FINE_WIRE } },
+            { "siao", new MaterialFlag[] { GENERATE_FINE_WIRE } }
 
     };
 
@@ -95,6 +97,9 @@ public class AstroModifiedMaterials {
             case "graphene" -> GTMaterials.Graphene;
             case "ultimet" -> GTMaterials.Ultimet;
             case "rtan" -> GTMaterials.RutheniumTriniumAmericiumNeutronate;
+            case "kanthal" -> GTMaterials.Kanthal;
+            case "uranium_triplatinum" -> GTMaterials.UraniumTriplatinum;
+            case "siao" -> GTMaterials.SamariumIronArsenicOxide;
             default -> null;
         };
     }
