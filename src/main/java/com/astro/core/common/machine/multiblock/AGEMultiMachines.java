@@ -1,9 +1,5 @@
 package com.astro.core.common.machine.multiblock;
 
-import com.astro.core.common.data.block.AstroBlocks;
-import com.astro.core.common.data.configs.AstroConfigs;
-import com.astro.core.common.machine.multiblock.generator.AstroSolarBoilers;
-import com.astro.core.common.machine.multiblock.steam.SteamBlastFurnace;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
@@ -16,9 +12,15 @@ import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.utils.GTUtil;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+
+import com.astro.core.common.data.block.AstroBlocks;
+import com.astro.core.common.data.configs.AstroConfigs;
+import com.astro.core.common.machine.multiblock.generator.AstroSolarBoilers;
+import com.astro.core.common.machine.multiblock.steam.SteamBlastFurnace;
 
 import java.util.List;
 
@@ -77,7 +79,8 @@ public class AGEMultiMachines {
     // GTCEu.id("block/multiblock/central_monitor")))
     // .register();
 
-    public static final MultiblockMachineDefinition STEAM_BLAST_FURNACE = REGISTRATE.multiblock("steam_blast_furnace", SteamBlastFurnace::new)
+    public static final MultiblockMachineDefinition STEAM_BLAST_FURNACE = REGISTRATE
+            .multiblock("steam_blast_furnace", SteamBlastFurnace::new)
             .rotationState(RotationState.NON_Y_AXIS)
             .recipeType(GTRecipeTypes.PRIMITIVE_BLAST_FURNACE_RECIPES)
             .recipeModifier(SteamBlastFurnace::recipeModifier)
@@ -104,7 +107,8 @@ public class AGEMultiMachines {
                                     BoilerFireboxType.BRONZE_FIREBOX, CASING_BRONZE_BRICKS))))
             .register();
 
-    public static final MultiblockMachineDefinition SOLAR_BOILER_ARRAY = REGISTRATE.multiblock("solar_boiler_array", AstroSolarBoilers::new)
+    public static final MultiblockMachineDefinition SOLAR_BOILER_ARRAY = REGISTRATE
+            .multiblock("solar_boiler_array", AstroSolarBoilers::new)
             .rotationState(RotationState.NON_Y_AXIS)
             .recipeType(GTRecipeTypes.DUMMY_RECIPES)
             .appearanceBlock(GTBlocks.CASING_STEEL_SOLID)
@@ -131,17 +135,24 @@ public class AGEMultiMachines {
                         .build();
                 return List.of(minShape);
             })
-            .workableCasingModel(GTCEu.id("block/casings/solid/machine_casing_solid_steel"), GTCEu.id("block/multiblock/blast_furnace"))
+            .workableCasingModel(GTCEu.id("block/casings/solid/machine_casing_solid_steel"),
+                    GTCEu.id("block/multiblock/blast_furnace"))
             .tooltips(
-                    Component.translatable("astrogreg.tooltip.mega_solar.desc", "An expandable array for solar-powered steam production.")
+                    Component
+                            .translatable("astrogreg.tooltip.mega_solar.desc",
+                                    "An expandable array for solar-powered steam production.")
                             .withStyle(ChatFormatting.GRAY),
-                    Component.translatable("astrogreg.tooltip.mega_solar.sunlight", "The entire structure must be exposed to direct sunlight to produce steam.")
+                    Component
+                            .translatable("astrogreg.tooltip.mega_solar.sunlight",
+                                    "The entire structure must be exposed to direct sunlight to produce steam.")
                             .withStyle(ChatFormatting.WHITE),
-                    Component.translatable("astrogreg.tooltip.mega_solar.production", "Production: " + AstroConfigs.INSTANCE.features.solarSpeed + " mb/t of Steam per active block")
+                    Component
+                            .translatable("astrogreg.tooltip.mega_solar.production",
+                                    "Production: " + AstroConfigs.INSTANCE.features.solarSpeed +
+                                            " mb/t of Steam per active block")
                             .withStyle(ChatFormatting.WHITE),
                     Component.translatable("astrogreg.tooltip.mega_solar.max_size", "Max Size: 33 x 33")
-                            .withStyle(ChatFormatting.GRAY)
-            )
+                            .withStyle(ChatFormatting.GRAY))
             .register();
 
     public static void init() {}

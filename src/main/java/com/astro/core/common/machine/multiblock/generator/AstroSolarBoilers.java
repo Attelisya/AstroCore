@@ -1,7 +1,5 @@
 package com.astro.core.common.machine.multiblock.generator;
 
-import com.astro.core.common.data.block.AstroBlocks;
-import com.astro.core.common.data.configs.AstroConfigs;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
@@ -15,14 +13,19 @@ import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.api.pattern.util.RelativeDirection;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
+
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
+import com.astro.core.common.data.block.AstroBlocks;
+import com.astro.core.common.data.configs.AstroConfigs;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -42,10 +45,14 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
     private int lDist, rDist, bDist;
     private boolean formed;
 
-    @Persisted private int sunlit;
-    @Persisted private int temperature;
-    @Persisted private long lastSteamOutput;
-    @Persisted private int overheatTimer;
+    @Persisted
+    private int sunlit;
+    @Persisted
+    private int temperature;
+    @Persisted
+    private long lastSteamOutput;
+    @Persisted
+    private int overheatTimer;
 
     private NotifiableFluidTank waterTank;
     private NotifiableFluidTank steamTank;
@@ -80,11 +87,13 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
 
                 for (var tank : tanks) {
                     if (tank instanceof NotifiableFluidTank fluidTank) {
-                        if (handler.getHandlerIO() == IO.IN && fluidTank.isFluidValid(0, GTMaterials.Water.getFluid(1))) {
+                        if (handler.getHandlerIO() == IO.IN &&
+                                fluidTank.isFluidValid(0, GTMaterials.Water.getFluid(1))) {
                             waterTank = fluidTank;
-                        } else if (handler.getHandlerIO() == IO.OUT && fluidTank.isFluidValid(0, GTMaterials.Steam.getFluid(1))) {
-                            steamTank = fluidTank;
-                        }
+                        } else if (handler.getHandlerIO() == IO.OUT &&
+                                fluidTank.isFluidValid(0, GTMaterials.Steam.getFluid(1))) {
+                                    steamTank = fluidTank;
+                                }
                     }
                 }
             }
@@ -105,7 +114,6 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
 
         if (getOffsetTimer() % 100 == 0) updateStructureDimensions();
 
-        // 1. Heat Logic
         boolean canHeat = isFormed() && isWorkingEnabled() && getLevel().isDay() && !getLevel().isRaining();
         double dimMult = getDimensionMultiplier();
 
@@ -122,7 +130,6 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
             }
         }
 
-        // 2. Production Logic
         int startTemp = AstroConfigs.INSTANCE.features.boilingPoint;
         if (temperature > startTemp && sunlit > 0 && waterTank != null && steamTank != null) {
             double efficiency = (double) (temperature - startTemp) / (MAX_TEMP - startTemp);
@@ -131,16 +138,17 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
 
             int waterNeeded = (int) Math.ceil(steamPerTick / ratio);
 
-            // Manual Bridge Fix for FluidStack Type Mismatch
             var forgeStack = waterTank.getFluidInTank(0);
             com.lowdragmc.lowdraglib.side.fluid.FluidStack waterInTank = forgeStack.isEmpty() ?
                     com.lowdragmc.lowdraglib.side.fluid.FluidStack.empty() :
-                    com.lowdragmc.lowdraglib.side.fluid.FluidStack.create(forgeStack.getFluid(), (long) forgeStack.getAmount(), forgeStack.getTag());
+                    com.lowdragmc.lowdraglib.side.fluid.FluidStack.create(forgeStack.getFluid(),
+                            (long) forgeStack.getAmount(), forgeStack.getTag());
 
             if (!waterInTank.isEmpty() && waterInTank.getAmount() >= waterNeeded) {
                 overheatTimer = 0;
 
-                int canFillSteam = (int) steamTank.fill(GTMaterials.Steam.getFluid((int) steamPerTick), FluidAction.SIMULATE);
+                int canFillSteam = (int) steamTank.fill(GTMaterials.Steam.getFluid((int) steamPerTick),
+                        FluidAction.SIMULATE);
                 if (canFillSteam > 0) {
                     int actualWaterUsed = (int) Math.ceil(canFillSteam / ratio);
                     waterTank.drain(actualWaterUsed, FluidAction.EXECUTE);
@@ -250,7 +258,11 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
 
     @Override
     protected RecipeLogic createRecipeLogic(Object... args) {
-        return new RecipeLogic(this) { @Override public void serverTick() {} };
+        return new RecipeLogic(this) {
+
+            @Override
+            public void serverTick() {}
+        };
     }
 
     @Override
@@ -259,18 +271,17 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
             String color = temperature > 800 ? "§4" : temperature > 500 ? "§6" : "§e";
             textList.add(Component.literal(color + "Temperature: " + temperature + " / " + MAX_TEMP + "°C"));
 
-            // Dynamic Efficiency Display
             int startTemp = AstroConfigs.INSTANCE.features.boilingPoint;
-            double currentEff = temperature <= startTemp ? 0 : (double)(temperature - startTemp) / (MAX_TEMP - startTemp) * 100;
+            double currentEff = temperature <= startTemp ? 0 :
+                    (double) (temperature - startTemp) / (MAX_TEMP - startTemp) * 100;
             String effColor = currentEff > 90 ? "§b" : currentEff > 50 ? "§f" : "§7";
             textList.add(Component.literal(String.format(effColor + "Thermal Efficiency: %.1f%%", currentEff)));
 
-            // Dimension Multiplier with descriptive text
             double mult = getDimensionMultiplier();
             if (mult > 1.0) {
-                textList.add(Component.literal("§dEnvironment: §lHigh Energy (" + (int)(mult * 100) + "%)"));
+                textList.add(Component.literal("§dEnvironment: §lHigh Energy (" + (int) (mult * 100) + "%)"));
             } else if (mult < 1.0) {
-                textList.add(Component.literal("§bEnvironment: §lCryogenic (" + (int)(mult * 100) + "%)"));
+                textList.add(Component.literal("§bEnvironment: §lCryogenic (" + (int) (mult * 100) + "%)"));
             }
 
             if (overheatTimer > 0) textList.add(Component.literal("§c§lDANGER: OVERHEATING"));

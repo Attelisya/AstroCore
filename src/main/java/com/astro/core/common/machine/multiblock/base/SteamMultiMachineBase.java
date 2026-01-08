@@ -4,7 +4,6 @@ import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.UITemplate;
-import com.gregtechceu.gtceu.api.machine.feature.multiblock.IDisplayUIMachine;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IDisplayUIMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
@@ -13,19 +12,20 @@ import com.gregtechceu.gtceu.api.machine.steam.SteamEnergyRecipeHandler;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
+
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
-import com.lowdragmc.lowdraglib.gui.util.ClickData; // Importante
+import com.lowdragmc.lowdraglib.gui.util.ClickData;
 import com.lowdragmc.lowdraglib.gui.widget.ComponentPanelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.DraggableScrollableWidgetGroup;
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
-import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder; // Importante
+import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -53,6 +53,7 @@ public abstract class SteamMultiMachineBase extends WorkableMultiblockMachine im
     protected double getConversionRate() {
         return 2.0;
     }
+
     @Override
     public void onStructureFormed() {
         super.onStructureFormed();
@@ -85,6 +86,7 @@ public abstract class SteamMultiMachineBase extends WorkableMultiblockMachine im
     public IGuiTexture getScreenTexture() {
         return GuiTextures.DISPLAY_STEAM.get(isSteel);
     }
+
     @Override
     public ModularUI createUI(Player entityPlayer) {
         var screen = new DraggableScrollableWidgetGroup(7, 4, 162, 121)
@@ -101,8 +103,8 @@ public abstract class SteamMultiMachineBase extends WorkableMultiblockMachine im
                 .widget(UITemplate.bindPlayerInventory(entityPlayer.getInventory(),
                         GuiTextures.SLOT_STEAM.get(isSteel), 7, 134, true));
     }
-    public void handleDisplayClick(String componentData, ClickData clickData) {
-    }
+
+    public void handleDisplayClick(String componentData, ClickData clickData) {}
 
     @Override
     public void addDisplayText(List<Component> textList) {

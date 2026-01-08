@@ -58,20 +58,31 @@ public class AstroConfigs {
         @Configurable
         @Configurable.Comment({ "Base heat gain per second when sunlit." })
         public int baseHeatRate = 2;
-        @Configurable public double moonBoost = 1.2;
-        @Configurable public double venusPenalty = 0.5;
-        @Configurable public double mercuryBoost = 2.5;
-        @Configurable public double marsPenalty = 0.8;
-        @Configurable public double glacioPenalty = 0.3;
+        @Configurable
+        public double moonBoost = 1.2;
+        @Configurable
+        public double venusPenalty = 0.5;
+        @Configurable
+        public double mercuryBoost = 2.5;
+        @Configurable
+        public double marsPenalty = 0.8;
+        @Configurable
+        public double glacioPenalty = 0.3;
 
         // Ad Extendra / Addons
-        @Configurable public double ceresPenalty = 0.7;
-        @Configurable public double jupiterPenalty = 0.25;
-        @Configurable public double saturnPenalty = 0.2;
-        @Configurable public double uranusPenalty = 0.15;
-        @Configurable public double neptunePenalty = 0.1;
-        @Configurable public double plutoPenalty = 0.05;
-        @Configurable public double kuiperBeltPenalty = 0.02;
-
+        @Configurable
+        public double ceresPenalty = 0.7;
+        @Configurable
+        public double jupiterPenalty = 0.25;
+        @Configurable
+        public double saturnPenalty = 0.2;
+        @Configurable
+        public double uranusPenalty = 0.15;
+        @Configurable
+        public double neptunePenalty = 0.1;
+        @Configurable
+        public double plutoPenalty = 0.05;
+        @Configurable
+        public double kuiperBeltPenalty = 0.02;
     }
 }
