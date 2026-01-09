@@ -18,22 +18,26 @@ import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
 import com.gregtechceu.gtceu.api.recipe.modifier.ParallelLogic;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
+
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.widget.*;
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-//This multiblock is a courtesy of Raishxn's GT:NA Project
+import javax.annotation.Nonnull;
+
+// This multiblock is a courtesy of Raishxn's GT:NA Project
 
 public class IndustrialCokeOvenMachine extends WorkableMultiblockMachine implements IDisplayUIMachine, IFancyUIMachine {
 
@@ -44,7 +48,7 @@ public class IndustrialCokeOvenMachine extends WorkableMultiblockMachine impleme
     @DescSynced
     private long continuousWorkingTicks = 0;
 
-    //constant values
+    // constant values
     private static final int TICKS_PER_STAGE = 10 * 60 * 20; // 10 min
     private static final int BASE_PARALLEL = 8;
     private static final int PARALLEL_INCREASE = 16;
@@ -129,7 +133,8 @@ public class IndustrialCokeOvenMachine extends WorkableMultiblockMachine impleme
                     FluidIngredient steamIng = FluidIngredient.of(GTMaterials.Steam.getFluid(totalSteamInt));
 
                     modified.inputs.computeIfAbsent(FluidRecipeCapability.CAP, k -> new ArrayList<>())
-                            .add(new Content(steamIng, ChanceLogic.getMaxChancedValue(), ChanceLogic.getMaxChancedValue(), 0));
+                            .add(new Content(steamIng, ChanceLogic.getMaxChancedValue(),
+                                    ChanceLogic.getMaxChancedValue(), 0));
                 }
                 return modified;
             };
@@ -171,13 +176,15 @@ public class IndustrialCokeOvenMachine extends WorkableMultiblockMachine impleme
 
             textList.add(Component.literal("Stage: ")
                     .append(Component.literal(String.valueOf(stage)).withStyle(ChatFormatting.GOLD))
-                    .append(Component.literal(" (Next in: " + (nextStageTicks/20) + "s)").withStyle(ChatFormatting.GRAY)));
+                    .append(Component.literal(" (Next in: " + (nextStageTicks / 20) + "s)")
+                            .withStyle(ChatFormatting.GRAY)));
 
             textList.add(Component.literal("Max Parallels: ")
                     .append(Component.literal(String.valueOf(maxStageParallel)).withStyle(ChatFormatting.BLUE)));
 
             textList.add(Component.literal("Steam Req: ")
-                    .append(Component.literal(String.valueOf(steamPerTick * 20) + " L/s").withStyle(ChatFormatting.GRAY)));
+                    .append(Component.literal(String.valueOf(steamPerTick * 20) + " L/s")
+                            .withStyle(ChatFormatting.GRAY)));
         }
         MultiblockDisplayText.builder(textList, isFormed())
                 .setWorkingStatus(recipeLogic.isWorkingEnabled(), recipeLogic.isActive())
