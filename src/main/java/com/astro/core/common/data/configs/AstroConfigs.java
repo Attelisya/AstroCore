@@ -24,6 +24,7 @@ public class AstroConfigs {
 
     public static class FeatureConfigs {
 
+        // Mana Boiler configs
         @Configurable
         @Configurable.Comment({ "The max temperature of the Large Manasteel Mana Boiler" })
         public int manasteelBoilerMaxTemperature = 2000;
@@ -46,20 +47,18 @@ public class AstroConfigs {
         @Configurable.Comment({ "The base speed multiplier for the Steam Blast Furnace. (works inversely, 0.5 would be 2x as fast)" })
         public double SBFRecipeSpeed = 1.0;
 
-        @Configurable
-        @Configurable.Comment({ "The steam per tick per cell production rate of the Solar Boiler Array" })
-        public int solarSpeed = 90;
 
+        @Configurable
+        @Configurable.Comment({ "The steam per tick per cell production rate of the Solar Boiler Array in mB" })
+        public int solarSpeed = 90;
         @Configurable
         @Configurable.Comment({ "The amount of Steam produced per 1mB of Water. Default is 160." })
-        public double waterToSteamRatio = 160.0;
-
+        public double steamRatio = 160.0;
         @Configurable
-        @Configurable.Comment({ "The temperature at which the boiler starts producing steam." })
+        @Configurable.Comment({ "The temperature at which the Solar Boiler Array starts producing steam." })
         public int boilingPoint = 50;
-
         @Configurable
-        @Configurable.Comment({ "Base heat gain per second when sunlit." })
+        @Configurable.Comment({ "The base temperature in Kelvin gained per second when sunlit." })
         public int baseHeatRate = 2;
         @Configurable
         public double moonBoost = 1.2;
@@ -69,10 +68,6 @@ public class AstroConfigs {
         public double mercuryBoost = 2.5;
         @Configurable
         public double marsPenalty = 0.8;
-        @Configurable
-        public double glacioPenalty = 0.3;
-
-        // Ad Extendra / Addons
         @Configurable
         public double ceresPenalty = 0.7;
         @Configurable

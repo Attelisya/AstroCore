@@ -105,6 +105,7 @@ public class AGEMultiMachines {
                     .andThen(b -> b.addDynamicRenderer(
                             () -> DynamicRenderHelper.makeBoilerPartRender(
                                     BoilerFireboxType.BRONZE_FIREBOX, CASING_BRONZE_BRICKS))))
+            .hasBER(true)
             .register();
 
     public static final MultiblockMachineDefinition SOLAR_BOILER_ARRAY = REGISTRATE
@@ -149,9 +150,9 @@ public class AGEMultiMachines {
                     Component
                             .translatable("astrogreg.tooltip.mega_solar.production",
                                     "Production: " + AstroConfigs.INSTANCE.features.solarSpeed +
-                                            " mb/t of Steam per active block")
+                                            " mB/t of Steam per active block")
                             .withStyle(ChatFormatting.WHITE),
-                    Component.translatable("astrogreg.tooltip.mega_solar.max_size", "Max Size: 33 x 33")
+                    Component.translatable("astrogreg.tooltip.mega_solar.max_size", "Max Cell Count: 33 x 33")
                             .withStyle(ChatFormatting.GRAY))
             .register();
 

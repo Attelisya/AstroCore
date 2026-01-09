@@ -39,7 +39,7 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
             AstroSolarBoilers.class, WorkableMultiblockMachine.MANAGED_FIELD_HOLDER);
 
     private static final int MAX_LR_DIST = 16;
-    private static final int MAX_B_DIST = 32;
+    private static final int MAX_B_DIST = 33;
     private static final int MAX_TEMP = 1000;
 
     private int lDist, rDist, bDist;
@@ -134,7 +134,7 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         if (temperature > startTemp && sunlit > 0 && waterTank != null && steamTank != null) {
             double efficiency = (double) (temperature - startTemp) / (MAX_TEMP - startTemp);
             long steamPerTick = (long) (sunlit * AstroConfigs.INSTANCE.features.solarSpeed * efficiency * dimMult);
-            double ratio = AstroConfigs.INSTANCE.features.waterToSteamRatio;
+            double ratio = AstroConfigs.INSTANCE.features.steamRatio;
 
             int waterNeeded = (int) Math.ceil(steamPerTick / ratio);
 
@@ -174,7 +174,6 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
             case "venus" -> cfg.venusPenalty;
             case "mercury" -> cfg.mercuryBoost;
             case "mars" -> cfg.marsPenalty;
-            case "glacio" -> cfg.glacioPenalty;
             case "ceres" -> cfg.ceresPenalty;
             case "jupiter" -> cfg.jupiterPenalty;
             case "saturn" -> cfg.saturnPenalty;
