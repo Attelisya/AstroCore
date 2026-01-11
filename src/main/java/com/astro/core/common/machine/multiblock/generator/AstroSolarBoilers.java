@@ -81,7 +81,6 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
                 if (sunlit > 0 && temperature < MAX_TEMP) {
                     double heatMult = 1.0 + (sunlit * cfg.heatSpeedPerCell);
                     int heatGain = (int) (cfg.baseHeatRate * getDimensionMultiplier() * heatMult);
-
                     temperature = Math.min(MAX_TEMP, temperature + Math.max(1, heatGain));
                 }
             } else {
@@ -96,14 +95,11 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         }
 
         if (canSeeWater()) {
-            if (temperature >= EXPLOSION_THRESHOLD) {
-                float blastPower = Math.min(12.0f, 4.0f + (sunlit / 50.0f));
-                doExplosion(blastPower);
-                return;
-            }
+            int startTemp = cfg.boilingPoint;
+            boolean isProducing = false;
 
-            if (temperature > cfg.boilingPoint && sunlit > 0) {
-                double efficiency = (double) (temperature - cfg.boilingPoint) / (MAX_TEMP - cfg.boilingPoint);
+            if (temperature > startTemp && sunlit > 0) {
+                double efficiency = (double) (temperature - startTemp) / (MAX_TEMP - startTemp);
                 long steamTarget = (long) (sunlit * cfg.solarSpeed * efficiency * getDimensionMultiplier());
 
                 if (steamTarget > 0) {
@@ -113,11 +109,26 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
                         RecipeHelper.handleRecipeIO(this, GTRecipeBuilder.ofRaw().outputFluids(steamStack).buildRawRecipe(),
                                 IO.OUT, getRecipeLogic().getChanceCaches());
                         lastSteamOutput = steamTarget;
+                        isProducing = true;
                     }
                 }
             }
+
+            if (!isProducing && temperature >= EXPLOSION_THRESHOLD) {
+                float blastPower = Math.min(12.0f, 4.0f + (sunlit / 50.0f));
+                doExplosion(blastPower);
+                return;
+            }
+
+            if (!isProducing) lastSteamOutput = 0;
+
         } else {
             lastSteamOutput = 0;
+
+            if (temperature >= EXPLOSION_THRESHOLD) {
+                float blastPower = Math.min(12.0f, 4.0f + (sunlit / 50.0f));
+                doExplosion(blastPower);
+            }
         }
     }
 
@@ -220,6 +231,8 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
             textList.add(Component.literal("§c§lSTRUCTURE NOT FORMED"));
             return;
         }
+        double intensity = getDimensionMultiplier() * 100;
+        textList.add(Component.literal(String.format("§6Solar Intensity: %.1f%%", intensity)));
 
         String color = temperature >= EXPLOSION_THRESHOLD ? "§4§l" : temperature > 400 ? "§6" : "§e";
         textList.add(Component.literal(color + "Temperature: " + temperature + "°C"));
@@ -231,8 +244,11 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         textList.add(Component.literal("§eSunlit Cells: " + sunlit));
         textList.add(Component.literal("§bSteam Output: " + (lastSteamOutput * 20) + " mB/s"));
 
-        if (temperature >= EXPLOSION_THRESHOLD && lastSteamOutput == 0) {
-            textList.add(Component.literal("§4§nWARNING: DO NOT ADD WATER"));
+        if (temperature >= EXPLOSION_THRESHOLD) {
+            textList.add(Component.literal("§4§nDANGER: SYSTEM OVERHEATING"));
+            if (lastSteamOutput == 0) {
+                textList.add(Component.literal("§4§lDO NOT ADD WATER NOW"));
+            }
         }
     }
 
