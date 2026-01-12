@@ -14,7 +14,6 @@ import com.lowdragmc.lowdraglib.gui.widget.ComponentPanelWidget;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
 import com.astro.core.common.data.configs.AstroConfigs;

@@ -13,21 +13,17 @@ import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderHelper;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTMachines;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.utils.GTUtil;
 
-import com.lowdragmc.lowdraglib.utils.BlockInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 
 import com.astro.core.common.data.block.AstroBlocks;
-import com.astro.core.common.data.configs.AstroConfigs;
 import com.astro.core.common.machine.multiblock.generator.AstroSolarBoilers;
 import com.astro.core.common.machine.multiblock.steam.SteamBlastFurnace;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
@@ -125,15 +121,14 @@ public class AGEMultiMachines {
                     .aisle("A@A")
                     .where('@', controller(blocks(definition.get())))
                     .where('A', blocks(GTBlocks.CASING_STEEL_SOLID.get())
-                                    .or(abilities(IMPORT_FLUIDS)).setMaxGlobalLimited(2)
-                                    .or(abilities(EXPORT_FLUIDS)).setMaxGlobalLimited(2)
-                            .or(abilities(MAINTENANCE)).setExactLimit(1)
-                    )
+                            .or(abilities(IMPORT_FLUIDS)).setMaxGlobalLimited(2)
+                            .or(abilities(EXPORT_FLUIDS)).setMaxGlobalLimited(2)
+                            .or(abilities(MAINTENANCE)).setExactLimit(1))
                     .where('B', blocks(AstroBlocks.SOLAR_CELL.get()))
                     .build())
             .shapeInfos(definition -> {
                 var minShape = MultiblockShapeInfo.builder()
-//                        .aisle("AA@CD") // no maintenance version
+                        // .aisle("AA@CD") // no maintenance version
                         .aisle("AE@CD") // maintenance version
                         .aisle("ABBBA")
                         .aisle("ABBBA")
@@ -159,13 +154,13 @@ public class AGEMultiMachines {
                         .literal("Heating speed scales with distance from the Sun.")
                         .withStyle(ChatFormatting.WHITE));
                 tooltip.add(Component
-                        .literal("Heat scaling: §e−1 K/s per Cell below 40 or +1% heating speed per sunlit Cell above 40")
+                        .literal(
+                                "Heat scaling: §e−1 K/s per Cell below 40 or +1% heating speed per sunlit Cell above 40")
                         .withStyle(ChatFormatting.AQUA));
                 tooltip.add(Component.literal("Max Cell Count: §e33 x 33 (1089 Cells)")
                         .withStyle(ChatFormatting.AQUA));
             })
             .register();
 
-    public static void init() {
-    }
+    public static void init() {}
 }

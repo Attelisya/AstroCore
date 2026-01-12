@@ -1,7 +1,5 @@
 package com.astro.core.common.machine.multiblock.generator;
 
-import com.astro.core.common.data.block.AstroBlocks;
-import com.astro.core.common.data.configs.AstroConfigs;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IDisplayUIMachine;
@@ -16,12 +14,17 @@ import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
+
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
+
+import com.astro.core.common.data.block.AstroBlocks;
+import com.astro.core.common.data.configs.AstroConfigs;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -124,14 +127,15 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
 
             if (temperature > cfg.boilingPoint && sunlit > 0) {
                 double efficiency = (double) (temperature - cfg.boilingPoint) / (MAX_TEMP - cfg.boilingPoint);
-                long steamTarget = (long) ( sunlit * cfg.solarSpeed * efficiency * getDimensionMultiplier() / 4 );
+                long steamTarget = (long) (sunlit * cfg.solarSpeed * efficiency * getDimensionMultiplier() / 4);
 
                 if (steamTarget > 0) {
                     int waterNeeded = (int) Math.ceil(steamTarget / cfg.steamRatio);
 
                     if (tryConsumeWater(waterNeeded)) {
                         var steamStack = GTMaterials.Steam.getFluid((int) steamTarget);
-                        RecipeHelper.handleRecipeIO(this, GTRecipeBuilder.ofRaw().outputFluids(steamStack).buildRawRecipe(),
+                        RecipeHelper.handleRecipeIO(this,
+                                GTRecipeBuilder.ofRaw().outputFluids(steamStack).buildRawRecipe(),
                                 IO.OUT, getRecipeLogic().getChanceCaches());
                         lastSteamOutput = steamTarget;
                     } else {
@@ -165,7 +169,8 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
     }
 
     private void doExplosion(float intensity) {
-        getLevel().explode(null, getPos().getX(), getPos().getY(), getPos().getZ(), intensity, Level.ExplosionInteraction.BLOCK);
+        getLevel().explode(null, getPos().getX(), getPos().getY(), getPos().getZ(), intensity,
+                Level.ExplosionInteraction.BLOCK);
         this.getHolder().self().setRemoved();
     }
 
@@ -187,8 +192,7 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
                 .where('A', Predicates.blocks(GTBlocks.CASING_STEEL_SOLID.get())
                         .or(Predicates.abilities(IMPORT_FLUIDS).setPreviewCount(1))
                         .or(Predicates.abilities(EXPORT_FLUIDS).setPreviewCount(1))
-                        .or(Predicates.abilities(MAINTENANCE).setExactLimit(1))
-                )
+                        .or(Predicates.abilities(MAINTENANCE).setExactLimit(1)))
                 .where('B', Predicates.blocks(AstroBlocks.SOLAR_CELL.get())).build();
     }
 
@@ -197,7 +201,8 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         if (world == null) return;
         Direction back = getFrontFacing().getOpposite();
         this.bDist = calculateDistance(world, getPos(), back, MAX_B_DIST);
-        this.lDist = calculateDistance(world, getPos().relative(back), getFrontFacing().getCounterClockWise(), MAX_LR_DIST);
+        this.lDist = calculateDistance(world, getPos().relative(back), getFrontFacing().getCounterClockWise(),
+                MAX_LR_DIST);
         this.rDist = calculateDistance(world, getPos().relative(back), getFrontFacing().getClockWise(), MAX_LR_DIST);
         this.formed = bDist >= 3 && lDist >= 1 && rDist >= 1;
     }
@@ -262,7 +267,8 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         textList.add(Component.literal(color + "Temperature: " + temperature + "°C"));
 
         int startTemp = AstroConfigs.INSTANCE.features.boilingPoint;
-        double currentEff = temperature <= startTemp ? 0 : (double) (temperature - startTemp) / (MAX_TEMP - startTemp) * 100;
+        double currentEff = temperature <= startTemp ? 0 :
+                (double) (temperature - startTemp) / (MAX_TEMP - startTemp) * 100;
         textList.add(Component.literal(String.format("§bThermal Efficiency: %.1f%%", currentEff)));
 
         textList.add(Component.literal("§eSunlit Cells: " + sunlit));
