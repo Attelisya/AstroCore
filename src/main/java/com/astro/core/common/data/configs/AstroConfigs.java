@@ -105,9 +105,5 @@ public class AstroConfigs {
         @Configurable.Comment({
                 "The base speed multiplier for the Steam Blast Furnace. (works inversely, e.g. 0.5 = 2x speed) Default: 1.0" })
         public double SBFRecipeSpeed = 1.0;
-        @Configurable
-        @Configurable.Comment({
-                "The base steam consumed per tick by custom AstroGreg steam machines. Default: 1.0" })
-        public double steamConsumption = 1.0;
     }
 }

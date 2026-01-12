@@ -1,6 +1,7 @@
 package com.astro.core.common.machine.multiblock;
 
 import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
@@ -11,9 +12,12 @@ import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderHelper;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
+import com.gregtechceu.gtceu.common.data.GTMachines;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.utils.GTUtil;
 
+import com.lowdragmc.lowdraglib.utils.BlockInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -23,11 +27,11 @@ import com.astro.core.common.data.configs.AstroConfigs;
 import com.astro.core.common.machine.multiblock.generator.AstroSolarBoilers;
 import com.astro.core.common.machine.multiblock.steam.SteamBlastFurnace;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
-import static com.gregtechceu.gtceu.api.machine.multiblock.PartAbility.EXPORT_FLUIDS;
-import static com.gregtechceu.gtceu.api.machine.multiblock.PartAbility.IMPORT_FLUIDS;
+import static com.gregtechceu.gtceu.api.machine.multiblock.PartAbility.*;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.CASING_BRONZE_BRICKS;
 import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createWorkableCasingMachineModel;
@@ -121,29 +125,44 @@ public class AGEMultiMachines {
                     .aisle("A@A")
                     .where('@', controller(blocks(definition.get())))
                     .where('A', blocks(GTBlocks.CASING_STEEL_SOLID.get())
-                            .or(abilities(IMPORT_FLUIDS)).setMaxGlobalLimited(2)
-                            .or(abilities(EXPORT_FLUIDS)).setMaxGlobalLimited(2))
+                                    .or(abilities(IMPORT_FLUIDS)).setMaxGlobalLimited(2)
+                                    .or(abilities(EXPORT_FLUIDS)).setMaxGlobalLimited(2)
+//                            .or(abilities(MAINTENANCE)).setExactLimit(1)
+                    )
                     .where('B', blocks(AstroBlocks.SOLAR_CELL.get()))
                     .build())
-//            .multiblockPreviewRenderer()
+            .shapeInfos(definition -> {
+                var minShape = MultiblockShapeInfo.builder()
+                        .aisle("D@C")
+                        .aisle("EBA")
+                        .aisle("AAA")
+                        .where('@', definition, Direction.NORTH)
+                        .where('A', GTBlocks.CASING_STEEL_SOLID)
+                        .where('B', AstroBlocks.SOLAR_CELL.get())
+                        .where('C', GTMachines.FLUID_EXPORT_HATCH[GTValues.LV], Direction.NORTH)
+                        .where('D', GTMachines.FLUID_IMPORT_HATCH[GTValues.LV], Direction.NORTH)
+//                        .where('E', GTMachines.MAINTENANCE_HATCH, Direction.WEST)
+                        .build();
+                return List.of(minShape);
+            })
+            .allowFlip(false)
             .workableCasingModel(GTCEu.id("block/casings/solid/machine_casing_solid_steel"),
                     GTCEu.id("block/multiblock/blast_furnace"))
             .tooltipBuilder((stack, tooltip) -> {
-//                if (GTUtil.isShiftDown()) {
-                    tooltip.add(Component
-                            .literal("Cells must be exposed to direct sunlight to work properly.")
-                            .withStyle(ChatFormatting.WHITE));
-                    tooltip.add(Component
-                            .literal("Heating speed scales with distance from the Sun.")
-                            .withStyle(ChatFormatting.WHITE));
-                    tooltip.add(Component
-                            .literal("Heat scaling: §e−1 K/s per Cell below 40 or +1% heating speed per sunlit Cell above 40")
-                            .withStyle(ChatFormatting.AQUA));
-                    tooltip.add(Component.literal("Max Cell Count: §e33 x 33 (1089 Cells)")
-                            .withStyle(ChatFormatting.AQUA));
-//                }
+                tooltip.add(Component
+                        .literal("Cells must be exposed to direct sunlight to work properly.")
+                        .withStyle(ChatFormatting.WHITE));
+                tooltip.add(Component
+                        .literal("Heating speed scales with distance from the Sun.")
+                        .withStyle(ChatFormatting.WHITE));
+                tooltip.add(Component
+                        .literal("Heat scaling: §e−1 K/s per Cell below 40 or +1% heating speed per sunlit Cell above 40")
+                        .withStyle(ChatFormatting.AQUA));
+                tooltip.add(Component.literal("Max Cell Count: §e33 x 33 (1089 Cells)")
+                        .withStyle(ChatFormatting.AQUA));
             })
             .register();
 
-    public static void init() {}
+    public static void init() {
+    }
 }

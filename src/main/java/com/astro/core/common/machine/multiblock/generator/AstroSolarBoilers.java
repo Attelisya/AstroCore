@@ -44,6 +44,7 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
     @Persisted private int sunlit;
     @Persisted private int temperature;
     @Persisted private long lastSteamOutput;
+    @Persisted private boolean hasNoWater;
 
     public AstroSolarBoilers(IMachineBlockEntity holder) {
         super(holder);
@@ -68,6 +69,7 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         if (!isFormed()) {
             if (temperature > 0) temperature--;
             sunlit = 0;
+            hasNoWater = false;
             return;
         }
 
@@ -94,40 +96,45 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
             }
         }
 
-        if (canSeeWater()) {
-            int startTemp = cfg.boilingPoint;
-            boolean isProducing = false;
 
-            if (temperature > startTemp && sunlit > 0) {
-                double efficiency = (double) (temperature - startTemp) / (MAX_TEMP - startTemp);
-                long steamTarget = (long) (sunlit * cfg.solarSpeed * efficiency * getDimensionMultiplier());
+        boolean waterIsPresent = canSeeWater();
 
-                if (steamTarget > 0) {
-                    int waterNeeded = (int) Math.ceil(steamTarget / cfg.steamRatio);
-                    if (tryConsumeWater(waterNeeded)) {
-                        var steamStack = GTMaterials.Steam.getFluid((int) steamTarget);
-                        RecipeHelper.handleRecipeIO(this, GTRecipeBuilder.ofRaw().outputFluids(steamStack).buildRawRecipe(),
-                                IO.OUT, getRecipeLogic().getChanceCaches());
-                        lastSteamOutput = steamTarget;
-                        isProducing = true;
-                    }
-                }
-            }
-
-            if (!isProducing && temperature >= EXPLOSION_THRESHOLD) {
+        if (waterIsPresent) {
+            if (this.hasNoWater && temperature >= EXPLOSION_THRESHOLD) {
                 float blastPower = Math.min(12.0f, 4.0f + (sunlit / 50.0f));
                 doExplosion(blastPower);
                 return;
             }
 
-            if (!isProducing) lastSteamOutput = 0;
 
+            this.hasNoWater = false;
+
+            if (temperature > cfg.boilingPoint && sunlit > 0) {
+                double efficiency = (double) (temperature - cfg.boilingPoint) / (MAX_TEMP - cfg.boilingPoint);
+                long steamTarget = (long) (sunlit * cfg.solarSpeed * efficiency * getDimensionMultiplier() / 150);
+
+                if (steamTarget > 0) {
+                    int waterNeeded = (int) Math.ceil(steamTarget / cfg.steamRatio);
+
+                    if (tryConsumeWater(waterNeeded)) {
+                        var steamStack = GTMaterials.Steam.getFluid((int) steamTarget);
+                        RecipeHelper.handleRecipeIO(this, GTRecipeBuilder.ofRaw().outputFluids(steamStack).buildRawRecipe(),
+                                IO.OUT, getRecipeLogic().getChanceCaches());
+                        lastSteamOutput = steamTarget;
+                    } else {
+                        lastSteamOutput = 0;
+                        if (temperature >= cfg.boilingPoint) this.hasNoWater = true;
+                    }
+                }
+            } else {
+                lastSteamOutput = 0;
+            }
         } else {
             lastSteamOutput = 0;
-
-            if (temperature >= EXPLOSION_THRESHOLD) {
-                float blastPower = Math.min(12.0f, 4.0f + (sunlit / 50.0f));
-                doExplosion(blastPower);
+            if (temperature >= cfg.boilingPoint) {
+                this.hasNoWater = true;
+            } else {
+                this.hasNoWater = false;
             }
         }
     }
@@ -147,6 +154,27 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
     private void doExplosion(float intensity) {
         getLevel().explode(null, getPos().getX(), getPos().getY(), getPos().getZ(), intensity, Level.ExplosionInteraction.BLOCK);
         this.getHolder().self().setRemoved();
+    }
+
+    @NotNull
+    @Override
+    public BlockPattern getPattern() {
+        if (getLevel() != null) updateStructureDimensions();
+        int safeL = formed ? lDist : 1;
+        int safeR = formed ? rDist : 1;
+        int safeB = formed ? bDist : 3;
+        int totalWidth = safeL + safeR + 3;
+        String boundary = "A".repeat(totalWidth);
+        String middle = "A" + "B".repeat(totalWidth - 2) + "A";
+        String controllerRow = "A".repeat(safeL + 1) + "~" + "A".repeat(safeR + 1);
+
+        return FactoryBlockPattern.start(RelativeDirection.LEFT, RelativeDirection.UP, RelativeDirection.FRONT)
+                .aisle(boundary).aisle(middle).setRepeatable(safeB).aisle(controllerRow)
+                .where('~', Predicates.controller(Predicates.blocks(getDefinition().get())))
+                .where('A', Predicates.blocks(GTBlocks.CASING_STEEL_SOLID.get())
+                        .or(Predicates.abilities(IMPORT_FLUIDS).setPreviewCount(1))
+                        .or(Predicates.abilities(EXPORT_FLUIDS).setPreviewCount(1)))
+                .where('B', Predicates.blocks(AstroBlocks.SOLAR_CELL.get())).build();
     }
 
     private void updateStructureDimensions() {
@@ -183,27 +211,6 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         return count;
     }
 
-    @NotNull
-    @Override
-    public BlockPattern getPattern() {
-        if (getLevel() != null) updateStructureDimensions();
-        int safeL = formed ? lDist : 1;
-        int safeR = formed ? rDist : 1;
-        int safeB = formed ? bDist : 3;
-        int totalWidth = safeL + safeR + 3;
-        String boundary = "A".repeat(totalWidth);
-        String middle = "A" + "B".repeat(totalWidth - 2) + "A";
-        String controllerRow = "A".repeat(safeL + 1) + "~" + "A".repeat(safeR + 1);
-
-        return FactoryBlockPattern.start(RelativeDirection.LEFT, RelativeDirection.UP, RelativeDirection.FRONT)
-                .aisle(boundary).aisle(middle).setRepeatable(safeB).aisle(controllerRow)
-                .where('~', Predicates.controller(Predicates.blocks(getDefinition().get())))
-                .where('A', Predicates.blocks(GTBlocks.CASING_STEEL_SOLID.get())
-                        .or(Predicates.abilities(IMPORT_FLUIDS).setPreviewCount(1))
-                        .or(Predicates.abilities(EXPORT_FLUIDS).setPreviewCount(1)))
-                .where('B', Predicates.blocks(AstroBlocks.SOLAR_CELL.get())).build();
-    }
-
     private double getDimensionMultiplier() {
         if (getLevel() == null) return 1.0;
         String path = getLevel().dimension().location().getPath();
@@ -228,13 +235,13 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
     @Override
     public void addDisplayText(@NotNull List<Component> textList) {
         if (!isFormed()) {
-            textList.add(Component.literal("§c§lSTRUCTURE NOT FORMED"));
+            textList.add(Component.literal("§cSTRUCTURE NOT FORMED"));
             return;
         }
         double intensity = getDimensionMultiplier() * 100;
         textList.add(Component.literal(String.format("§6Solar Intensity: %.1f%%", intensity)));
 
-        String color = temperature >= EXPLOSION_THRESHOLD ? "§4§l" : temperature > 400 ? "§6" : "§e";
+        String color = temperature >= EXPLOSION_THRESHOLD ? "§4" : temperature > 400 ? "§6" : "§e";
         textList.add(Component.literal(color + "Temperature: " + temperature + "°C"));
 
         int startTemp = AstroConfigs.INSTANCE.features.boilingPoint;
@@ -245,9 +252,10 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
         textList.add(Component.literal("§bSteam Output: " + (lastSteamOutput * 20) + " mB/s"));
 
         if (temperature >= EXPLOSION_THRESHOLD) {
-            textList.add(Component.literal("§4§nDANGER: SYSTEM OVERHEATING"));
+            textList.add(Component.literal("§4§nDANGER: MAX TEMPERATURE"));
             if (lastSteamOutput == 0) {
-                textList.add(Component.literal("§4§lDO NOT ADD WATER NOW"));
+                textList.add(Component.literal("§4§nDO NOT ADD WATER!"));
+                textList.add(Component.literal("§4Wait for the array to cool first."));
             }
         }
     }
