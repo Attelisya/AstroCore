@@ -74,8 +74,6 @@ public class SteamBlastFurnace extends SteamMultiMachineBase {
     public void addDisplayText(List<Component> textList) {
         super.addDisplayText(textList);
         if (this.isFormed()) {
-            textList.add(Component.translatable("astrocore.multiblock.parallel_amount", this.targetParallel)
-                    .withStyle(ChatFormatting.GOLD));
             textList.add(Component.literal("Parallels: ")
                     .append(ComponentPanelWidget.withButton(Component.literal("[-] "), "parallelSub"))
                     .append(ComponentPanelWidget.withButton(Component.literal("[+]"), "parallelAdd")));
