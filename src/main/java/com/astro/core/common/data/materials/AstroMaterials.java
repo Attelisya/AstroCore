@@ -14,17 +14,12 @@ import net.minecraft.world.level.block.Blocks;
 import appeng.core.definitions.AEBlocks;
 import appeng.core.definitions.AEItems;
 import com.astro.core.AstroCore;
-import com.astro.core.common.GTVoltage;
 import com.drd.ad_extendra.common.registry.ModBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import earth.terrarium.adastra.common.registry.ModItems;
-import org.zeith.botanicadds.init.BlocksBA;
-import org.zeith.botanicadds.init.ItemsBA;
 import owmii.powah.block.Blcks;
 import owmii.powah.item.Itms;
-import vazkii.botania.common.block.BotaniaBlocks;
-import vazkii.botania.common.item.BotaniaItems;
 
 import static com.astro.core.common.data.materials.AstroMaterialSet.DULL_MAGNETIC;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
@@ -58,15 +53,6 @@ public class AstroMaterials {
     public static Material FLUIX;
     public static Material FLUIX_PEARL;
     public static Material FUTURA_ALLOY;
-    public static Material MANA;
-    public static Material MANASTEEL;
-    public static Material MANA_DIAMOND;
-    public static Material DRAGONSTONE;
-    public static Material TERRASTEEL;
-    public static Material DORMANT_TERRASTEEL;
-    public static Material ELEMENTIUM;
-    public static Material GAIASTEEL;
-    public static Material AETHER;
     public static Material POLYAMIDE_IMIDE;
     public static Material BLAZING_ETRIUM;
     public static Material NIOTIC_CALORITE;
@@ -309,103 +295,6 @@ public class AstroMaterials {
                 .color(0xebb7ea).secondaryColor(0x000000).iconSet(SHINY)
                 .components(StainlessSteel, 4, SKY_STONE, 1)
                 .formula("(Fe6CrMnNi)4✨")
-                .buildAndRegister();
-
-        // Botania
-        MANA = new Material.Builder(
-                AstroCore.id("mana"))
-                .langValue("Mana")
-                .dust()
-                .flags(DISABLE_MATERIAL_RECIPES)
-                .element(AstroElements.MN).formula("✨")
-                .color(0x00fbff)
-                .buildAndRegister();
-
-        AETHER = new Material.Builder(
-                AstroCore.id("aether"))
-                .langValue("§3Æther§r")
-                .gas()
-                .element(AstroElements.AE).formula("✨")
-                .color(0x26a33f)
-                .buildAndRegister();
-
-        MANA_DIAMOND = new Material.Builder(
-                AstroCore.id("mana_diamond"))
-                .langValue("Mana Diamond")
-                .gem()
-                .flags(GENERATE_LENS, GENERATE_PLATE, CRYSTALLIZABLE, DISABLE_DECOMPOSITION)
-                .components(Carbon, 1, MANA, 1).formula("C✨")
-                .color(0x47eaed).iconSet(DIAMOND)
-                .buildAndRegister();
-
-        DRAGONSTONE = new Material.Builder(
-                AstroCore.id("dragonstone"))
-                .langValue("Dragonstone")
-                .gem()
-                .flags(GENERATE_LENS, GENERATE_PLATE, CRYSTALLIZABLE, DISABLE_DECOMPOSITION)
-                .components(Carbon, 1, AETHER, 1).formula("C✨")
-                .color(0xed64d4).iconSet(DIAMOND)
-                .buildAndRegister();
-
-        MANASTEEL = new Material.Builder(
-                AstroCore.id("manasteel"))
-                .langValue("§9Manasteel")
-                .ingot()
-                .fluid()
-                .blastTemp(1000, BlastProperty.GasTier.LOW, 120, 400)
-                .flags(GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_PLATE,
-                        GENERATE_ROD, MORTAR_GRINDABLE, DISABLE_ALLOY_BLAST, DISABLE_ALLOY_PROPERTY)
-                .fluidPipeProperties(1855, 150, true, false, false, false)
-                .color(0x228cc9).iconSet(SHINY)
-                .components(Steel, 1, MANA, 1).formula("Fe✨")
-                .buildAndRegister();
-
-        DORMANT_TERRASTEEL = new Material.Builder(
-                AstroCore.id("dormant_terrasteel"))
-                .langValue("Dormant §2Terrasteel§r")
-                .dust()
-                .components(Steel, 1, Beryllium, 1, Aluminium, 1).formula("FeBeAl")
-                .color(0x128719)
-                .buildAndRegister();
-
-        TERRASTEEL = new Material.Builder(
-                AstroCore.id("terrasteel"))
-                .langValue("§2Terrasteel")
-                .ingot()
-                .fluid()
-                .blastTemp(1700, BlastProperty.GasTier.LOW, (int) GTVoltage.VA.MV, 800)
-                .flags(GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_PLATE,
-                        GENERATE_ROD, DISABLE_ALLOY_BLAST, DISABLE_ALLOY_PROPERTY)
-                .fluidPipeProperties(2142, 225, true, false, false, false)
-                .color(0x159e1e).iconSet(BRIGHT)
-                .components(Steel, 1, Beryllium, 1, Aluminium, 1, MANA, 1)
-                .formula("FeBeAl✨")
-                .buildAndRegister();
-
-        ELEMENTIUM = new Material.Builder(
-                AstroCore.id("elementium"))
-                .langValue("§dAlfsteel")
-                .ingot()
-                .fluid()
-                .blastTemp(3500, BlastProperty.GasTier.MID, (int) GTVoltage.VA.IV, 1600)
-                .flags(GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_PLATE, GENERATE_ROD)
-                .fluidPipeProperties(2426, 300, true, false, false, false)
-                .color(0xed64d4).iconSet(SHINY)
-                .components(Titanium, 3, Rhodium, 2, DRAGONSTONE, 1)
-                .formula("Ti3Rh2C✨")
-                .buildAndRegister();
-
-        GAIASTEEL = new Material.Builder(
-                AstroCore.id("gaiasteel"))
-                .langValue("§cGaiasteel")
-                .ingot()
-                .fluid()
-                .blastTemp(7100, BlastProperty.GasTier.HIGH, (int) GTVoltage.VA.ZPM, 2400)
-                .flags(GENERATE_FRAME, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_PLATE, GENERATE_ROD,
-                        DISABLE_ALLOY_BLAST)
-                .fluidPipeProperties(3776, 400, true, true, true, true)
-                .color(0x8c2929).iconSet(BRIGHT)
-                // .components(VESNIUM, )
                 .buildAndRegister();
 
         // GregTech
@@ -738,31 +627,6 @@ public class AstroMaterials {
 
         gem.setIgnored(CertusQuartz, AEItems.CERTUS_QUARTZ_CRYSTAL);
         block.setIgnored(CertusQuartz, AEBlocks.QUARTZ_BLOCK);
-
-        // botania/additions
-        dust.setIgnored(MANA, () -> BotaniaItems.manaPowder);
-
-        gem.setIgnored(MANA_DIAMOND, () -> BotaniaItems.manaDiamond);
-        block.setIgnored(MANA_DIAMOND, () -> BotaniaBlocks.manaDiamondBlock);
-
-        gem.setIgnored(DRAGONSTONE, () -> BotaniaItems.dragonstone);
-        block.setIgnored(DRAGONSTONE, () -> BotaniaBlocks.dragonstoneBlock);
-
-        ingot.setIgnored(MANASTEEL, () -> BotaniaItems.manaSteel);
-        nugget.setIgnored(MANASTEEL, () -> BotaniaItems.manasteelNugget);
-        block.setIgnored(MANASTEEL, () -> BotaniaBlocks.manasteelBlock);
-
-        ingot.setIgnored(TERRASTEEL, () -> BotaniaItems.terrasteel);
-        block.setIgnored(TERRASTEEL, () -> BotaniaBlocks.terrasteelBlock);
-        nugget.setIgnored(TERRASTEEL, () -> BotaniaItems.terrasteelNugget);
-
-        ingot.setIgnored(ELEMENTIUM, () -> BotaniaItems.elementium);
-        block.setIgnored(ELEMENTIUM, () -> BotaniaBlocks.elementiumBlock);
-        nugget.setIgnored(ELEMENTIUM, () -> BotaniaItems.elementiumNugget);
-
-        ingot.setIgnored(GAIASTEEL, ItemsBA.GAIASTEEL_INGOT);
-        nugget.setIgnored(GAIASTEEL, ItemsBA.GAIASTEEL_NUGGET);
-        block.setIgnored(GAIASTEEL, BlocksBA.GAIASTEEL_BLOCK);
     }
 
     // ID, Color 1, Color 2, Icon Set, Material Flags
@@ -811,10 +675,6 @@ public class AstroMaterials {
                     new Object[] { 5300, BlastProperty.GasTier.MID, 122880, 1600 },
                     new Object[] { V[GTValues.LuV], 48, 0, true },
                     new Object[] { 700, 260, 3, 24000 } },
-            { "gaiaforged_naquadah", "Gaia-Forged Naquadah", 0x7a1d29, 0x000000, SHINY,
-                    new Object[] { 7100, BlastProperty.GasTier.HIGH, 491520, 1800 },
-                    new Object[] { V[GTValues.ZPM], 64, 0, true },
-                    new Object[] { 1100, 380, 3, 32000 } },
             { "neptunium_molybdenum_selenide", "Neptunium Molybdenum Selenide", 0x088a5c, 0x65f4fc,
                     RADIOACTIVE,
                     new Object[] { 10000, BlastProperty.GasTier.HIGHER, 1966080, 2000 },

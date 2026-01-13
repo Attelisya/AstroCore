@@ -26,10 +26,11 @@ import javax.annotation.Nonnull;
 
 public class SteamBlastFurnace extends SteamMultiMachineBase {
 
+    public static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
+            SteamBlastFurnace.class);
+
     @Persisted
-    private int targetParallel = ConfigHolder.INSTANCE.machines.steamMultiParallelAmount; // Default to 8 parallels /
-                                                                                          // Predeterminado a 8
-                                                                                          // paralelos
+    private int targetParallel = ConfigHolder.INSTANCE.machines.steamMultiParallelAmount;
 
     public SteamBlastFurnace(IMachineBlockEntity holder, Object... args) {
         super(holder, false, args);
@@ -56,7 +57,7 @@ public class SteamBlastFurnace extends SteamMultiMachineBase {
 
         // English: Set to 1.0 for speed default. Lower values make it faster.
         // Español: Establecido en 1.0 para velocidad estándar. Valores más bajos lo hacen más rápido.
-        double durationMultiplier = AstroConfigs.INSTANCE.features.SBFRecipeSpeed;
+        double durationMultiplier = AstroConfigs.INSTANCE.Steam.SBFRecipeSpeed;
 
         return ModifierFunction.builder()
                 .modifyAllContents(ContentModifier.multiplier(parallels))

@@ -12,8 +12,6 @@ public class AstroElements {
     public static final Element SY = createAndRegister(0, 110, -1, null, "saturlyte", "Sy", false);
     public static final Element E = createAndRegister(0, 1500, -1, null, "electrolyte", "⚡", false);
     public static final Element SS = createAndRegister(0, 98, -1, null, "sky_stone", "✨", false);
-    public static final Element MN = createAndRegister(0, 1, -1, null, "mana", "✨", false);
-    public static final Element AE = createAndRegister(0, 1, -1, null, "aether", "✨", false);
     public static final Element UK = createAndRegister(0, 98, -1, null, "unknown", "?", false);
     public static final Element AD = createAndRegister(0, 500, -1, null, "debris", "An*", false);
     public static final Element NH = createAndRegister(0, 800, -1, null, "netherite", "An", false);
