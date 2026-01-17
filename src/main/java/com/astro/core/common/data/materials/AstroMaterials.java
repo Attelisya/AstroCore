@@ -6,8 +6,10 @@ import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.BlastProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.data.chemical.material.properties.ToolProperty;
 import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
 
+import com.gregtechceu.gtceu.api.item.tool.GTToolType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -308,8 +310,8 @@ public class AstroMaterials {
                 .ingot()
                 .flags(GENERATE_PLATE, GENERATE_ROD, GENERATE_FRAME,
                         GENERATE_FOIL, GENERATE_RING)
-                // .toolStats(new ToolProperty(10.0F, 10.0F, 4096, 5,
-                // new GTToolType[] {GTToolType.SOFT_MALLET, GTToolType.PLUNGER}))
+//                 .toolStats(new ToolProperty(10.0F, 10.0F, 4096, 5,
+//                 new GTToolType[] {GTToolType.SOFT_MALLET, GTToolType.PLUNGER}))
                 .components(Carbon, 22, Hydrogen, 14, Nitrogen, 2, Oxygen, 3)
                 .fluidPipeProperties(1400, 1000, true, true, true, true)
                 .color(0xd9ac37).secondaryColor(0x54301a).iconSet(DULL)
