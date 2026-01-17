@@ -6,10 +6,7 @@ import net.minecraft.network.chat.Component;
 
 import com.astro.core.api.CustomNameAccess;
 import com.glodblock.github.extendedae.container.ContainerRenamer;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,7 +15,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @Mixin(value = ContainerRenamer.class, remap = false)
-@SuppressWarnings("MixinAnnotationTarget")
 public abstract class MixinContainerRenamer {
 
     @Shadow
@@ -32,12 +28,12 @@ public abstract class MixinContainerRenamer {
     private Supplier<Component> getter;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void monilabs$init(
+    private void astrocore$init(
                                int id,
                                net.minecraft.world.entity.player.Inventory inv,
                                Object host,
                                CallbackInfo ci) {
-        Object target = resolveTarget(host, inv.player);
+        Object target = astroCore$resolveTarget(host, inv.player);
         if (!(target instanceof IMachineBlockEntity holder)) {
             return;
         }
@@ -53,16 +49,18 @@ public abstract class MixinContainerRenamer {
             } catch (Exception ignored) {}
         };
 
-        apply(setterFn, access::astro$getCustomName);
+        astroCore$apply(setterFn, access::astro$getCustomName);
     }
 
-    private void apply(Consumer<String> setter, Supplier<String> getter) {
+    @Unique
+    private void astroCore$apply(Consumer<String> setter, Supplier<String> getter) {
         this.setter = setter;
         this.getter = () -> Component.literal(getter.get());
         ((ContainerRenamer) (Object) this).setValidMenu(true);
     }
 
-    private Object resolveTarget(Object host, net.minecraft.world.entity.player.Player player) {
+    @Unique
+    private Object astroCore$resolveTarget(Object host, net.minecraft.world.entity.player.Player player) {
         if (!host.getClass().getSimpleName().contains("Locator")) {
             return host;
         }
