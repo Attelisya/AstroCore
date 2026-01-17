@@ -68,14 +68,21 @@ public class AstroBlocks {
                 "§2Terrasteel§r Machine Casing");
         ALFSTEEL_MACHINE_CASING = createCasing("solid_alfsteel_machine_casing",
                 "generators/machine_casing_turbine_alfsteel", "§dAlfsteel§r Engine Casing");
-        MACHINE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock( "Pristine Rhodium Plated Palladium Machine Casing", "machine_casing_pristine_rhodium_plated_palladium", "casings/machine_casing_pristine_rhodium_plated_palladium", BlockItem::new);
-        MACHINE_CASING_PAI = createSidedCasingBlock( "Thermochemically Stable PAI Machine Casing", "machine_casing_super_inert_pai", "casings/machine_casing_super_inert_pai", BlockItem::new);
-//    MACHINE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock( "Invariant Naquadah Alloy Machine Casing", "machine_casing_invariant_naquadah_alloy", "machine_casing_invariant_naquadah_alloy", BlockItem::new);
+        MACHINE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock(
+                "Pristine Rhodium Plated Palladium Machine Casing", "machine_casing_pristine_rhodium_plated_palladium",
+                "casings/machine_casing_pristine_rhodium_plated_palladium", BlockItem::new);
+        MACHINE_CASING_PAI = createSidedCasingBlock("Thermochemically Stable PAI Machine Casing",
+                "machine_casing_super_inert_pai", "casings/machine_casing_super_inert_pai", BlockItem::new);
+        // MACHINE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock( "Invariant Naquadah Alloy Machine Casing",
+        // "machine_casing_invariant_naquadah_alloy", "machine_casing_invariant_naquadah_alloy", BlockItem::new);
         ALFSTEEL_GEARBOX_CASING = createSidedCasingBlock("§dAlfsteel§r Gearbox", "alfsteel_gearbox_casing",
                 "generators/machine_casing_gearbox_alfsteel", BlockItem::new);
-        GEARBOX_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock( "Rhodium Plated Palladium Gearbox Casing", "gearbox_casing_rhodium_plated_palladium", "casings/gearbox_casing_pristine_rhodium_plated_palladium", BlockItem::new);
-//    GEARBOX_CASING_NAQUADAH_ALLOY = createSidedCasingBlock( "Naquadah Alloy Gearbox Casing", "gearbox_casing_invariant_naquadah_alloy", "gearbox_casing_invariant_naquadah_alloy", BlockItem::new);
-//    EXAMPLE_CASING = createSidedCasingBlock( "", "", "", BlockItem::new);
+        GEARBOX_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock("Rhodium Plated Palladium Gearbox Casing",
+                "gearbox_casing_rhodium_plated_palladium", "casings/gearbox_casing_pristine_rhodium_plated_palladium",
+                BlockItem::new);
+        // GEARBOX_CASING_NAQUADAH_ALLOY = createSidedCasingBlock( "Naquadah Alloy Gearbox Casing",
+        // "gearbox_casing_invariant_naquadah_alloy", "gearbox_casing_invariant_naquadah_alloy", BlockItem::new);
+        // EXAMPLE_CASING = createSidedCasingBlock( "", "", "", BlockItem::new);
 
         // 3. Pipe Casings
         MANASTEEL_PIPE_CASING = createSidedCasingBlock("§9Manasteel§r Pipe Casing", "manasteel_pipe_casing",
@@ -84,9 +91,13 @@ public class AstroBlocks {
                 "generators/machine_casing_pipe_terrasteel", BlockItem::new);
         ALFSTEEL_PIPE_CASING = createSidedCasingBlock("§dAlfsteel§r Pipe Casing", "alfsteel_pipe_casing",
                 "generators/machine_casing_pipe_alfsteel", BlockItem::new);
-        PIPE_CASING_PAI = createSidedCasingBlock( "PAI Pipe Casing", "pipe_casing_super_inert_pai", "casings/pipe_casing_super_inert_pai", BlockItem::new);
-        PIPE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock( "Rhodium Plated Palladium Pipe Casing", "pipe_casing_rhodium_plated_palladium", "casings/pipe_casing_pristine_rhodium_plated_palladium", BlockItem::new);
-//    PIPE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock( "Naquadah Alloy Pipe Casing", "pipe_casing_invariant_naquadah_alloy", "pipe_casing_invariant_naquadah_alloy", BlockItem::new);
+        PIPE_CASING_PAI = createSidedCasingBlock("PAI Pipe Casing", "pipe_casing_super_inert_pai",
+                "casings/pipe_casing_super_inert_pai", BlockItem::new);
+        PIPE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock("Rhodium Plated Palladium Pipe Casing",
+                "pipe_casing_rhodium_plated_palladium", "casings/pipe_casing_pristine_rhodium_plated_palladium",
+                BlockItem::new);
+        // PIPE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock( "Naquadah Alloy Pipe Casing",
+        // "pipe_casing_invariant_naquadah_alloy", "pipe_casing_invariant_naquadah_alloy", BlockItem::new);
 
         // 4. Fireboxes
         FIREBOX_MANASTEEL = createFirebox(new FireboxInfo("manasteel_firebox",

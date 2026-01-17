@@ -1,13 +1,5 @@
 package com.astro.core.mixin;
 
-import java.util.List;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
@@ -17,6 +9,13 @@ import com.gregtechceu.gtceu.integration.emi.multipage.MultiblockInfoEmiRecipe;
 import net.minecraft.resources.ResourceLocation;
 
 import dev.emi.emi.api.EmiRegistry;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 @Mixin(value = MultiblockInfoEmiCategory.class)
 public class MultiblockInfoEmiCategoryMixin {
