@@ -32,11 +32,9 @@ public class MultiblockInfoEmiCategoryMixin {
                 .filter(MultiblockMachineDefinition.class::isInstance)
                 .map(MultiblockMachineDefinition.class::cast)
                 .filter(MultiblockMachineDefinition::isRenderXEIPreview)
-                // NEW: Filter by the Definition ID before creating the EMI recipe object
-                .filter(definition -> !astro$excludedMultis.contains(definition.getId()))
                 .map(MultiblockInfoEmiRecipe::new)
+                .filter(multi -> !astro$excludedMultis.contains(multi.getId()))
                 .forEach(registry::addRecipe);
-
         ci.cancel();
     }
 }
