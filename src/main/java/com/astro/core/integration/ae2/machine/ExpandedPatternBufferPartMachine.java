@@ -66,6 +66,7 @@ import appeng.api.storage.StorageHelper;
 import appeng.crafting.pattern.EncodedPatternItem;
 import appeng.crafting.pattern.ProcessingPatternItem;
 import appeng.helpers.patternprovider.PatternContainer;
+import com.astro.core.api.CustomNameAccess;
 import com.astro.core.integration.ae2.machine.trait.ExpandedInternalSlotRecipeHandler;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -82,7 +83,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ExpandedPatternBufferPartMachine extends MEBusPartMachine
-                                              implements ICraftingProvider, PatternContainer, IDataStickInteractable {
+                                              implements ICraftingProvider, PatternContainer, IDataStickInteractable,
+                                              CustomNameAccess {
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             ExpandedPatternBufferPartMachine.class, MEBusPartMachine.MANAGED_FIELD_HOLDER);
@@ -130,7 +132,6 @@ public class ExpandedPatternBufferPartMachine extends MEBusPartMachine
 
     @DescSynced
     @Persisted
-    @Setter
     private String customName = "";
 
     private boolean needPatternSync;
@@ -390,6 +391,19 @@ public class ExpandedPatternBufferPartMachine extends MEBusPartMachine
                             GTAEMachines.ME_PATTERN_BUFFER.get().getDefinition().getItem().getDescription() :
                             Component.literal(customName),
                     Collections.emptyList());
+        }
+    }
+
+    @Override
+    public String astro$getCustomName() {
+        return this.customName;
+    }
+
+    public void setCustomName(String name) {
+        this.customName = (name == null) ? "" : name;
+        this.markDirty();
+        if (getMainNode().isOnline()) {
+            ICraftingProvider.requestUpdate(getMainNode());
         }
     }
 
