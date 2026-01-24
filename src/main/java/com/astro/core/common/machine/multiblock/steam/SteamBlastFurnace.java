@@ -32,7 +32,6 @@ public class SteamBlastFurnace extends SteamParallelMultiblockMachine {
     @Persisted
     private int targetParallel = ConfigHolder.INSTANCE.machines.steamMultiParallelAmount;
 
-    // The actual number of parallels used for the currently running recipe.
     @Persisted
     private int activeParallels = 0;
 

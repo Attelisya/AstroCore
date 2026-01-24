@@ -1,5 +1,7 @@
 package com.astro.core.common.machine.multiblock;
 
+import com.astro.core.common.machine.multiblock.electric.FluidDrillMachine;
+import com.astro.core.common.machine.multiblock.electric.LargeMinerMachine;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
@@ -15,6 +17,7 @@ import com.gregtechceu.gtceu.client.renderer.machine.impl.BoilerMultiPartRender;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTMachines;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.machine.multiblock.steam.SteamParallelMultiblockMachine;
 
@@ -31,6 +34,7 @@ import com.astro.core.common.machine.multiblock.primitive.CokeOvenMachine;
 import com.astro.core.common.machine.multiblock.steam.SteamBlastFurnace;
 import com.astro.core.common.machine.multiblock.steam.SteamGrinder;
 import com.astro.core.common.machine.multiblock.steam.SteamWasher;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +48,7 @@ import static com.gregtechceu.gtceu.common.data.GTBlocks.*;
 import static com.gregtechceu.gtceu.common.data.GTMachines.COKE_OVEN_HATCH;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.COKE_OVEN_RECIPES;
 import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createWorkableCasingMachineModel;
+import static com.gregtechceu.gtceu.utils.FormattingUtil.formatNumbers;
 
 @SuppressWarnings("all")
 public class AGEMultiMachines {
@@ -223,7 +228,7 @@ public class AGEMultiMachines {
                     .where("@", controller(blocks(definition.get())))
                     .where("P", blocks(CASING_BRONZE_PIPE.get()))
                     .where("X", blocks(CASING_INDUSTRIAL_STEAM.get()).setMinGlobalLimited(55)
-                            .or(abilities(STEAM).setExactLimit(1).setPreviewCount(1))
+                            .or(abilities(STEAM).setExactLimit(1))
                             .or(abilities(STEAM_IMPORT_ITEMS).setPreviewCount(1).setMinGlobalLimited(1)
                                     .setMaxGlobalLimited(3))
                             .or(abilities(STEAM_EXPORT_ITEMS).setPreviewCount(1).setMinGlobalLimited(1)
@@ -279,6 +284,95 @@ public class AGEMultiMachines {
                         .withStyle(ChatFormatting.AQUA));
                 tooltip.add(Component.literal("Max Cell Count: §e33 x 33 (1089 Cells)")
                         .withStyle(ChatFormatting.AQUA));
+            })
+            .register();
+
+    public static final MultiblockMachineDefinition FLUID_DRILLING_RIG_IV = REGISTRATE
+            .multiblock("fluid_drilling_rig_iv", holder -> new FluidDrillMachine(holder, GTValues.IV))
+            .rotationState(RotationState.ALL)
+            .langValue("§9Elite Fluid Drilling Rig")
+            .recipeType(GTRecipeTypes.DUMMY_RECIPES)
+            .tooltips(
+                    Component.translatable("astrogreg.machine.fluid_drilling_rig.iv.tooltip"),
+                    Component.translatable("gtceu.machine.fluid_drilling_rig.description"),
+                    Component.translatable("gtceu.machine.fluid_drilling_rig.depletion", formatNumbers(3)),
+                    Component.translatable("gtceu.universal.tooltip.energy_tier_range", GTValues.VNF[GTValues.LuV],
+                            GTValues.VNF[GTValues.ZPM]),
+                    Component.translatable("gtceu.machine.fluid_drilling_rig.production", 256,
+                            formatNumbers(384)))
+            .appearanceBlock(() -> AstroBlocks.MACHINE_CASING_RHODIUM_PLATED_PALLADIUM.get())
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("#XXX#", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####")
+                    .aisle("XXXXX", "#FFF#", "#FFF#", "#FFF#", "##F##", "##F##", "##F##", "#####", "#####", "#####")
+                    .aisle("XXXXX", "#FCF#", "#FCF#", "#FXF#", "#FCF#", "#FCF#", "#FCF#", "##F##", "##F##", "##F##")
+                    .aisle("XXXXX", "#FFF#", "#FFF#", "#FFF#", "##F##", "##F##", "##F##", "#####", "#####", "#####")
+                    .aisle("#XSX#", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####")
+                    .where('S', controller(blocks(definition.get())))
+                    .where('X', blocks(AstroBlocks.MACHINE_CASING_RHODIUM_PLATED_PALLADIUM.get()).setMinGlobalLimited(3)
+                            .or(abilities(INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(1)))
+                    .where('C', blocks(AstroBlocks.MACHINE_CASING_RHODIUM_PLATED_PALLADIUM.get()))
+                    .where('F', frames(GTMaterials.RhodiumPlatedPalladium))
+                    .where('#', any())
+                    .build())
+            .workableCasingModel(AstroCore.id("block/casings/machine_casing_pristine_rhodium_plated_palladium"),
+                    GTCEu.id("block/multiblock/fluid_drilling_rig"))
+            .register();
+
+    public static final MultiblockMachineDefinition LARGE_MINER_ZPM = REGISTRATE
+            .multiblock("large_miner_zpm", holder -> new LargeMinerMachine(holder, GTValues.ZPM, 64 / GTValues.ZPM,
+                    2 * GTValues.ZPM - 5, GTValues.ZPM, 6))
+            .rotationState(RotationState.NON_Y_AXIS)
+            .langValue("§cElite Large Ore Miner III")
+            .recipeType(GTRecipeTypes.MACERATOR_RECIPES)
+            .appearanceBlock(() -> AstroBlocks.MACHINE_CASING_RHODIUM_PLATED_PALLADIUM.get())
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("#XXX#", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####")
+                    .aisle("XXXXX", "#FFF#", "#FFF#", "#FFF#", "##F##", "##F##", "##F##", "#####", "#####", "#####")
+                    .aisle("XXXXX", "#FCF#", "#FCF#", "#FCF#", "#FCF#", "#FCF#", "#FCF#", "##F##", "##F##", "##F##")
+                    .aisle("XXXXX", "#FFF#", "#FFF#", "#FFF#", "##F##", "##F##", "##F##", "#####", "#####", "#####")
+                    .aisle("#XSX#", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####")
+                    .where('S', controller(blocks(definition.getBlock())))
+                    .where('X', blocks(AstroBlocks.MACHINE_CASING_RHODIUM_PLATED_PALLADIUM.get())
+                            .or(abilities(EXPORT_ITEMS).setExactLimit(1).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1))
+                            .or(abilities(INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2)
+                                    .setPreviewCount(1)))
+                    .where('C', blocks(AstroBlocks.MACHINE_CASING_RHODIUM_PLATED_PALLADIUM.get()))
+                    .where('F', frames(GTMaterials.RhodiumPlatedPalladium))
+                    .where('#', any())
+                    .build())
+            .allowExtendedFacing(true)
+            .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
+            .model(createWorkableCasingMachineModel(
+                    AstroCore.id("block/casings/machine_casing_pristine_rhodium_plated_palladium"),
+                    GTCEu.id("block/multiblock/large_miner"))
+                    .andThen((ctx, prov, modelBuilder) -> {
+                        modelBuilder.replaceForAllStates((state, models) -> {
+                            if (!state.getValue(GTMachineModelProperties.IS_FORMED)) {
+                                return models;
+                            }
+                            var parentModel = prov.models()
+                                    .getExistingFile(GTCEu.id("block/machine/large_miner_active"));
+                            for (var model : models) {
+                                ((BlockModelBuilder) model.model)
+                                        .parent(parentModel);
+                            }
+                            return models;
+                        });
+                    }))
+            .tooltips(Component.translatable("astrogreg.machine.large_miner.zpm.tooltip"),
+                    Component.translatable("gtceu.machine.miner.multi.description"))
+            .tooltipBuilder((stack, tooltip) -> {
+                int workingAreaChunks = 2 * GTValues.ZPM - 5;
+                tooltip.add(Component.translatable("gtceu.machine.miner.multi.modes"));
+                tooltip.add(Component.translatable("gtceu.machine.miner.multi.production"));
+                tooltip.add(Component.translatable("gtceu.machine.miner.fluid_usage", 6,
+                        GTMaterials.DrillingFluid.getLocalizedName()));
+                tooltip.add(Component.translatable("gtceu.universal.tooltip.working_area_chunks", workingAreaChunks,
+                        workingAreaChunks));
+                tooltip.add(Component.translatable("gtceu.universal.tooltip.energy_tier_range",
+                        GTValues.VNF[GTValues.UV], GTValues.VNF[GTValues.UHV]));
             })
             .register();
 
