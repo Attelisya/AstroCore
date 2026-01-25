@@ -1,5 +1,7 @@
 package com.astro.core.common.machine.hatches;
 
+import com.astro.core.common.machine.trait.AstroPartAbility;
+import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
@@ -7,6 +9,7 @@ import com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.common.machine.multiblock.part.ParallelHatchPartMachine;
 
+import com.gregtechceu.gtceu.utils.FormattingUtil;
 import net.minecraft.network.chat.Component;
 
 import com.astro.core.AstroCore;
@@ -49,5 +52,48 @@ public class AstroHatches {
             .allowCoverOnFront(true)
             .register();
 
+    public static final MachineDefinition[] MANA_INPUT_HATCH = registerTieredMachines("mana_input_hatch",
+            (holder, tier) -> new AstroManaHatches(holder, tier),
+            (tier, builder) -> {
+                long capacity = AstroManaHatches.INITIAL_TANK_CAPACITY * (1L << (tier - 1));
+                return builder
+                        .langValue(VNF[tier] + " Arcane Sink Hatch")
+                        .rotationState(RotationState.ALL)
+                        .abilities(AstroPartAbility.IMPORT_EXOTIC_MATTER)
+                        .modelProperty(IS_FORMED, false)
+                        .colorOverlayTieredHullModel(
+                                AstroCore.id("block/machines/hatches/mana_input_hatch/overlay_mana_hatch_input"),
+                                null,
+                                AstroCore.id("block/machines/hatches/mana_input_hatch/overlay_mana_hatch_input_emissive"))
+                        .tooltips(Component.translatable("astrogreg.machine.mana_input_hatch.tooltip"),
+                                Component.translatable("gtceu.universal.tooltip.fluid_storage_capacity",
+                                        FormattingUtil.formatNumbers(capacity)))
+                        .allowCoverOnFront(true)
+                        .register();
+            },
+            LV, MV, HV, EV, IV, LuV, ZPM, UV, UHV);
+
+    public static final MachineDefinition[] MANA_OUTPUT_HATCH = registerTieredMachines("mana_output_hatch",
+            (holder, tier) -> new AstroManaHatches(holder, tier, IO.OUT),
+            (tier, builder) -> {
+                long capacity = AstroManaHatches.INITIAL_TANK_CAPACITY * (1L << (tier - 1));
+                return builder
+                        .langValue(VNF[tier] + " Arcane Source Hatch")
+                        .rotationState(RotationState.ALL)
+                        .abilities(AstroPartAbility.EXPORT_EXOTIC_MATTER)
+                        .modelProperty(IS_FORMED, false)
+                        .colorOverlayTieredHullModel(
+                                AstroCore.id("block/machines/hatches/mana_output_hatch/overlay_mana_hatch_output"),
+                                null,
+                                AstroCore.id("block/machines/hatches/mana_output_hatch/overlay_mana_hatch_output_emissive"))
+                        .tooltips(Component.translatable("astrogreg.machine.mana_output_hatch.tooltip"),
+                                Component.translatable("gtceu.universal.tooltip.fluid_storage_capacity",
+                                        FormattingUtil.formatNumbers(capacity * 2)))
+                        .allowCoverOnFront(true)
+                        .register();
+            },
+            LV, MV, HV, EV, IV, LuV, ZPM, UV, UHV);
+
     public static void init() {}
+
 }
