@@ -1,5 +1,25 @@
 {
   "parent": "minecraft:block/block",
+  "dynamic_renders": [
+    {
+      "type": "astrogreg:astro_boiler_render",
+      "casing_block": {
+        "Name": "astrogreg:solid_terrasteel_machine_casing"
+      },
+      "firebox_active": {
+        "Name": "astrogreg:terrasteel_firebox_casing",
+        "Properties": {
+          "active": "true"
+        }
+      },
+      "firebox_idle": {
+        "Name": "astrogreg:terrasteel_firebox_casing",
+        "Properties": {
+          "active": "false"
+        }
+      }
+    }
+  ],
   "loader": "gtceu:machine",
   "machine": "astrogreg:terrasteel_mana_large_boiler",
   "texture_overrides": {

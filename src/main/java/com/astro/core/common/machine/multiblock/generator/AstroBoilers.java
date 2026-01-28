@@ -25,6 +25,7 @@ import com.astro.core.AstroCore;
 import com.astro.core.common.data.AstroRecipeTypes;
 import com.astro.core.common.data.block.AstroBlocks;
 import com.astro.core.common.registry.AstroRegistry;
+import com.astro.core.client.renderer.machine.AstroBoilerMultiPartRender;
 
 import java.util.function.Supplier;
 
@@ -38,7 +39,7 @@ public class AstroBoilers {
                                                                   Supplier<? extends Block> pipe,
                                                                   Supplier<? extends Block> fireBox,
                                                                   ResourceLocation texture,
-                                                                  AstroBlocks.FireboxInfo fireboxInfo, // Updated Type
+                                                                  AstroBlocks.FireboxInfo fireboxInfo,
                                                                   int maxTemperature, int heatSpeed) {
         return registerAstroBoiler(AstroRegistry.REGISTRATE, id, lang, casing, pipe, fireBox, texture, fireboxInfo,
                 maxTemperature, heatSpeed);
@@ -49,7 +50,7 @@ public class AstroBoilers {
                                                                   Supplier<? extends Block> pipe,
                                                                   Supplier<? extends Block> fireBox,
                                                                   ResourceLocation texture,
-                                                                  AstroBlocks.FireboxInfo fireboxInfo, // Updated Type
+                                                                  AstroBlocks.FireboxInfo fireboxInfo,
                                                                   int maxTemperature, int heatSpeed) {
         return registrate
                 .multiblock("%s_large_boiler".formatted(id),
@@ -62,9 +63,8 @@ public class AstroBoilers {
                 .appearanceBlock(casing)
                 .partAppearance((controller, part,
                                  side) -> controller.self().getPos().below().getY() == part.self().getPos().getY() ?
-                                         fireBox.get().defaultBlockState() : casing.get().defaultBlockState())
+                        fireBox.get().defaultBlockState() : casing.get().defaultBlockState())
                 .pattern((definition) -> {
-                    // FIX: Use the fireBox Supplier directly instead of the ALL_FIREBOXES map
                     TraceabilityPredicate fireboxPred = blocks(fireBox.get()).setMinGlobalLimited(3)
                             .or(Predicates.abilities(PartAbility.IMPORT_FLUIDS).setMinGlobalLimited(1)
                                     .setPreviewCount(1))
@@ -93,8 +93,8 @@ public class AstroBoilers {
                                 GTMaterialItems.MATERIAL_ITEMS.get(TagPrefix.dustTiny, GTMaterials.Ash).get() })
                 .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
                 .model(createWorkableCasingMachineModel(texture,
-                        AstroCore.id("block/multiblock/large_%s_boiler".formatted(id))))
-                // Removed makeBoilerPartRender as it specifically requires BoilerFireboxType record
+                        AstroCore.id("block/multiblock/large_%s_boiler".formatted(id)))
+                        .andThen(b -> b.addDynamicRenderer(() -> new AstroBoilerMultiPartRender(fireBox, casing))))
                 .tooltips(
                         Component.translatable("gtceu.multiblock.large_boiler.max_temperature", maxTemperature + 274,
                                 maxTemperature),

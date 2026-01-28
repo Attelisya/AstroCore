@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "astrogreg:solid_alfsteel_machine_casing"
+          "name": "astrogreg:machine_casing_rhodium_plated_palladium"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "astrogreg:blocks/solid_alfsteel_machine_casing"
+  "random_sequence": "astrogreg:blocks/machine_casing_rhodium_plated_palladium"
 }

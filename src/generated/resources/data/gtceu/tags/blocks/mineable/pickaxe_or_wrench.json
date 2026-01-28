@@ -2,7 +2,7 @@
   "values": [
     "astrogreg:manasteel_brick_machine_casing",
     "astrogreg:solid_terrasteel_machine_casing",
-    "astrogreg:solid_alfsteel_machine_casing",
+    "astrogreg:machine_casing_alfsteel",
     "astrogreg:machine_casing_pristine_rhodium_plated_palladium",
     "astrogreg:machine_casing_invariant_naquadah_alloy",
     "astrogreg:machine_casing_netherite_mesh",
@@ -10,6 +10,9 @@
     "astrogreg:alfsteel_gearbox_casing",
     "astrogreg:gearbox_casing_rhodium_plated_palladium",
     "astrogreg:gearbox_casing_invariant_naquadah_alloy",
+    "astrogreg:machine_casing_turbine_alfsteel",
+    "astrogreg:machine_casing_rhodium_plated_palladium",
+    "astrogreg:machine_casing_turbine_naquadah_alloy",
     "astrogreg:manasteel_pipe_casing",
     "astrogreg:terrasteel_pipe_casing",
     "astrogreg:alfsteel_pipe_casing",

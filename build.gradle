@@ -217,8 +217,6 @@ dependencies {
     modImplementation("dev.latvian.mods:rhino-forge:${rhino_version}")
     modImplementation("dev.architectury:architectury-forge:${architectury_version}")
 
-    compileOnly("curse.maven:ex-pattern-provider-892005:7248944")
-    compileOnly("curse.maven:glodium-957920:5226922")
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
@@ -226,6 +224,8 @@ dependencies {
     //AE2 and dependencies
     modImplementation("org.appliedenergistics:appliedenergistics2-forge-${ae_version}")
     modImplementation("org.appliedenergistics:guideme-${guide_version}")
+    compileOnly("curse.maven:ex-pattern-provider-892005:7248944")
+    compileOnly("curse.maven:glodium-957920:5226922")
 
     //Powah and dependencies
     modImplementation("owmii.powah:Powah-${powah_version}")

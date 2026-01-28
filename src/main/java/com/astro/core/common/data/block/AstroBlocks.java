@@ -37,6 +37,7 @@ public class AstroBlocks {
     public static BlockEntry<ActiveBlock> FIREBOX_TERRASTEEL;
 
     public static BlockEntry<Block> ALFSTEEL_MACHINE_CASING;
+    public static BlockEntry<Block> ALFSTEEL_ENGINE_CASING;
     public static BlockEntry<Block> ALFSTEEL_PIPE_CASING;
     public static BlockEntry<Block> ALFSTEEL_GEARBOX_CASING;
     public static BlockEntry<ActiveBlock> FIREBOX_ALFSTEEL;
@@ -46,11 +47,13 @@ public class AstroBlocks {
 
     public static BlockEntry<Block> MACHINE_CASING_RHODIUM_PLATED_PALLADIUM;
     public static BlockEntry<Block> PIPE_CASING_RHODIUM_PLATED_PALLADIUM;
+    public static BlockEntry<Block> TURBINE_CASING_RHODIUM_PLATED_PALLADIUM;
     public static BlockEntry<Block> GEARBOX_CASING_RHODIUM_PLATED_PALLADIUM;
 
     public static BlockEntry<Block> MACHINE_CASING_NAQUADAH_ALLOY;
     public static BlockEntry<Block> PIPE_CASING_NAQUADAH_ALLOY;
     public static BlockEntry<Block> GEARBOX_CASING_NAQUADAH_ALLOY;
+    public static BlockEntry<Block> TURBINE_CASING_NAQUADAH_ALLOY;
     public static BlockEntry<ActiveBlock> ULTIMATE_INTAKE_CASING;
 
     public static BlockEntry<Block> MACHINE_CASING_NETHERITE_MESH;
@@ -76,8 +79,8 @@ public class AstroBlocks {
                 "generators/machine_casing_manasteel_plated_bricks", "§9Manasteel§r-Plated Brick Casing");
         TERRASTEEL_MACHINE_CASING = createCasing("solid_terrasteel_machine_casing", "generators/terrasteel_casing",
                 "§2Terrasteel§r Machine Casing");
-        ALFSTEEL_MACHINE_CASING = createCasing("solid_alfsteel_machine_casing",
-                "generators/machine_casing_turbine_alfsteel", "§dAlfsteel§r Engine Casing");
+        ALFSTEEL_MACHINE_CASING = createCasing("machine_casing_alfsteel",
+                "generators/machine_casing_solid_alfsteel", "§dAlfsteel§r Machine Casing");
         MACHINE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock(
                 "Pristine Rhodium Plated Palladium Machine Casing", "machine_casing_pristine_rhodium_plated_palladium",
                 "casings/machine_casing_pristine_rhodium_plated_palladium", BlockItem::new);
@@ -95,6 +98,14 @@ public class AstroBlocks {
                 BlockItem::new);
         GEARBOX_CASING_NAQUADAH_ALLOY = createSidedCasingBlock("Naquadah Alloy Gearbox Casing",
                 "gearbox_casing_invariant_naquadah_alloy", "casings/gearbox_casing_invariant_naquadah_alloy",
+                BlockItem::new);
+        ALFSTEEL_ENGINE_CASING = createCasing("machine_casing_turbine_alfsteel",
+                "generators/machine_casing_turbine_alfsteel", "§dAlfsteel§r Engine Casing");
+        TURBINE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock("Rhodium Plated Palladium Turbine Casing",
+                "machine_casing_rhodium_plated_palladium", "generators/machine_casing_turbine_rhodium_plated_palladium",
+                BlockItem::new);
+        TURBINE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock("Naquadah Alloy Turbine Casing",
+                "machine_casing_turbine_naquadah_alloy", "generators/machine_casing_turbine_naquadah_alloy",
                 BlockItem::new);
         // EXAMPLE_CASING = createSidedCasingBlock( "", "", "", BlockItem::new);
 
@@ -123,8 +134,8 @@ public class AstroBlocks {
                 AstroCore.id("block/generators/terrasteel_casing"),
                 AstroCore.id("block/generators/machine_casing_firebox_terrasteel")), "§2Terrasteel§r Firebox Casing");
         FIREBOX_ALFSTEEL = createManaFirebox(new FireboxInfo("alfsteel_firebox",
-                AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
-                AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
+                AstroCore.id("block/generators/machine_casing_solid_alfsteel"),
+                AstroCore.id("block/generators/machine_casing_solid_alfsteel"),
                 AstroCore.id("block/generators/machine_casing_firebox_alfsteel")), "§dAlfsteel§r Firebox Casing");
 
         // 5. Functional Casings
@@ -264,7 +275,7 @@ public class AstroBlocks {
             AstroCore.id("block/generators/terrasteel_casing"),
             AstroCore.id("block/generators/machine_casing_firebox_terrasteel"));
     public static final FireboxInfo ALFSTEEL_FIREBOX_REC = new FireboxInfo("alfsteel_firebox",
-            AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
-            AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
+            AstroCore.id("block/generators/machine_casing_solid_alfsteel"),
+            AstroCore.id("block/generators/machine_casing_solid_alfsteel"),
             AstroCore.id("block/generators/machine_casing_firebox_alfsteel"));
 }

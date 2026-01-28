@@ -33,7 +33,7 @@ import com.astro.core.common.machine.drums.AstroDrums;
 import com.astro.core.common.machine.hatches.AstroHatches;
 import com.astro.core.common.machine.integration.AstroAEMachines;
 import com.astro.core.common.machine.multiblock.AGEMultiMachines;
-import com.astro.core.common.machine.multiblock.generator.AetherEngine;
+import com.astro.core.common.machine.multiblock.generator.AstroGeneratorMultiMachines;
 import com.astro.core.common.machine.multiblock.generator.ManaBoilers;
 import com.astro.core.common.machine.singleblocks.AstroSteamMachines;
 import com.astro.core.datagen.AstroDatagen;
@@ -124,14 +124,14 @@ public class AstroCore {
         if (AstroConfigs.INSTANCE == null) {
             AstroConfigs.init();
         }
-        ManaBoilers.init();
-        AetherEngine.init();
+        AstroSteamMachines.init();
         AstroDrums.register();
         AstroCrates.register();
         AstroHatches.init();
-        AGEMultiMachines.init();
         AstroAEMachines.init();
-        AstroSteamMachines.init();
+        ManaBoilers.init();
+        AGEMultiMachines.init();
+        AstroGeneratorMultiMachines.init();
     }
 
     public void registerSounds(GTCEuAPI.RegisterEvent<ResourceLocation, SoundEntry> event) {

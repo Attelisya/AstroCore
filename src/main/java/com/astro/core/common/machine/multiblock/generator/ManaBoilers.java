@@ -26,7 +26,6 @@ public class ManaBoilers {
                 AstroConfigs.INSTANCE.Steam.manasteelBoilerMaxTemperature,
                 AstroConfigs.INSTANCE.Steam.manasteelBoilerHeatSpeed);
 
-        // Terrasteel Boiler
         TERRASTEEL_MANA_BOILER = registerAstroBoiler(
                 "terrasteel_mana",
                 "Large §2Terrasteel§r Mana Boiler",
@@ -38,14 +37,13 @@ public class ManaBoilers {
                 AstroConfigs.INSTANCE.Steam.terrasteelBoilerMaxTemperature,
                 AstroConfigs.INSTANCE.Steam.terrasteelBoilerHeatSpeed);
 
-        // Alfsteel Boiler
         ALFSTEEL_MANA_BOILER = registerAstroBoiler(
                 "alfsteel_mana",
                 "Large §dAlfsteel§r Mana Boiler",
                 AstroBlocks.ALFSTEEL_MACHINE_CASING,
                 AstroBlocks.ALFSTEEL_PIPE_CASING,
                 AstroBlocks.FIREBOX_ALFSTEEL,
-                AstroCore.id("block/generators/machine_casing_turbine_alfsteel"),
+                AstroCore.id("block/generators/machine_casing_solid_alfsteel"),
                 AstroBlocks.ALFSTEEL_FIREBOX_REC,
                 AstroConfigs.INSTANCE.Steam.alfsteelBoilerMaxTemperature,
                 AstroConfigs.INSTANCE.Steam.alfsteelBoilerHeatSpeed);
