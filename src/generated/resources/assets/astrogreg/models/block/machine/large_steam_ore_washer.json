@@ -20,8 +20,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_emissive"
         }
       }
     },
@@ -30,8 +30,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_emissive"
         }
       }
     },
@@ -40,8 +40,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front_active",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_active_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active_emissive"
         }
       }
     },
@@ -50,8 +50,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front_active",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_active_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active_emissive"
         }
       }
     },
@@ -60,8 +60,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_emissive"
         }
       }
     },
@@ -70,8 +70,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_emissive"
         }
       }
     },
@@ -80,8 +80,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front_active",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_active_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active_emissive"
         }
       }
     },
@@ -90,8 +90,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "gtceu:block/casings/gcym/industrial_steam_casing",
-          "overlay_front": "astrogreg:block/multiblock/ore_washer/overlay_front_active",
-          "overlay_front_emissive": "astrogreg:block/multiblock/ore_washer/overlay_front_active_emissive"
+          "overlay_front": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active",
+          "overlay_front_emissive": "astrogreg:block/multiblock/steam_ore_washer/overlay_front_active_emissive"
         }
       }
     }

@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.astro.core.common.data.block.AstroBlocks.*;
+import static com.astro.core.common.data.AstroBlocks.*;
 import static com.gregtechceu.gtceu.api.machine.multiblock.PartAbility.*;
 
 // this multiblock is a courtest Raishxn's GT:NA project with a lot of work from Phoenixvine and Haze Vista

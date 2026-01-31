@@ -9,7 +9,7 @@ import com.astro.core.common.data.AstroRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 
-import static com.astro.core.common.data.block.AstroBlocks.*;
+import static com.astro.core.common.data.AstroBlocks.*;
 import static com.astro.core.common.machine.multiblock.generator.AstroGeneratorRegistry.*;
 
 @SuppressWarnings("unused")

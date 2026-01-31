@@ -36,8 +36,12 @@ public class AstroModifiedMaterials {
             { "kanthal", new MaterialFlag[] { GENERATE_FINE_WIRE } },
             { "uranium_triplatinum", new MaterialFlag[] { GENERATE_FINE_WIRE } },
             { "siao", new MaterialFlag[] { GENERATE_FINE_WIRE } },
-            { "rpp", new MaterialFlag[] { GENERATE_FRAME, GENERATE_GEAR } }
-
+            { "rpp", new MaterialFlag[] { GENERATE_FRAME, GENERATE_GEAR } },
+            { "rose_gold", new MaterialFlag[] { GENERATE_FRAME, DISABLE_ALLOY_PROPERTY } },
+            { "cobalt_brass", new MaterialFlag[] { GENERATE_FRAME } },
+            { "red_steel", new MaterialFlag[] { GENERATE_FRAME } },
+            { "vanadium_steel", new MaterialFlag[] { GENERATE_FRAME, DISABLE_ALLOY_PROPERTY } },
+            { "bismuth_bronze", new MaterialFlag[] { GENERATE_FRAME, DISABLE_ALLOY_PROPERTY  } }
     };
 
     private static void applyFluidPipeProperties() {
@@ -78,31 +82,36 @@ public class AstroModifiedMaterials {
 
     private static Material getMaterialByName(String name) {
         return switch (name.toLowerCase()) {
-            case "titanium" -> GTMaterials.Titanium;
-            case "neutronium" -> GTMaterials.Neutronium;
-            case "iron" -> GTMaterials.Iron;
-            case "potin" -> GTMaterials.Potin;
-            case "brass" -> GTMaterials.Brass;
-            case "invar" -> GTMaterials.Invar;
-            case "red_alloy" -> GTMaterials.RedAlloy;
-            case "zinc" -> GTMaterials.Zinc;
-            case "nickel" -> GTMaterials.Nickel;
-            case "neptunium" -> GTMaterials.Neptunium;
-            case "netherite" -> GTMaterials.Netherite;
-            case "tin" -> GTMaterials.Tin;
-            case "steel" -> GTMaterials.Steel;
-            case "stainless_steel" -> GTMaterials.StainlessSteel;
-            case "tungsten_carbide" -> GTMaterials.TungstenCarbide;
-            case "hsss" -> GTMaterials.HSSS;
-            case "duranium" -> GTMaterials.Duranium;
-            case "tritanium" -> GTMaterials.Tritanium;
-            case "graphene" -> GTMaterials.Graphene;
-            case "ultimet" -> GTMaterials.Ultimet;
-            case "rtan" -> GTMaterials.RutheniumTriniumAmericiumNeutronate;
-            case "kanthal" -> GTMaterials.Kanthal;
-            case "uranium_triplatinum" -> GTMaterials.UraniumTriplatinum;
-            case "siao" -> GTMaterials.SamariumIronArsenicOxide;
-            case "rpp" -> GTMaterials.RhodiumPlatedPalladium;
+            case "titanium" -> Titanium;
+            case "neutronium" -> Neutronium;
+            case "iron" -> Iron;
+            case "potin" -> Potin;
+            case "brass" -> Brass;
+            case "invar" -> Invar;
+            case "red_alloy" -> RedAlloy;
+            case "zinc" -> Zinc;
+            case "nickel" -> Nickel;
+            case "neptunium" -> Neptunium;
+            case "netherite" -> Netherite;
+            case "tin" -> Tin;
+            case "steel" -> Steel;
+            case "stainless_steel" -> StainlessSteel;
+            case "tungsten_carbide" -> TungstenCarbide;
+            case "hsss" -> HSSS;
+            case "duranium" -> Duranium;
+            case "tritanium" -> Tritanium;
+            case "graphene" -> Graphene;
+            case "ultimet" -> Ultimet;
+            case "rtan" -> RutheniumTriniumAmericiumNeutronate;
+            case "kanthal" -> Kanthal;
+            case "uranium_triplatinum" -> UraniumTriplatinum;
+            case "siao" -> SamariumIronArsenicOxide;
+            case "rpp" -> RhodiumPlatedPalladium;
+            case "red_steel" -> RedSteel;
+            case "vanadium_steel" -> VanadiumSteel;
+            case "rose_gold" -> RoseGold;
+            case "cobalt_brass" -> Cobalt;
+            case "bismuth_bronze" -> BismuthBronze;
             default -> null;
         };
     }

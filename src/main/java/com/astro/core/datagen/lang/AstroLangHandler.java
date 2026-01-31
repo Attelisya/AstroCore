@@ -10,6 +10,13 @@ public class AstroLangHandler {
         provider.add("astrogreg.machine.fluid_drilling_rig.iv.tooltip", "Crust Sucker");
         provider.add("astrogreg.machine.mana_input_hatch", "Exotic Matter Input for Multiblocks");
         provider.add("astrogreg.machine.mana_output_hatch", "Exotic Matter Output for Multiblocks");
+        provider.add("astrogreg.machine.cwu_generator.tooltip.0", "Generates Computational Work Units");
+        provider.add("astrogreg.machine.cwu_generator.tooltip.1", "Produces %s CWU/t");
+        provider.add("astrogreg.machine.cwu_generator.tooltip.2", "Consumes %s mB/t Lubricant");
+        provider.add("astrogreg.machine.cwu_generator.producing", "Producing: %s CWU/t");
+        provider.add("astrogreg.machine.cwu_generator.lubricant", "Lubricant: %s mB/t");
+        provider.add("astrogreg.machine.cwu_generator.available", "Available: %s CWU");
+        provider.add("astrogreg.machine.cwu_input_hatch.tooltip", "Accepts CWU from adjacent CWU Generators");
 
         multilineLang(provider, "astrogreg.gui.configurator_slot.tooltip",
                 "§fConfigurator Slot§r\n§7Place a §6Programmed Circuit§7 in this slot to\n§7change its configured value.\n§aA Programmed Circuit in this slot is also valid for recipe inputs.§r");

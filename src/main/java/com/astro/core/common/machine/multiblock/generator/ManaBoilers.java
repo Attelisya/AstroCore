@@ -3,7 +3,7 @@ package com.astro.core.common.machine.multiblock.generator;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 
 import com.astro.core.AstroCore;
-import com.astro.core.common.data.block.AstroBlocks;
+import com.astro.core.common.data.AstroBlocks;
 import com.astro.core.common.data.configs.AstroConfigs;
 
 import static com.astro.core.common.machine.multiblock.generator.AstroBoilers.registerAstroBoiler;

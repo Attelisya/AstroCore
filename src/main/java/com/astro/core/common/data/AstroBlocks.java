@@ -1,4 +1,4 @@
-package com.astro.core.common.data.block;
+package com.astro.core.common.data;
 
 import com.gregtechceu.gtceu.api.block.ActiveBlock;
 import com.gregtechceu.gtceu.api.block.property.GTBlockStateProperties;
@@ -42,6 +42,23 @@ public class AstroBlocks {
     public static BlockEntry<Block> ALFSTEEL_GEARBOX_CASING;
     public static BlockEntry<ActiveBlock> FIREBOX_ALFSTEEL;
 
+    public static BlockEntry<Block> MACHINE_CASING_SILICONE_RUBBER;
+    public static BlockEntry<Block> MACHINE_CASING_POLYVINYL_CHLORIDE;
+    public static BlockEntry<Block> MACHINE_CASING_CARBON_FIBER_MESH;
+    public static BlockEntry<Block> MACHINE_CASING_RED_STEEL;
+    public static BlockEntry<Block> MACHINE_CASING_BLUE_STEEL;
+    public static BlockEntry<Block> MACHINE_CASING_BLACK_STEEL;
+    public static BlockEntry<Block> MACHINE_CASING_STYRENE_BUTADIENE;
+    public static BlockEntry<Block> MACHINE_CASING_BISMUTH_BRONZE;
+    public static BlockEntry<Block> MACHINE_CASING_COBALT_BRASS;
+    public static BlockEntry<Block> MACHINE_CASING_VANADIUM_STEEL;
+    public static BlockEntry<Block> MACHINE_CASING_ULTIMET;
+    public static BlockEntry<Block> MACHINE_CASING_ROSE_GOLD;
+
+    public static BlockEntry<Block> INDUSTRIAL_PROCESSING_CORE_MK1;
+    public static BlockEntry<Block> INDUSTRIAL_PROCESSING_CORE_MK2;
+    public static BlockEntry<Block> INDUSTRIAL_PROCESSING_CORE_MK3;
+
     public static BlockEntry<Block> MACHINE_CASING_PAI;
     public static BlockEntry<Block> PIPE_CASING_PAI;
 
@@ -78,9 +95,33 @@ public class AstroBlocks {
         MANASTEEL_MACHINE_CASING = createCasing("manasteel_brick_machine_casing",
                 "generators/machine_casing_manasteel_plated_bricks", "§9Manasteel§r-Plated Brick Casing");
         TERRASTEEL_MACHINE_CASING = createCasing("solid_terrasteel_machine_casing", "generators/terrasteel_casing",
-                "§2Terrasteel§r Machine Casing");
+                "Solid §2Terrasteel§r Casing");
         ALFSTEEL_MACHINE_CASING = createCasing("machine_casing_alfsteel",
-                "generators/machine_casing_solid_alfsteel", "§dAlfsteel§r Machine Casing");
+                "generators/machine_casing_solid_alfsteel", "Solid §dAlfsteel§r Casing");
+        MACHINE_CASING_VANADIUM_STEEL = createCasing( "industrial_vanadium_steel_casing",
+                "casings/industrial_casings/machine_casing_vanadium_steel", "Industrial Vanadium Steel Casing");
+        MACHINE_CASING_ULTIMET = createCasing( "industrial_ultimet_casing",
+                "casings/industrial_casings/machine_casing_ultimet", "Industrial Ultimet Casing");
+        MACHINE_CASING_ROSE_GOLD = createCasing( "industrial_rose_gold_casing",
+                "casings/industrial_casings/machine_casing_rose_gold", "Industrial Rose Gold Casing");
+        MACHINE_CASING_BLACK_STEEL = createCasing( "industrial_black_steel_casing",
+                "casings/industrial_casings/machine_casing_black_steel", "Industrial Black Steel Casing");
+        MACHINE_CASING_RED_STEEL = createCasing( "industrial_red_steel_casing",
+                "casings/industrial_casings/machine_casing_red_steel", "Industrial Red Steel Casing");
+        MACHINE_CASING_BLUE_STEEL = createCasing( "industrial_blue_steel_casing",
+                "casings/industrial_casings/machine_casing_blue_steel", "Industrial Blue Steel Casing");
+        MACHINE_CASING_BISMUTH_BRONZE = createCasing( "industrial_bismuth_bronze_casing",
+                "casings/industrial_casings/machine_casing_bismuth_bronze", "Industrial Bismuth Bronze Casing");
+        MACHINE_CASING_COBALT_BRASS = createCasing( "industrial_cobalt_brass_casing",
+                "casings/industrial_casings/machine_casing_cobalt_brass", "Industrial Cobalt Brass Casing");
+        MACHINE_CASING_CARBON_FIBER_MESH = createCasing( "industrial_carbon_fiber_casing",
+                "casings/industrial_casings/machine_casing_carbon_fiber_mesh", "Industrial Carbon Fiber Mesh Casing");
+        MACHINE_CASING_POLYVINYL_CHLORIDE = createCasing( "industrial_polyvinyl_chloride_casing",
+                "casings/industrial_casings/machine_casing_polyvinyl_chloride", "Industrial Polyvinyl Chloride Coated Casing");
+        MACHINE_CASING_SILICONE_RUBBER = createCasing( "industrial_silicone_rubber_casing",
+                "casings/industrial_casings/machine_casing_silicone_rubber", "Industrial Silicone Rubber Coated Casing");
+        MACHINE_CASING_STYRENE_BUTADIENE = createCasing( "industrial_styrene_butadiene_rubber_casing",
+                "casings/industrial_casings/machine_casing_styrene_butadiene_rubber", "Industrial Styrene Butadiene Rubber Coated Casing");
         MACHINE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock(
                 "Pristine Rhodium Plated Palladium Machine Casing", "machine_casing_pristine_rhodium_plated_palladium",
                 "casings/machine_casing_pristine_rhodium_plated_palladium", BlockItem::new);
@@ -107,7 +148,7 @@ public class AstroBlocks {
         TURBINE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock("Naquadah Alloy Turbine Casing",
                 "machine_casing_turbine_naquadah_alloy", "generators/machine_casing_turbine_naquadah_alloy",
                 BlockItem::new);
-        // EXAMPLE_CASING = createSidedCasingBlock( "", "", "", BlockItem::new);
+//         EXAMPLE_CASING = createCasing( "", "", "");
 
         // 3. Pipe Casings
         MANASTEEL_PIPE_CASING = createSidedCasingBlock("§9Manasteel§r Pipe Casing", "manasteel_pipe_casing",
@@ -149,6 +190,14 @@ public class AstroBlocks {
         SOLAR_CELL_ETRIUM = createSolar("solar_cell_etrium", "Solar Cell MK II");
         SOLAR_CELL_VESNIUM = createSolar("solar_cell_vesnium", "Solar Cell MK III");
         SOLAR_CELL_NAQ = createSolar("solar_cell_enriched_naquadah", "Solar Cell MK IV");
+
+        // 7. Industrial Processing Cores
+        INDUSTRIAL_PROCESSING_CORE_MK1 = createCoreBlock("hv_industrial_processing_core",
+                "industrial_processing_core_1", "Industrial Processing Core MK I");
+        INDUSTRIAL_PROCESSING_CORE_MK2 = createCoreBlock("ev_industrial_processing_core",
+                "industrial_processing_core_2", "Industrial Processing Core MK II");
+        INDUSTRIAL_PROCESSING_CORE_MK3 = createCoreBlock("iv_industrial_processing_core",
+                "industrial_processing_core_3", "Industrial Processing Core MK III");
     }
 
     // --- Helpers ---
@@ -262,6 +311,20 @@ public class AstroBlocks {
                                 .cube(ctx.getName(), side, AstroCore.id("block/generators/" + id), side, side, side,
                                         side)
                                 .texture("particle", side)))
+                .lang(name)
+                .item(BlockItem::new).build().register();
+    }
+
+    private static BlockEntry<Block> createCoreBlock(String id, String texture, String name) {
+        ResourceLocation side = AstroCore.id("block/casings/industrial_casings/" + texture);
+        ResourceLocation top = AstroCore.id("block/casings/industrial_casings/" + texture + "_top");
+        ResourceLocation bottom = AstroCore.id("block/casings/industrial_casings/" + texture + "_bottom");
+        return REGISTRATE.block(id, Block::new)
+                .initialProperties(() -> Blocks.IRON_BLOCK)
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
+                        prov.models()
+                                .cubeBottomTop(ctx.getName(), side, bottom, top)
+                                .texture("side", side).texture("bottom", bottom).texture("top", top)))
                 .lang(name)
                 .item(BlockItem::new).build().register();
     }

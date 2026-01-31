@@ -1,4 +1,4 @@
-package com.astro.core.common.machine.singleblocks;
+package com.astro.core.common.machine.singleblock;
 
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
@@ -13,6 +13,7 @@ import it.unimi.dsi.fastutil.Pair;
 
 import static com.astro.core.common.data.machine.AstroMachineUtils.registerSteamMachines;
 
+@SuppressWarnings("all")
 public class AstroSteamMachines {
 
     public static final Pair<MachineDefinition, MachineDefinition> STEAM_CENTRIFUGE = registerSteamMachines(

@@ -27,7 +27,7 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
 import com.astro.core.AstroCore;
 import com.astro.core.common.data.AstroRecipeTypes;
-import com.astro.core.common.data.block.AstroBlocks;
+import com.astro.core.common.data.AstroBlocks;
 import com.astro.core.common.machine.multiblock.electric.FluidDrillMachine;
 import com.astro.core.common.machine.multiblock.electric.LargeMinerMachine;
 import com.astro.core.common.machine.multiblock.generator.AstroSolarBoilers;
@@ -179,7 +179,7 @@ public class AGEMultiMachines {
                     .where("#", air())
                     .build())
             .workableCasingModel(GTCEu.id("block/casings/solid/machine_casing_bronze_plated_bricks"),
-                    AstroCore.id("block/multiblock/compressor"))
+                    AstroCore.id("block/multiblock/steam_compressor"))
             .register();
 
     public static final MultiblockMachineDefinition STEAM_SEPARATOR = REGISTRATE
@@ -207,7 +207,7 @@ public class AGEMultiMachines {
                     .where("#", any())
                     .build())
             .workableCasingModel(GTCEu.id("block/casings/gcym/industrial_steam_casing"),
-                    AstroCore.id("block/multiblock/centrifuge"))
+                    AstroCore.id("block/multiblock/steam_centrifuge"))
             .register();
 
     public static final MultiblockMachineDefinition STEAM_WASHER = REGISTRATE
@@ -238,7 +238,7 @@ public class AGEMultiMachines {
                     .build())
             .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
             .model(createWorkableCasingMachineModel(GTCEu.id("block/casings/gcym/industrial_steam_casing"),
-                    AstroCore.id("block/multiblock/ore_washer"))
+                    AstroCore.id("block/multiblock/steam_ore_washer"))
                     .andThen(b -> b.addDynamicRenderer(DynamicRenderHelper::makeRecipeFluidAreaRender)))
             .register();
 
