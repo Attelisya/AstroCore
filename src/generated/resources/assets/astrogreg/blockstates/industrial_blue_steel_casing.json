@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "astrogreg:block/industrial_blue_steel_casing"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "astrogreg:block/industrial_bismuth_bronze_casing"
+    }
+  }
+}

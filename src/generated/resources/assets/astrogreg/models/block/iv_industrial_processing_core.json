@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "astrogreg:block/casings/industrial_casings/industrial_processing_core_3_bottom",
+    "side": "astrogreg:block/casings/industrial_casings/industrial_processing_core_3",
+    "top": "astrogreg:block/casings/industrial_casings/industrial_processing_core_3_top"
+  }
+}

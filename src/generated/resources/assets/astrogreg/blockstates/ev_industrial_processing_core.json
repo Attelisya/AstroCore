@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "astrogreg:block/ev_industrial_processing_core"
+    }
+  }
+}
