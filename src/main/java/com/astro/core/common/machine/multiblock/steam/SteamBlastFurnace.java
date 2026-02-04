@@ -48,13 +48,12 @@ public class SteamBlastFurnace extends SteamParallelMultiblockMachine {
     @Nullable
     public static ModifierFunction recipeModifier(MetaMachine machine, @Nonnull GTRecipe recipe) {
         if (!(machine instanceof SteamBlastFurnace steamMachine)) {
-            return ModifierFunction.NULL;
+            return ModifierFunction.IDENTITY;
         }
         if (recipe.getType() != AstroRecipeTypes.STEAM_BLAST_FURNACE_RECIPES) {
-            return ModifierFunction.NULL;
+            return ModifierFunction.IDENTITY;
         }
 
-        // Clamp to 1..8 so configs or old NBT can't exceed the intended max.
         int maxParallel = clampTargetParallel(steamMachine.targetParallel);
         steamMachine.setMaxParallels(maxParallel);
         if (steamMachine.targetParallel != maxParallel) {
@@ -62,13 +61,10 @@ public class SteamBlastFurnace extends SteamParallelMultiblockMachine {
         }
         int parallels = ParallelLogic.getParallelAmount(machine, recipe, maxParallel);
 
-        if (parallels == 0) return ModifierFunction.NULL;
+        if (parallels == 0) return ModifierFunction.IDENTITY;
 
-        // Store for UI/Jade display.
         steamMachine.activeParallels = parallels;
 
-        // English: Set to 1.0 for speed default. Lower values make it faster.
-        // Español: Establecido en 1.0 para velocidad estándar. Valores más bajos lo hacen más rápido.
         double durationMultiplier = AstroConfigs.INSTANCE.Steam.SBFRecipeSpeed;
 
         return ModifierFunction.builder()
@@ -89,11 +85,9 @@ public class SteamBlastFurnace extends SteamParallelMultiblockMachine {
         int p = Math.max(1, this.activeParallels);
         int perParallel = 6;
         int total = perParallel * p;
-        textList.add(Component.literal("Using " + total + " mB/t Steam (" + perParallel + " mB/t x " + p + ")"));
-        textList.add(Component.literal("Parallels: ")
-                .append(Component.literal(String.valueOf(clampTargetParallel(this.targetParallel))))
-                .append(Component.literal(" (active: " + p + ") "))
-                .append(ComponentPanelWidget.withButton(Component.literal("[-] "), "parallelSub"))
+        textList.add(Component.translatable("astrogreg.machine.steam_blast_furnace.steam_usage", total, perParallel, p));
+        textList.add(Component.translatable("astrogreg.machine.steam_blast_furnace.parallels", clampTargetParallel(this.targetParallel), p)
+                .append(ComponentPanelWidget.withButton(Component.literal(" [-] "), "parallelSub"))
                 .append(ComponentPanelWidget.withButton(Component.literal("[+]"), "parallelAdd")));
     }
 

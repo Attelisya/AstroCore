@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "loader": "gtceu:machine",
-  "machine": "astrogreg:industrial_",
+  "machine": "astrogreg:industrial_macerator",
   "texture_overrides": {
     "all": "astrogreg:block/casings/industrial_casings/machine_casing_carbon_fiber_mesh"
   },

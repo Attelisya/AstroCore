@@ -18,6 +18,7 @@ import com.gregtechceu.gtceu.utils.GTUtil;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -34,7 +35,6 @@ import java.util.Map;
 import static com.astro.core.common.data.AstroBlocks.*;
 import static com.gregtechceu.gtceu.api.machine.multiblock.PartAbility.*;
 
-// this multiblock is a courtest Raishxn's GT:NA project with a lot of work from Phoenixvine and Haze Vista
 @SuppressWarnings("all")
 public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDisplayUIMachine {
 
@@ -51,15 +51,15 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
     @Persisted
     private boolean formed;
     @Persisted
-    private int sunlit;
+    public int sunlit;
     @Persisted
-    private int temperature;
+    public int temperature;
     @Persisted
-    private long lastSteamOutput;
+    public long lastSteamOutput;
+    @Persisted
+    public double cellMultiplier;
     @Persisted
     private boolean hasNoWater;
-    @Persisted
-    private double cellMultiplier;
 
     public AstroSolarBoilers(IMachineBlockEntity holder) {
         super(holder);
@@ -322,30 +322,44 @@ public class AstroSolarBoilers extends WorkableMultiblockMachine implements IDis
     @Override
     public void addDisplayText(@NotNull List<Component> textList) {
         if (!isFormed()) {
-            textList.add(Component.literal("§cSTRUCTURE NOT FORMED"));
+            textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.not_formed")
+                    .withStyle(ChatFormatting.RED));
             return;
         }
         double intensity = getDimensionMultiplier() * 100;
-        textList.add(Component.literal(String.format("§6Solar Intensity: %.1f%%", intensity)));
+        textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.solar_intensity",
+                        String.format("%.1f", intensity))
+                .withStyle(ChatFormatting.GOLD));
 
-        String color = temperature >= EXPLOSION_THRESHOLD ? "§4" : temperature > 400 ? "§6" : "§e";
-        textList.add(Component.literal(color + "Temperature: " + temperature + "°C"));
+        ChatFormatting tempColor = temperature >= EXPLOSION_THRESHOLD ? ChatFormatting.DARK_RED :
+                temperature > 400 ? ChatFormatting.GOLD : ChatFormatting.YELLOW;
+        textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.temperature", temperature)
+                .withStyle(tempColor));
 
         int startTemp = AstroConfigs.INSTANCE.Steam.boilingPoint;
         double currentEff = temperature <= startTemp ? 0 :
                 (double) (temperature - startTemp) / (MAX_TEMP - startTemp) * 100;
-        textList.add(Component.literal(String.format("§bThermal Efficiency: %.1f%%", currentEff)));
+        textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.thermal_efficiency",
+                        String.format("%.1f", currentEff))
+                .withStyle(ChatFormatting.AQUA));
 
-        textList.add(Component.literal(String.format("§dCell Quality: %.2fx", cellMultiplier)));
+        textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.cell_quality",
+                        String.format("%.2f", cellMultiplier))
+                .withStyle(ChatFormatting.LIGHT_PURPLE));
 
-        textList.add(Component.literal("§eSunlit Cells: " + sunlit));
-        textList.add(Component.literal("§bSteam Output: " + lastSteamOutput + " mB/t"));
+        textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.sunlit_cells", sunlit)
+                .withStyle(ChatFormatting.YELLOW));
+        textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.steam_output", lastSteamOutput)
+                .withStyle(ChatFormatting.AQUA));
 
         if (temperature >= EXPLOSION_THRESHOLD) {
             if (lastSteamOutput == 0) {
-                textList.add(Component.literal("§4§nDANGER: EXPLOSIVE!"));
-                textList.add(Component.literal("§4DO NOT ADD WATER!"));
-                textList.add(Component.literal("§4Wait for the array to cool first."));
+                textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.danger_explosive")
+                        .withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));
+                textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.danger_no_water")
+                        .withStyle(ChatFormatting.DARK_RED));
+                textList.add(Component.translatable("astrogreg.machine.solar_boiler_array.danger_cool_first")
+                        .withStyle(ChatFormatting.DARK_RED));
             }
         }
     }

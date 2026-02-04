@@ -1,17 +1,16 @@
 package com.astro.core.common.machine.multiblock;
 
+import com.astro.core.common.machine.multiblock.electric.ProcessingCoreMachine;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
-import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.MultiblockShapeInfo;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderHelper;
 import com.gregtechceu.gtceu.client.renderer.machine.impl.BoilerMultiPartRender;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
@@ -21,8 +20,6 @@ import com.gregtechceu.gtceu.common.machine.multiblock.steam.SteamParallelMultib
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
@@ -35,11 +32,9 @@ import com.astro.core.common.machine.multiblock.primitive.CokeOvenMachine;
 import com.astro.core.common.machine.multiblock.steam.SteamBlastFurnace;
 import com.astro.core.common.machine.multiblock.steam.SteamGrinder;
 import com.astro.core.common.machine.multiblock.steam.SteamWasher;
-import com.astro.core.common.machine.multiblock.electric.ProcessingCoreMachine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 import static com.astro.core.common.data.AstroBlocks.*;
 import static com.astro.core.common.machine.hatches.AstroHatches.WATER_HATCH;
@@ -49,15 +44,14 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_INDUSTRIAL_STEAM;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.*;
 import static com.gregtechceu.gtceu.common.data.GTMachines.COKE_OVEN_HATCH;
-import static com.gregtechceu.gtceu.common.data.GTMachines.ITEM_EXPORT_BUS;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.COKE_OVEN_RECIPES;
 import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createWorkableCasingMachineModel;
 import static com.gregtechceu.gtceu.utils.FormattingUtil.formatNumbers;
-import static com.gregtechceu.gtceu.common.data.GTMachines.*;
 
 @SuppressWarnings("all")
 public class AGEMultiMachines {
 
+    // Primitive Machines
     public static final MultiblockMachineDefinition COKE_OVEN = REGISTRATE
             .multiblock("coke_oven", CokeOvenMachine::new)
             .rotationState(RotationState.ALL)
@@ -103,6 +97,7 @@ public class AGEMultiMachines {
                     GTCEu.id("block/multiblock/coke_oven"))
             .register();
 
+    // Steam Machines
     public static final MultiblockMachineDefinition STEAM_BLAST_FURNACE = REGISTRATE
             .multiblock("steam_blast_furnace", SteamBlastFurnace::new)
             .rotationState(RotationState.NON_Y_AXIS)
@@ -115,7 +110,7 @@ public class AGEMultiMachines {
                     .aisle("FFF", "XXX", "XXX", "XXX")
                     .aisle("FFF", "X#X", "X#X", "XMX")
                     .aisle("FFF", "X@X", "XXX", "XXX")
-                    .where('@', controller(blocks(definition.getBlock())))
+                    .where('@', controller(blocks(definition.get())))
                     .where('X', blocks(CASING_BRONZE_BRICKS.get()).setMinGlobalLimited(6)
                             .or(abilities(STEAM_IMPORT_ITEMS).setPreviewCount(1))
                             .or(abilities(STEAM_EXPORT_ITEMS).setPreviewCount(1)))
@@ -292,102 +287,383 @@ public class AGEMultiMachines {
             })
             .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_AUTOCLAVE = registerIndustrialMachine(
-            "industrial_autoclave",
-            "Industrial Autoclave",
-            MACHINE_CASING_STYRENE_BUTADIENE,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_styrene_butadiene_rubber"),
-            AstroCore.id("block/multiblock/autoclave"),
-            GTRecipeTypes.AUTOCLAVE_RECIPES);
+    // Industrial Processing Machines
+    public static final MultiblockMachineDefinition INDUSTRIAL_AUTOCLAVE = REGISTRATE
+            .multiblock("industrial_autoclave", ProcessingCoreMachine::new)
+            .langValue("Industrial Autoclave")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.AUTOCLAVE_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_STYRENE_BUTADIENE)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_STYRENE_BUTADIENE.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.autoclave")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_styrene_butadiene_rubber"),
+                    AstroCore.id("block/multiblock/autoclave"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_BENDER = registerIndustrialMachine(
-            "industrial_bender",
-            "Industrial Material Press",
-            MACHINE_CASING_ULTIMET,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_ultimet"),
-            AstroCore.id("block/multiblock/bender"),
-            GTRecipeTypes.BENDER_RECIPES, GTRecipeTypes.FORGE_HAMMER_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_BENDER = REGISTRATE
+            .multiblock("industrial_bender", ProcessingCoreMachine::new)
+            .langValue("Industrial Material Press")
+            .rotationState(RotationState.ALL)
+            .recipeTypes(GTRecipeTypes.BENDER_RECIPES, GTRecipeTypes.FORGE_HAMMER_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_ULTIMET)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_ULTIMET.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_2.tooltip",
+                            Component.translatable("gtceu.bender"),
+                            Component.translatable("gtceu.forge_hammer")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_ultimet"),
+                    AstroCore.id("block/multiblock/bender"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_CENTRIFUGE = registerIndustrialMachine(
-            "industrial_centrifuge",
-            "Industrial Centrifugal Unit",
-            MACHINE_CASING_RED_STEEL,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_red_steel"),
-            AstroCore.id("block/multiblock/centrifuge"),
-            GTRecipeTypes.CENTRIFUGE_RECIPES, GTRecipeTypes.THERMAL_CENTRIFUGE_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_CENTRIFUGE = REGISTRATE
+            .multiblock("industrial_centrifuge", ProcessingCoreMachine::new)
+            .langValue("Industrial Centrifugal Unit")
+            .rotationState(RotationState.ALL)
+            .recipeTypes(GTRecipeTypes.CENTRIFUGE_RECIPES, GTRecipeTypes.THERMAL_CENTRIFUGE_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_RED_STEEL)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_RED_STEEL.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_2.tooltip",
+                            Component.translatable("gtceu.centrifuge"),
+                            Component.translatable("gtceu.thermal_centrifuge")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_red_steel"),
+                    AstroCore.id("block/multiblock/centrifuge"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_ELECTROLYZER = registerIndustrialMachine(
-            "industrial_electrolyzer",
-            "Industrial Electrolyzer",
-            MACHINE_CASING_BLUE_STEEL,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_blue_steel"),
-            AstroCore.id("block/multiblock/electrolyzer"),
-            GTRecipeTypes.ELECTROLYZER_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_CHEMICAL_BATH = REGISTRATE
+            .multiblock("industrial_chemical_bath", ProcessingCoreMachine::new)
+            .langValue("Industrial Chemical Bath")
+            .rotationState(RotationState.ALL)
+            .recipeTypes(GTRecipeTypes.ORE_WASHER_RECIPES, GTRecipeTypes.CHEMICAL_BATH_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_POLYVINYL_CHLORIDE)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_POLYVINYL_CHLORIDE.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_2.tooltip",
+                            Component.translatable("gtceu.ore_washer"),
+                            Component.translatable("gtceu.chemical_bath")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_polyvinyl_chloride"),
+                    AstroCore.id("block/multiblock/ore_washer"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_CHEMICAL_BATH = registerIndustrialMachine(
-            "industrial_chemical_bath",
-            "Industrial Chemical Bath",
-            MACHINE_CASING_POLYVINYL_CHLORIDE,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_polyvinyl_chloride"),
-            AstroCore.id("block/multiblock/ore_washer"),
-            GTRecipeTypes.ORE_WASHER_RECIPES, GTRecipeTypes.CHEMICAL_BATH_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_ELECTROLYZER = REGISTRATE
+            .multiblock("industrial_electrolyzer", ProcessingCoreMachine::new)
+            .langValue("Industrial Electrolyzer")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.ELECTROLYZER_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_BLUE_STEEL)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_BLUE_STEEL.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.electrolyzer")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_blue_steel"),
+                    AstroCore.id("block/multiblock/electrolyzer"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_EXTRUDER = registerIndustrialMachine(
-            "industrial_extruder",
-            "Industrial Extruder",
-            MACHINE_CASING_BLACK_STEEL,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_black_steel"),
-            AstroCore.id("block/multiblock/extruder"),
-            GTRecipeTypes.EXTRUDER_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_EXTRUDER = REGISTRATE
+            .multiblock("industrial_extruder", ProcessingCoreMachine::new)
+            .langValue("Industrial Extruder")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.EXTRUDER_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_BLACK_STEEL)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_BLACK_STEEL.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.extruder")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_black_steel"),
+                    AstroCore.id("block/multiblock/extruder"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_FLUID_SOLIDIFIER = registerIndustrialMachine(
-            "industrial_fluid_solidifier",
-            "Industrial Fluid Solidifier",
-            MACHINE_CASING_SILICONE_RUBBER,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_silicone_rubber"),
-            AstroCore.id("block/multiblock/fluid_solidifier"),
-            GTRecipeTypes.FLUID_SOLIDFICATION_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_FLUID_SOLIDIFIER = REGISTRATE
+            .multiblock("industrial_fluid_solidifier", ProcessingCoreMachine::new)
+            .langValue("Industrial Fluid Solidifier")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.FLUID_SOLIDFICATION_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_SILICONE_RUBBER)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_SILICONE_RUBBER.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.fluid_solidifier")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_silicone_rubber"),
+                    AstroCore.id("block/multiblock/fluid_solidifier"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_LATHE = registerIndustrialMachine(
-            "industrial_lathe",
-            "Industrial Lathe",
-            MACHINE_CASING_ROSE_GOLD,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_rose_gold"),
-            AstroCore.id("block/multiblock/lathe"),
-            GTRecipeTypes.LATHE_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_LATHE = REGISTRATE
+            .multiblock("industrial_lathe", ProcessingCoreMachine::new)
+            .langValue("Industrial Lathe")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.LATHE_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_ROSE_GOLD)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_ROSE_GOLD.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.lathe")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_rose_gold"),
+                    AstroCore.id("block/multiblock/lathe"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_MACERATOR = registerIndustrialMachine(
-            "industrial_",
-            "Industrial ",
-            MACHINE_CASING_CARBON_FIBER_MESH,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_carbon_fiber_mesh"),
-            AstroCore.id("block/multiblock/macerator"),
-            GTRecipeTypes.MACERATOR_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_MACERATOR = REGISTRATE
+            .multiblock("industrial_macerator", ProcessingCoreMachine::new)
+            .langValue("Industrial Macerator")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.MACERATOR_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_CARBON_FIBER_MESH)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_CARBON_FIBER_MESH.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.macerator")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_carbon_fiber_mesh"),
+                    AstroCore.id("block/multiblock/macerator"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_MIXER = registerIndustrialMachine(
-            "industrial_mixer",
-            "Industrial Mixer",
-            MACHINE_CASING_VANADIUM_STEEL,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_vanadium_steel"),
-            AstroCore.id("block/multiblock/mixer"),
-            GTRecipeTypes.MIXER_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_MIXER = REGISTRATE
+            .multiblock("industrial_mixer", ProcessingCoreMachine::new)
+            .langValue("Industrial Mixer")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.MIXER_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_VANADIUM_STEEL)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_VANADIUM_STEEL.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.mixer")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_vanadium_steel"),
+                    AstroCore.id("block/multiblock/mixer"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_SIFTER = registerIndustrialMachine(
-            "industrial_sifter",
-            "Industrial Sifter",
-            MACHINE_CASING_BISMUTH_BRONZE,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_bismuth_bronze"),
-            AstroCore.id("block/multiblock/sifter"),
-            GTRecipeTypes.SIFTER_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_SIFTER = REGISTRATE
+            .multiblock("industrial_sifter", ProcessingCoreMachine::new)
+            .langValue("Industrial Sifter")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.SIFTER_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_BISMUTH_BRONZE)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_BISMUTH_BRONZE.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.sifter")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_bismuth_bronze"),
+                    AstroCore.id("block/multiblock/sifter"))
+            .register();
 
-    public static final MultiblockMachineDefinition INDUSTRIAL_WIREMILL = registerIndustrialMachine(
-            "industrial_wiremill",
-            "Industrial Wiremill",
-            MACHINE_CASING_COBALT_BRASS,
-            AstroCore.id("block/casings/industrial_casings/machine_casing_cobalt_brass"),
-            AstroCore.id("block/multiblock/wiremill"),
-            GTRecipeTypes.WIREMILL_RECIPES);
+    public static final MultiblockMachineDefinition INDUSTRIAL_WIREMILL = REGISTRATE
+            .multiblock("industrial_wiremill", ProcessingCoreMachine::new)
+            .langValue("Industrial Wiremill")
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.WIREMILL_RECIPES)
+            .recipeModifiers(ProcessingCoreMachine::processingCoreOverclock, GTRecipeModifiers.BATCH_MODE)
+            .appearanceBlock(MACHINE_CASING_COBALT_BRASS)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("XXX", "XXX", "XXX")
+                    .aisle("XXX", "XCX", "XXX")
+                    .aisle("XXX", "X@X", "XXX")
+                    .where('@', controller(blocks(definition.get())))
+                    .where('X', blocks(MACHINE_CASING_COBALT_BRASS.get()).setMinGlobalLimited(15)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
+                    .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+                    .build())
+            .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"),
+                    Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
+                            Component.translatable("gtceu.wiremill")),
+                    Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .workableCasingModel(AstroCore.id("block/casings/industrial_casings/machine_casing_cobalt_brass"),
+                    AstroCore.id("block/multiblock/wiremill"))
+            .register();
 
+    // Drills
     public static final MultiblockMachineDefinition FLUID_DRILLING_RIG_IV = REGISTRATE
             .multiblock("fluid_drilling_rig_iv", holder -> new FluidDrillMachine(holder, GTValues.IV))
             .rotationState(RotationState.ALL)
@@ -433,7 +709,7 @@ public class AGEMultiMachines {
                     .aisle("XXXXX", "#FCF#", "#FCF#", "#FCF#", "#FCF#", "#FCF#", "#FCF#", "##F##", "##F##", "##F##")
                     .aisle("XXXXX", "#FFF#", "#FFF#", "#FFF#", "##F##", "##F##", "##F##", "#####", "#####", "#####")
                     .aisle("#XSX#", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####", "#####")
-                    .where('S', controller(blocks(definition.getBlock())))
+                    .where('S', controller(blocks(definition.get())))
                     .where('X', blocks(MACHINE_CASING_RHODIUM_PLATED_PALLADIUM.get())
                             .or(abilities(EXPORT_ITEMS).setExactLimit(1).setPreviewCount(1))
                             .or(abilities(IMPORT_FLUIDS).setExactLimit(1).setPreviewCount(1))
@@ -477,6 +753,7 @@ public class AGEMultiMachines {
             })
             .register();
 
+    // Methods
     private static MultiblockShapeInfo createSolarBoilerShape(MultiblockMachineDefinition definition, int size) {
         var builder = MultiblockShapeInfo.builder();
         int center = size / 2;
@@ -505,51 +782,6 @@ public class AGEMultiMachines {
                 .where('D', GTMachines.FLUID_IMPORT_HATCH[GTValues.LV], Direction.NORTH)
                 .where('E', GTMachines.MAINTENANCE_HATCH, Direction.NORTH)
                 .build();
-    }
-
-    public static MultiblockMachineDefinition registerIndustrialMachine(String id, String lang,
-                                                                        Supplier<? extends Block> casing,
-                                                                        ResourceLocation baseTexture,
-                                                                        ResourceLocation overlayTexture,
-                                                                        GTRecipeType... recipeTypes) {
-        return REGISTRATE
-                .multiblock(id, WorkableElectricMultiblockMachine::new)
-                .langValue(lang)
-                .rotationState(RotationState.ALL)
-                .recipeTypes(recipeTypes)
-                .recipeModifiers((machine, recipe) -> ProcessingCoreMachine.processingCoreOverclock(
-                        machine, recipe,
-                        INDUSTRIAL_PROCESSING_CORE_MK1.get(),
-                        INDUSTRIAL_PROCESSING_CORE_MK2.get(),
-                        INDUSTRIAL_PROCESSING_CORE_MK3.get()),
-                        GTRecipeModifiers.OC_PERFECT_SUBTICK, GTRecipeModifiers.BATCH_MODE)
-                .appearanceBlock(casing)
-                .pattern(definition -> FactoryBlockPattern.start()
-                        .aisle("XXX", "XXX", "XXX")
-                        .aisle("XXX", "XCX", "XXX")
-                        .aisle("XXX", "X@X", "XXX")
-                        .where('@', controller(blocks(definition.getBlock())))
-                        .where('X', blocks(casing.get()).setMinGlobalLimited(15)
-                                .or(abilities(INPUT_ENERGY).setExactLimit(1))
-                                .or(abilities(MAINTENANCE).setExactLimit(1))
-                                .or(abilities(IMPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
-                                .or(abilities(EXPORT_ITEMS).setMaxGlobalLimited(2).setPreviewCount(1))
-                                .or(abilities(IMPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1))
-                                .or(abilities(EXPORT_FLUIDS).setMaxGlobalLimited(2).setPreviewCount(1)))
-                        .where('C', blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
-                                .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
-                                .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
-                        .build())
-                .tooltips(Component.translatable("astrogreg.machine.industrial_core.tooltip"))
-                .tooltips(recipeTypes.length == 1 ?
-                        Component.translatable("gtceu.machine.available_recipe_map_1.tooltip",
-                                Component.translatable("gtceu." + recipeTypes[0].registryName.getPath().replace("_recipes", ""))) :
-                        Component.translatable("gtceu.machine.available_recipe_map_2.tooltip",
-                                Component.translatable("gtceu." + recipeTypes[0].registryName.getPath().replace("_recipes", "")),
-                                Component.translatable("gtceu." + recipeTypes[1].registryName.getPath().replace("_recipes", ""))))
-                .tooltips(Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
-                .workableCasingModel(baseTexture, overlayTexture)
-                .register();
     }
 
     public static void init() {}

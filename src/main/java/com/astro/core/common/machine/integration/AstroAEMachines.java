@@ -36,11 +36,9 @@ public class AstroAEMachines {
                     .colorOverlayTieredHullModel(GTCEu.id("block/overlay/appeng/me_buffer_hatch"))
                     .langValue("Expanded ME Pattern Buffer")
                     .tooltips(
-                            Component.literal(
-                                    "§fAllows expanded direct §6AE2 pattern storage §ffor GregTech Multiblocks."),
+                            Component.translatable("astrogreg.machine.expanded_me_pattern_buffer.tooltip.0"),
                             Component.translatable("block.gtceu.pattern_buffer.desc.1"),
-                            Component.literal(
-                                    "§fLink §6Expanded Pattern Buffer Proxies §fwith a §bdatastick §fto link machines together!"),
+                            Component.translatable("astrogreg.machine.expanded_me_pattern_buffer.tooltip.1"),
                             Component.translatable("gtceu.part_sharing.enabled"))
                     .register();
 
@@ -53,8 +51,7 @@ public class AstroAEMachines {
                     .colorOverlayTieredHullModel(GTCEu.id("block/overlay/appeng/me_buffer_hatch_proxy"))
                     .langValue("Expanded ME Pattern Buffer Proxy")
                     .tooltips(
-                            Component.literal(
-                                    "§fAllows linking many machines to a singular §6Expanded ME Pattern Buffer§f."),
+                            Component.translatable("astrogreg.machine.expanded_me_pattern_buffer_proxy.tooltip.0"),
                             Component.translatable("block.gtceu.pattern_buffer_proxy.desc.2"),
                             Component.translatable("gtceu.part_sharing.enabled"))
                     .register();
@@ -68,8 +65,8 @@ public class AstroAEMachines {
                     .colorOverlayTieredHullModel(AstroCore.id("block/machines/tag_inputs/me_tag_input_bus"))
                     .langValue("ME Tag Input Bus")
                     .tooltips(
-                            Component.literal("§6Tag‑based AE2 Item Import"),
-                            Component.literal("§7Matches items via tag expressions"),
+                            Component.translatable("astrogreg.machine.me_tag_input_bus.tooltip.0"),
+                            Component.translatable("astrogreg.machine.me_tag_input_bus.tooltip.1"),
                             Component.translatable("gtceu.part_sharing.enabled"))
                     .register();
 
@@ -83,8 +80,8 @@ public class AstroAEMachines {
                     .colorOverlayTieredHullModel(AstroCore.id("block/machines/tag_inputs/me_tag_input_hatch"))
                     .langValue("ME Tag Input Hatch")
                     .tooltips(
-                            Component.literal("§6Tag‑based AE2 Fluid Import"),
-                            Component.literal("§7Matches fluids via tag expressions"),
+                            Component.translatable("astrogreg.machine.me_tag_input_hatch.tooltip.0"),
+                            Component.translatable("astrogreg.machine.me_tag_input_hatch.tooltip.1"),
                             Component.translatable("gtceu.part_sharing.enabled"))
                     .register();
         }

@@ -42,7 +42,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class METagInputBusPartMachine extends MEBusPartMachine
-                                      implements IDataStickInteractable, IMachineLife, IHasCircuitSlot {
+        implements IDataStickInteractable, IMachineLife, IHasCircuitSlot {
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             METagInputBusPartMachine.class, MEBusPartMachine.MANAGED_FIELD_HOLDER);
@@ -125,8 +125,6 @@ public class METagInputBusPartMachine extends MEBusPartMachine
     }
 
     protected void syncME() {
-        // 1. Grid Safety Check: If the grid is null, we can't do anything.
-        // We clear all previews so the player doesn't see "ghost" items when the power is out.
         if (getMainNode().getGrid() == null) {
             for (int i = 0; i < CONFIG_SIZE; i++) {
                 previewStacks[i] = ItemStack.EMPTY;
@@ -140,7 +138,6 @@ public class METagInputBusPartMachine extends MEBusPartMachine
         for (int i = 0; i < CONFIG_SIZE; i++) {
             ExportOnlyAEItemSlot aeSlot = this.aeItemHandler.getInventory()[i];
 
-            // 2. Handle Overflow: Push items back to the network if they exceed the slot limits
             GenericStack exceedItem = aeSlot.exceedStack();
             if (exceedItem != null) {
                 long inserted = networkInv.insert(exceedItem.what(), exceedItem.amount(), Actionable.MODULATE,
@@ -148,7 +145,6 @@ public class METagInputBusPartMachine extends MEBusPartMachine
                 if (inserted > 0) aeSlot.extractItem(0, GTMath.saturatedCast(inserted), false);
             }
 
-            // 3. Handle Pulling: Request items from the network based on the Tag Config
             GenericStack reqItem = aeSlot.requestStack();
             if (reqItem != null && reqItem.what() instanceof AEItemKey key) {
                 if (isAllowed(key)) {
@@ -158,20 +154,16 @@ public class METagInputBusPartMachine extends MEBusPartMachine
                 }
             }
 
-            // 4. Update UI Previews: Ensure the ghost icons and amounts are accurate
             GenericStack stock = aeSlot.getStock();
             GenericStack config = aeSlot.getConfig();
 
             if (stock != null && stock.what() instanceof AEItemKey itemKey) {
-                // If items are physically in the bus, show them and their real count
                 previewStacks[i] = itemKey.toStack(1);
                 previewAmounts[i] = stock.amount();
             } else if (config != null && config.what() instanceof AEItemKey configKey) {
-                // If the slot is empty but configured (waiting for items), show the "Ghost" icon with 0
                 previewStacks[i] = configKey.toStack(1);
                 previewAmounts[i] = 0L;
             } else {
-                // If there is no item and no configuration, the slot must be visually empty
                 previewStacks[i] = ItemStack.EMPTY;
                 previewAmounts[i] = 0L;
             }
@@ -179,15 +171,9 @@ public class METagInputBusPartMachine extends MEBusPartMachine
     }
 
     protected boolean isAllowed(AEItemKey key) {
-        // If everything is empty, allow nothing.
         if (whitelistExpr.isBlank() && blacklistExpr.isBlank()) return false;
-
         if (!blacklistExpr.isBlank() && TagMatcher.doesItemMatch(key, blacklistExpr)) return false;
-
-        // Whitelist check: if whitelist exists, it MUST match.
         if (!whitelistExpr.isBlank()) return TagMatcher.doesItemMatch(key, whitelistExpr);
-
-        // If there is only a blacklist and it passed, it's allowed.
         return true;
     }
 
@@ -202,24 +188,25 @@ public class METagInputBusPartMachine extends MEBusPartMachine
             whitelistExpr = "";
             blacklistExpr = "";
             updateConfigurationFromTags();
-        }).setTexture(new GuiTextureGroup(GuiTextures.VANILLA_BUTTON, new TextTexture("Clear")),
-                new GuiTextureGroup(GuiTextures.VANILLA_BUTTON, new TextTexture("Clear"))));
+        }).setTexture(new GuiTextureGroup(GuiTextures.VANILLA_BUTTON,
+                        new TextTexture("astrogreg.gui.me_tag.clear")),
+                new GuiTextureGroup(GuiTextures.VANILLA_BUTTON,
+                        new TextTexture("astrogreg.gui.me_tag.clear"))));
 
         int y = 18;
-        group.addWidget(new LabelWidget(5, y, "Whitelist Tags"));
+        group.addWidget(new LabelWidget(5, y, "astrogreg.gui.me_tag.whitelist_tags"));
 
         y += 12;
-
         group.addWidget(new MultilineTextFieldWidget(5, y, 166, 30,
                 () -> whitelistExpr,
                 val -> {
                     whitelistExpr = val;
                     updateConfigurationFromTags();
                 },
-                Component.literal("...")));
+                Component.translatable("astrogreg.gui.me_tag.placeholder")));
 
         y += 36;
-        group.addWidget(new LabelWidget(5, y, "Blacklist Tags"));
+        group.addWidget(new LabelWidget(5, y, "astrogreg.gui.me_tag.blacklist_tags"));
 
         y += 12;
         group.addWidget(new MultilineTextFieldWidget(5, y, 166, 30,
@@ -228,28 +215,22 @@ public class METagInputBusPartMachine extends MEBusPartMachine
                     blacklistExpr = val;
                     updateConfigurationFromTags();
                 },
-                Component.literal("...")));
+                Component.translatable("astrogreg.gui.me_tag.placeholder")));
 
         y += 36;
-        group.addWidget(new LabelWidget(5, y, "Item Preview (Read Only)"));
+        group.addWidget(new LabelWidget(5, y, "astrogreg.gui.me_tag.item_preview"));
 
         y += 15;
         for (int i = 0; i < CONFIG_SIZE; i++) {
             int col = i % 8;
             int row = i / 8;
-
             group.addWidget(new LargeAmountPreviewWidget(16 + col * 18, y + row * 18, i, this));
         }
 
         return group;
     }
 
-    /**
-     * Specialized widget that renders the icons from previewStacks
-     * but pulls quantity from previewAmounts (Long).
-     */
     private static class LargeAmountPreviewWidget extends Widget {
-
         private final int index;
         private final METagInputBusPartMachine machine;
 
@@ -299,25 +280,20 @@ public class METagInputBusPartMachine extends MEBusPartMachine
 
         System.out.println("[TagBus] Scanning... Whitelist: " + whitelistExpr);
 
-        // 1. CLEANUP: Check existing slots
         java.util.Set<AEItemKey> alreadyConfigured = new java.util.HashSet<>();
         for (int i = 0; i < CONFIG_SIZE; i++) {
             var slot = this.aeItemHandler.getInventory()[i];
             GenericStack config = slot.getConfig();
 
             if (config != null && config.what() instanceof AEItemKey key) {
-                // Check if the item still exists in the network
                 boolean stillExists = availableInNetwork.get(key) > 0;
 
                 if (isAllowed(key) && stillExists) {
                     alreadyConfigured.add(key);
                 } else {
-                    // Item is gone or no longer allowed - WIPE EVERYTHING
                     System.out.println(
                             "[TagBus] Clearing Slot " + i + ": " + (stillExists ? "Disallowed" : "Gone from ME"));
                     slot.setConfig(null);
-
-                    // INSTANT UI CLEAR: Don't wait for syncME to catch up
                     previewStacks[i] = ItemStack.EMPTY;
                     previewAmounts[i] = 0L;
                     changed = true;
@@ -325,7 +301,6 @@ public class METagInputBusPartMachine extends MEBusPartMachine
             }
         }
 
-        // 2. FILL: Find NEW items in the network
         for (var entry : availableInNetwork) {
             if (entry.getKey() instanceof AEItemKey itemKey && isAllowed(itemKey)) {
                 if (!alreadyConfigured.contains(itemKey)) {
@@ -364,11 +339,10 @@ public class METagInputBusPartMachine extends MEBusPartMachine
             tag.put("METagInputBus", writeConfigToTag());
             dataStick.setTag(tag);
 
-            String displayName = whitelistExpr.isBlank() ? "Empty Tag Bus" : "Tag Bus: " + whitelistExpr;
-            dataStick.setHoverName(Component.literal("ME Tag Input Bus Configuration Data")
+            dataStick.setHoverName(Component.translatable("astrogreg.gui.me_tag.datastick_name")
                     .withStyle(style -> style.withItalic(true)));
 
-            player.sendSystemMessage(Component.literal("Settings Copied: " + whitelistExpr));
+            player.sendSystemMessage(Component.translatable("astrogreg.gui.me_tag.settings_copied", whitelistExpr));
         }
         return InteractionResult.SUCCESS;
     }
@@ -381,10 +355,8 @@ public class METagInputBusPartMachine extends MEBusPartMachine
 
         if (!isRemote()) {
             readConfigFromTag(dataStick.getTag().getCompound("METagInputBus"));
-
             updateConfigurationFromTags();
-
-            player.sendSystemMessage(Component.literal("Settings Pasted successfully."));
+            player.sendSystemMessage(Component.translatable("astrogreg.gui.me_tag.settings_pasted"));
         }
         return InteractionResult.sidedSuccess(isRemote());
     }

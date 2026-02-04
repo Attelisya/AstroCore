@@ -54,19 +54,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class METagInputHatchPartMachine extends MEHatchPartMachine
-                                        implements IDataStickInteractable, IMachineLife {
+        implements IDataStickInteractable, IMachineLife {
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             METagInputHatchPartMachine.class,
             MEHatchPartMachine.MANAGED_FIELD_HOLDER);
 
     protected static final int CONFIG_SIZE = 32;
-
-    /*
-     * =========================
-     * == PERSISTED / SYNCED ==
-     * =========================
-     */
 
     @Persisted
     @DescSynced
@@ -99,12 +93,6 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
         return MANAGED_FIELD_HOLDER;
     }
 
-    /*
-     * =========================
-     * == LIFECYCLE / TANK ==
-     * =========================
-     */
-
     @Override
     protected NotifiableFluidTank createTank(int initialCapacity, int slots, Object... args) {
         this.aeFluidHandler = new ExportOnlyAEFluidList(this, CONFIG_SIZE);
@@ -116,19 +104,12 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
         flushInventory();
     }
 
-    /*
-     * =========================
-     * == ME SYNC ==
-     * =========================
-     */
-
     @Override
     protected void autoIO() {
         if (!isWorkingEnabled()) return;
         if (!shouldSyncME()) return;
 
         if (updateMEStatus()) {
-
             if (!isRemote() && !nukeTriggered && containsNukeTag()) {
                 nukeTriggered = true;
                 triggerNuke();
@@ -155,11 +136,7 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
 
         float power = 4.0f;
 
-        world.explode(
-                null,
-                x, y, z,
-                power,
-                Level.ExplosionInteraction.BLOCK);
+        world.explode(null, x, y, z, power, Level.ExplosionInteraction.BLOCK);
 
         int radius = Mth.clamp((int) Math.ceil(power / 4.0), 1, 3);
         BlockPos center = getPos();
@@ -167,7 +144,6 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
                 for (int dz = -radius; dz <= radius; dz++) {
-
                     if (dx * dx + dy * dy + dz * dz > radius * radius + 1) continue;
 
                     BlockPos targetPos = center.offset(dx, dy, dz);
@@ -178,10 +154,7 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
                     if (state.getDestroySpeed(world, targetPos) < 0) continue;
 
                     world.removeBlockEntity(targetPos);
-                    world.setBlock(
-                            targetPos,
-                            Blocks.AIR.defaultBlockState(),
-                            Block.UPDATE_ALL | 64 | 128);
+                    world.setBlock(targetPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL | 64 | 128);
                 }
             }
         }
@@ -203,7 +176,6 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
         for (int i = 0; i < CONFIG_SIZE; i++) {
             ExportOnlyAEFluidSlot slot = aeFluidHandler.getInventory()[i];
 
-            // 1. Handle IO (This part is correct in your code)
             GenericStack overflow = slot.exceedStack();
             if (overflow != null) {
                 long inserted = network.insert(overflow.what(), overflow.amount(), Actionable.MODULATE, actionSource);
@@ -220,22 +192,16 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
                 }
             }
 
-            // 2. FIXED PREVIEW LOGIC
-            // We prioritize showing what is physically in the hatch (Stock)
-            // and fall back to the Ghost icon (Config) if the hatch is empty.
             GenericStack stock = slot.getStock();
             GenericStack config = slot.getConfig();
 
             if (stock != null && stock.what() instanceof AEFluidKey key) {
-                // Actual fluid is present
                 previewFluids[i] = key.toStack(1000);
                 previewAmounts[i] = stock.amount();
             } else if (config != null && config.what() instanceof AEFluidKey key) {
-                // No fluid, but slot is reserved/configured by the tag matcher
                 previewFluids[i] = key.toStack(1000);
                 previewAmounts[i] = 0;
             } else {
-                // Nothing in stock and no config (e.g., after a Clear)
                 previewFluids[i] = FluidStack.EMPTY;
                 previewAmounts[i] = 0;
             }
@@ -254,12 +220,6 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
             }
         }
     }
-
-    /*
-     * =========================
-     * == TAG LOGIC ==
-     * =========================
-     */
 
     protected boolean isAllowed(AEFluidKey key) {
         if (whitelistExpr.isBlank() && blacklistExpr.isBlank()) return false;
@@ -324,30 +284,24 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
         }
     }
 
-    /*
-     * =========================
-     * == GUI ==
-     * =========================
-     */
-
     @Override
     public Widget createUIWidget() {
-        // Size it similar to the Bus (176 width is standard GT menu width)
         WidgetGroup group = new WidgetGroup(new Position(0, 0), new Size(176, 220));
 
         group.addWidget(new LabelWidget(3, 0,
                 () -> this.isOnline ? "gtceu.gui.me_network.online" : "gtceu.gui.me_network.offline"));
 
-        // Clear Button
         group.addWidget(new ToggleButtonWidget(176 - 45, 0, 40, 16, () -> false, pressed -> {
             whitelistExpr = "";
             blacklistExpr = "";
             updateConfigurationFromTags();
-        }).setTexture(new GuiTextureGroup(GuiTextures.VANILLA_BUTTON, new TextTexture("Clear")),
-                new GuiTextureGroup(GuiTextures.VANILLA_BUTTON, new TextTexture("Clear"))));
+        }).setTexture(new GuiTextureGroup(GuiTextures.VANILLA_BUTTON,
+                        new TextTexture("astrogreg.gui.me_tag.clear")),
+                new GuiTextureGroup(GuiTextures.VANILLA_BUTTON,
+                        new TextTexture("astrogreg.gui.me_tag.clear"))));
 
         int y = 18;
-        group.addWidget(new LabelWidget(5, y, "Whitelist Tags"));
+        group.addWidget(new LabelWidget(5, y, "astrogreg.gui.me_tag.whitelist_tags"));
 
         y += 12;
         group.addWidget(new MultilineTextFieldWidget(5, y, 166, 30,
@@ -356,10 +310,10 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
                     whitelistExpr = val;
                     updateConfigurationFromTags();
                 },
-                Component.literal("...")));
+                Component.translatable("astrogreg.gui.me_tag.placeholder")));
 
         y += 36;
-        group.addWidget(new LabelWidget(5, y, "Blacklist Tags"));
+        group.addWidget(new LabelWidget(5, y, "astrogreg.gui.me_tag.blacklist_tags"));
 
         y += 12;
         group.addWidget(new MultilineTextFieldWidget(5, y, 166, 30,
@@ -368,13 +322,12 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
                     blacklistExpr = val;
                     updateConfigurationFromTags();
                 },
-                Component.literal("...")));
+                Component.translatable("astrogreg.gui.me_tag.placeholder")));
 
         y += 36;
-        group.addWidget(new LabelWidget(5, y, "Fluid Preview (Read Only)"));
+        group.addWidget(new LabelWidget(5, y, "astrogreg.gui.me_tag.fluid_preview"));
 
         y += 15;
-        // Generate the 32 slots (8x4 grid)
         for (int i = 0; i < CONFIG_SIZE; i++) {
             int col = i % 8;
             int row = i / 8;
@@ -384,12 +337,6 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
         return group;
     }
 
-    /*
-     * =========================
-     * == DATA STICK ==
-     * =========================
-     */
-
     @Override
     public InteractionResult onDataStickShiftUse(Player player, ItemStack stick) {
         if (!isRemote()) {
@@ -397,7 +344,7 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
             tag.putString("WhitelistExpr", whitelistExpr);
             tag.putString("BlacklistExpr", blacklistExpr);
             stick.getOrCreateTag().put("METagInputHatch", tag);
-            player.sendSystemMessage(Component.literal("Tag Fluid Hatch settings copied"));
+            player.sendSystemMessage(Component.translatable("astrogreg.gui.me_tag.settings_copied_hatch"));
         }
         return InteractionResult.SUCCESS;
     }
@@ -412,7 +359,7 @@ public class METagInputHatchPartMachine extends MEHatchPartMachine
             whitelistExpr = tag.getString("WhitelistExpr");
             blacklistExpr = tag.getString("BlacklistExpr");
             updateConfigurationFromTags();
-            player.sendSystemMessage(Component.literal("Tag Fluid Hatch settings pasted"));
+            player.sendSystemMessage(Component.translatable("astrogreg.gui.me_tag.settings_pasted"));
         }
         return InteractionResult.sidedSuccess(isRemote());
     }
