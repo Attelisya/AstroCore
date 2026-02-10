@@ -1,0 +1,5 @@
+{
+  "ldlib": {
+    "connection": "astrogreg:block/generators/samarium_feg_magnet_ctm"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "astrogreg:block/zpm_faraday_magnet"
+    }
+  }
+}

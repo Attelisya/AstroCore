@@ -9,6 +9,7 @@ import static com.astro.core.common.data.materials.AstroMaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 
+@SuppressWarnings("all")
 public class AstroModifiedMaterials {
 
     private static final Object[][] MATERIAL_MODIFIERS = {
@@ -44,7 +45,9 @@ public class AstroModifiedMaterials {
             { "bismuth_bronze", new MaterialFlag[] { GENERATE_FRAME, DISABLE_ALLOY_PROPERTY } },
             { "sbr", new MaterialFlag[] { GENERATE_FRAME } },
             { "silicone", new MaterialFlag[] { GENERATE_FRAME } },
-            { "pvc", new MaterialFlag[] { GENERATE_FRAME } }
+            { "pvc", new MaterialFlag[] { GENERATE_FRAME } },
+            { "magneo", new MaterialFlag[] { GENERATE_PLATE } },
+            { "magsam", new MaterialFlag[] { GENERATE_PLATE } }
 
     };
 
@@ -119,6 +122,8 @@ public class AstroModifiedMaterials {
             case "sbr" -> StyreneButadieneRubber;
             case "pvc" -> PolyvinylChloride;
             case "silicone" -> SiliconeRubber;
+            case "magneo" -> NeodymiumMagnetic;
+            case "magsam" -> SamariumMagnetic;
             default -> null;
         };
     }

@@ -23,7 +23,6 @@ public class AstroLangHandler {
                 "Heat scaling: §e−1 K/s per Cell below 40 or +1% heating speed per sunlit Cell above 40");
         provider.add("astrogreg.machine.solar_boiler_array_max_cells.tooltip",
                 "Max Cell Count: §e33 x 33 (1089 Cells)");
-        provider.add("astrogreg.machine.solar_boiler_array.not_formed", "STRUCTURE NOT FORMED");
         provider.add("astrogreg.machine.solar_boiler_array.solar_intensity", "Solar Intensity: %s%%");
         provider.add("astrogreg.machine.solar_boiler_array.temperature", "Temperature: %s°C");
         provider.add("astrogreg.machine.solar_boiler_array.thermal_efficiency", "Thermal Efficiency: %s%%");

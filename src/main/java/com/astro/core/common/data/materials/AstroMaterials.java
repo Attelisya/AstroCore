@@ -454,7 +454,7 @@ public class AstroMaterials {
                 AstroCore.id("magnetic_neutronium"))
                 .ingot()
                 .color(0xFFFFFF).secondaryColor(0x000000)
-                .flags(GENERATE_ROD, IS_MAGNETIC, GENERATE_LONG_ROD)
+                .flags(GENERATE_ROD, IS_MAGNETIC, GENERATE_LONG_ROD, GENERATE_PLATE)
                 .components(Neutronium, 1)
                 .ingotSmeltInto(Neutronium)
                 .arcSmeltInto(Neutronium)

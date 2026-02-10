@@ -7,7 +7,6 @@ import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -16,7 +15,6 @@ import net.minecraftforge.client.model.generators.ModelFile;
 
 import com.astro.core.AstroCore;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 
@@ -82,6 +80,11 @@ public class AstroBlocks {
     public static BlockEntry<Block> SOLAR_CELL_VESNIUM;
     public static BlockEntry<Block> SOLAR_CELL_NAQ;
 
+    public static BlockEntry<ActiveBlock> FARADAY_GENERATOR_COIL;
+    public static BlockEntry<Block> ELECTROMAGNET_MK1;
+    public static BlockEntry<Block> ELECTROMAGNET_MK2;
+    public static BlockEntry<Block> ELECTROMAGNET_MK3;
+
     public static void init() {
         REGISTRATE.creativeModeTab(() -> AstroCore.ASTRO_CREATIVE_TAB);
 
@@ -125,48 +128,43 @@ public class AstroBlocks {
                 "casings/industrial_casings/machine_casing_bismuth_bronze", "Industrial Bismuth Bronze Casing");
         MACHINE_CASING_COBALT_BRASS = createCasing("industrial_cobalt_brass_casing",
                 "casings/industrial_casings/machine_casing_cobalt_brass", "Industrial Cobalt Brass Casing");
-        MACHINE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock(
-                "Pristine Rhodium Plated Palladium Machine Casing", "machine_casing_pristine_rhodium_plated_palladium",
-                "casings/machine_casing_pristine_rhodium_plated_palladium", BlockItem::new);
-        MACHINE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock("Invariant Naquadah Alloy Machine Casing",
-                "machine_casing_invariant_naquadah_alloy", "casings/machine_casing_invariant_naquadah_alloy",
-                BlockItem::new);
+        MACHINE_CASING_RHODIUM_PLATED_PALLADIUM = createCasing(
+                "machine_casing_pristine_rhodium_plated_palladium",
+                "casings/machine_casing_pristine_rhodium_plated_palladium",
+                "Pristine Rhodium Plated Palladium Machine Casing");
+        MACHINE_CASING_NAQUADAH_ALLOY = createCasing("machine_casing_invariant_naquadah_alloy",
+                "casings/machine_casing_invariant_naquadah_alloy", "Invariant Naquadah Alloy Machine Casing");
         MACHINE_CASING_NETHERITE_MESH = createCasing("machine_casing_netherite_mesh",
                 "casings/machine_casing_runic_netherite", "Netherite Mesh Casing");
-        MACHINE_CASING_PAI = createSidedCasingBlock("Thermochemically Stable PAI Machine Casing",
-                "machine_casing_super_inert_pai", "casings/machine_casing_super_inert_pai", BlockItem::new);
-        ALFSTEEL_GEARBOX_CASING = createSidedCasingBlock("§dAlfsteel§r Gearbox", "alfsteel_gearbox_casing",
-                "generators/machine_casing_gearbox_alfsteel", BlockItem::new);
-        GEARBOX_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock("Rhodium Plated Palladium Gearbox Casing",
-                "gearbox_casing_rhodium_plated_palladium", "casings/gearbox_casing_pristine_rhodium_plated_palladium",
-                BlockItem::new);
-        GEARBOX_CASING_NAQUADAH_ALLOY = createSidedCasingBlock("Naquadah Alloy Gearbox Casing",
-                "gearbox_casing_invariant_naquadah_alloy", "casings/gearbox_casing_invariant_naquadah_alloy",
-                BlockItem::new);
+        MACHINE_CASING_PAI = createCasing("machine_casing_super_inert_pai",
+                "casings/machine_casing_super_inert_pai", "Thermochemically Stable PAI Machine Casing");
+        ALFSTEEL_GEARBOX_CASING = createCasing("alfsteel_gearbox_casing",
+                "generators/machine_casing_gearbox_alfsteel", "§dAlfsteel§r Gearbox");
+        GEARBOX_CASING_RHODIUM_PLATED_PALLADIUM = createCasing("gearbox_casing_rhodium_plated_palladium",
+                "casings/gearbox_casing_pristine_rhodium_plated_palladium", "Rhodium Plated Palladium Gearbox Casing");
+        GEARBOX_CASING_NAQUADAH_ALLOY = createCasing("gearbox_casing_invariant_naquadah_alloy",
+                "casings/gearbox_casing_invariant_naquadah_alloy", "Naquadah Alloy Gearbox Casing");
         ALFSTEEL_ENGINE_CASING = createCasing("machine_casing_turbine_alfsteel",
                 "generators/machine_casing_turbine_alfsteel", "§dAlfsteel§r Engine Casing");
-        TURBINE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock("Rhodium Plated Palladium Turbine Casing",
-                "machine_casing_rhodium_plated_palladium", "generators/machine_casing_turbine_rhodium_plated_palladium",
-                BlockItem::new);
-        TURBINE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock("Naquadah Alloy Turbine Casing",
-                "machine_casing_turbine_naquadah_alloy", "generators/machine_casing_turbine_naquadah_alloy",
-                BlockItem::new);
+        TURBINE_CASING_RHODIUM_PLATED_PALLADIUM = createCasing("machine_casing_rhodium_plated_palladium",
+                "generators/machine_casing_turbine_rhodium_plated_palladium", "Rhodium Plated Palladium Turbine Casing");
+        TURBINE_CASING_NAQUADAH_ALLOY = createCasing("machine_casing_turbine_naquadah_alloy",
+                "generators/machine_casing_turbine_naquadah_alloy", "Naquadah Alloy Turbine Casing");
         // EXAMPLE_CASING = createCasing( "", "", "");
 
         // 3. Pipe Casings
-        MANASTEEL_PIPE_CASING = createSidedCasingBlock("§9Manasteel§r Pipe Casing", "manasteel_pipe_casing",
-                "generators/machine_casing_pipe_manasteel", BlockItem::new);
-        TERRASTEEL_PIPE_CASING = createSidedCasingBlock("§2Terrasteel§r Pipe Casing", "terrasteel_pipe_casing",
-                "generators/machine_casing_pipe_terrasteel", BlockItem::new);
-        ALFSTEEL_PIPE_CASING = createSidedCasingBlock("§dAlfsteel§r Pipe Casing", "alfsteel_pipe_casing",
-                "generators/machine_casing_pipe_alfsteel", BlockItem::new);
-        PIPE_CASING_RHODIUM_PLATED_PALLADIUM = createSidedCasingBlock("Rhodium Plated Palladium Pipe Casing",
-                "pipe_casing_rhodium_plated_palladium", "casings/pipe_casing_pristine_rhodium_plated_palladium",
-                BlockItem::new);
-        PIPE_CASING_NAQUADAH_ALLOY = createSidedCasingBlock("Naquadah Alloy Pipe Casing",
-                "pipe_casing_invariant_naquadah_alloy", "casings/pipe_casing_invariant_naquadah_alloy", BlockItem::new);
-        PIPE_CASING_PAI = createSidedCasingBlock("PAI Pipe Casing", "pipe_casing_super_inert_pai",
-                "casings/pipe_casing_super_inert_pai", BlockItem::new);
+        MANASTEEL_PIPE_CASING = createCasing("manasteel_pipe_casing",
+                "generators/machine_casing_pipe_manasteel", "§9Manasteel§r Pipe Casing");
+        TERRASTEEL_PIPE_CASING = createCasing("terrasteel_pipe_casing",
+                "generators/machine_casing_pipe_terrasteel", "§2Terrasteel§r Pipe Casing");
+        ALFSTEEL_PIPE_CASING = createCasing("alfsteel_pipe_casing",
+                "generators/machine_casing_pipe_alfsteel", "§dAlfsteel§r Pipe Casing");
+        PIPE_CASING_RHODIUM_PLATED_PALLADIUM = createCasing("pipe_casing_rhodium_plated_palladium",
+                "casings/pipe_casing_pristine_rhodium_plated_palladium", "Rhodium Plated Palladium Pipe Casing");
+        PIPE_CASING_NAQUADAH_ALLOY = createCasing("pipe_casing_invariant_naquadah_alloy",
+                "casings/pipe_casing_invariant_naquadah_alloy", "Naquadah Alloy Pipe Casing");
+        PIPE_CASING_PAI = createCasing("pipe_casing_super_inert_pai",
+                "casings/pipe_casing_super_inert_pai", "PAI Pipe Casing");
 
         // 4. Fireboxes
         FIREBOX_MANASTEEL = createManaFirebox(new FireboxInfo("manasteel_firebox",
@@ -201,21 +199,20 @@ public class AstroBlocks {
                 "industrial_processing_core_2", "§5Industrial Processing Core MK II");
         INDUSTRIAL_PROCESSING_CORE_MK3 = createCoreBlock("iv_industrial_processing_core",
                 "industrial_processing_core_3", "§9Industrial Processing Core MK III");
+
+        // 8. Electromagnetic Generator Blocks
+        ELECTROMAGNET_MK1 = createCasing("iv_faraday_magnet",
+                "generators/neodymium_feg_magnet", "§9Faraday Generator Magnet MK I");
+        ELECTROMAGNET_MK2 = createCasing("luv_faraday_magnet",
+                "generators/samarium_feg_magnet", "§dFaraday Generator Magnet MK II");
+        ELECTROMAGNET_MK3 = createCasing("zpm_faraday_magnet",
+                "generators/neutronium_feg_magnet", "§cFaraday Generator Magnet MK III");
+        FARADAY_GENERATOR_COIL = createBloomCoilBlock("faraday_generator_coil",
+                "generators/faraday_generator_coil", "Faraday Generator Coil");
+
     }
 
     // --- Helpers ---
-    private static BlockEntry<Block> createSidedCasingBlock(String name, String id, String texture,
-                                                            NonNullBiFunction<Block, Item.Properties, ? extends BlockItem> func) {
-        return REGISTRATE.block(id, Block::new)
-                .initialProperties(() -> Blocks.IRON_BLOCK)
-                .properties(p -> p.isValidSpawn((state, level, pos, ent) -> false))
-                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
-                        prov.models().cubeAll(ctx.getName(), AstroCore.id("block/" + texture))))
-                .tag(CustomTags.MINEABLE_WITH_CONFIG_VALID_PICKAXE_WRENCH)
-                .lang(name)
-                .item(func).build().register();
-    }
-
     private static BlockEntry<Block> createStone(String id, String name, String texture, MapColor color,
                                                  float strength) {
         return REGISTRATE.block(id, Block::new)
@@ -332,8 +329,31 @@ public class AstroBlocks {
                 .item(BlockItem::new).build().register();
     }
 
+    private static BlockEntry<ActiveBlock> createBloomCoilBlock(String id, String texture, String lang) {
+        return REGISTRATE.block(id, ActiveBlock::new)
+                .initialProperties(() -> Blocks.IRON_BLOCK)
+                .properties(p -> p.isValidSpawn((state, level, pos, ent) -> false))
+                .addLayer(() -> RenderType::cutoutMipped)
+                .blockstate((ctx, prov) -> {
+                    ModelFile inactive = prov.models().cubeAll(ctx.getName(),
+                            AstroCore.id("block/" + texture));
+                    ModelFile active = prov.models().cubeAll(ctx.getName() + "_active",
+                            AstroCore.id("block/" + texture + "_bloom"));
+                    prov.getVariantBuilder(ctx.getEntry())
+                            .partialState().with(GTBlockStateProperties.ACTIVE, false).modelForState()
+                            .modelFile(inactive).addModel()
+                            .partialState().with(GTBlockStateProperties.ACTIVE, true).modelForState()
+                            .modelFile(active).addModel();
+                })
+                .tag(CustomTags.MINEABLE_WITH_CONFIG_VALID_PICKAXE_WRENCH)
+                .lang(lang)
+                .item(BlockItem::new)
+                .build()
+                .register();
+    }
+
     public static final FireboxInfo MANASTEEL_FIREBOX_REC = new FireboxInfo("manasteel_firebox",
-            AstroCore.id("block/generators/machine_casing_manasteel_plated_bricks"),
+            AstroCore.id("block/generators/machine_casing_ma/nasteel_plated_bricks"),
             AstroCore.id("block/generators/machine_casing_manasteel_plated_bricks"),
             AstroCore.id("block/generators/machine_casing_firebox_manasteel"));
     public static final FireboxInfo TERRASTEEL_FIREBOX_REC = new FireboxInfo("terrasteel_firebox",

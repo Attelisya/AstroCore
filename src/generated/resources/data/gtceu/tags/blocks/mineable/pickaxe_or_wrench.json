@@ -33,6 +33,10 @@
     "astrogreg:pipe_casing_super_inert_pai",
     "astrogreg:manasteel_firebox_casing",
     "astrogreg:terrasteel_firebox_casing",
-    "astrogreg:alfsteel_firebox_casing"
+    "astrogreg:alfsteel_firebox_casing",
+    "astrogreg:iv_faraday_magnet",
+    "astrogreg:luv_faraday_magnet",
+    "astrogreg:zpm_faraday_magnet",
+    "astrogreg:faraday_generator_coil"
   ]
 }

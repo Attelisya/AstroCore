@@ -30,13 +30,6 @@ public class SolarBoilerProvider implements IBlockComponentProvider, IServerData
 
         if (!data.contains("formed")) return;
 
-        boolean formed = data.getBoolean("formed");
-        if (!formed) {
-            tooltip.add(Component.translatable("astrogreg.machine.solar_boiler_array.not_formed")
-                    .withStyle(ChatFormatting.RED));
-            return;
-        }
-
         // Check if shift is held
         boolean shiftHeld = net.minecraft.client.Minecraft.getInstance().screen == null &&
                 GLFW.glfwGetKey(net.minecraft.client.Minecraft.getInstance().getWindow().getWindow(),

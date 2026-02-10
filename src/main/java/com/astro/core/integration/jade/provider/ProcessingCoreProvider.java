@@ -51,10 +51,8 @@ public class ProcessingCoreProvider implements IBlockComponentProvider, IServerD
             }
         }
 
-        tooltip.add(Component.translatable("astrogreg.machine.processing_core.core", mkLevel)
-                .withStyle(ChatFormatting.GREEN));
-        tooltip.add(Component.translatable("astrogreg.machine.processing_core.max_eut", maxEUt, tierName)
-                .withStyle(ChatFormatting.GREEN));
+        tooltip.add(Component.translatable("astrogreg.machine.processing_core.core", mkLevel));
+        tooltip.add(Component.translatable("astrogreg.machine.processing_core.max_eut", maxEUt, tierName));
     }
 
     @Override

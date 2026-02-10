@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "astrogreg:block/faraday_generator_coil"
+    },
+    "active=true": {
+      "model": "astrogreg:block/faraday_generator_coil_active"
+    }
+  }
+}
