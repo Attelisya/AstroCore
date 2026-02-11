@@ -42,14 +42,14 @@ public class AstroLangHandler {
 
         provider.add("astrogreg.machine.faraday_generator_description.tooltip", "§fConverts rotational force into EU");
         provider.add("astrogreg.machine.faraday_generator_expanding.tooltip",
-                "§eBase Production:§r§f 4096 EU/t (§a2A§r §5EV§r) §7per§r §eCoil Row§r.");
+                "§eBase Production:§r§f 4096 EU/t (§a2A§r §5EV§r) §7per§r §eMagnet Ring§r.");
         provider.add("astrogreg.machine.faraday_generator_magnets.tooltip",
-                "Higher tiers of §bFaraday Generator Magnet§r rows multiplies EU/t by 4 for that §r§eCoil Row§r.");
+                "Higher tiers of §bFaraday Generator Magnet§r rows multiply EU/t by 4 for that §r§Magnet Ring§r.");
         provider.add("astrogreg.machine.faraday_generator_fluids.tooltip",
-                "Consumes 1mB §6Lubricant§r §7and either§r§f 100mB §r§bLiquid Oxygen§r§7 or§r 25mB §eLiquid Helium§r per second for each §eCoil Row§r.");
+                "Consumes 1mB §6Lubricant§r §7and either§r§f 100mB §r§bLiquid Oxygen§r§7 or§r 25mB §eLiquid Helium§r per second for each §eMagnet Ring§r.");
         provider.add("astrogreg.machine.faraday_generator_returns.tooltip",
                 "Returns 40%§7 of §rCoolant§7 back in§r Gaseous §7form.");
-        provider.add("astrogreg.machine.faraday_generator_max_length.tooltip", "§aMax Length:§r§e 64 Coil Rows");
+        provider.add("astrogreg.machine.faraday_generator_max_length.tooltip", "§aMax Length:§r§e 64 Magnet Rings");
 
         provider.add("astrogreg.machine.large_miner.zpm.tooltip", "Planetary Depletion Apparatus");
         provider.add("astrogreg.machine.fluid_drilling_rig.iv.tooltip", "Crust Sucker");

@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconType;
 public class AstroMaterialSet {
 
     public static final MaterialIconType SLEEVE = new MaterialIconType("sleeve");
+    public static final MaterialIconType COMPRESSED_SPRING = new MaterialIconType("compressed_spring");
 
     public static final MaterialIconSet DULL_MAGNETIC = new MaterialIconSet("dull_magnetic", MaterialIconSet.MAGNETIC);
 

@@ -1,0 +1,7 @@
+{
+  "parent": "gtceu:item/material_sets/shiny/compressed_spring",
+  "textures": {
+    "layer2": "gtceu:item/material_sets/bright/compressed_spring_overlay"
+  }
+}
+
