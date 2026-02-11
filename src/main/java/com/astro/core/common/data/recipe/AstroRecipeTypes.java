@@ -91,7 +91,7 @@ public class AstroRecipeTypes {
                 });
 
         FARADAY_GENERATOR_RECIPES = register("faraday_generator", MULTIBLOCK)
-                .setMaxIOSize(2, 1, 2, 0)
+                .setMaxIOSize(1, 1, 0, 0)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_MAGNET, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
                 .setSound(GTSoundEntries.REPLICATOR)
                 .setEUIO(IO.OUT);

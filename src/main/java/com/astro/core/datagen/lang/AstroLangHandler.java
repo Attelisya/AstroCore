@@ -41,8 +41,14 @@ public class AstroLangHandler {
         provider.add("config.jade.plugin_astrogreg.processing_core_info", "§aIndustrial Processing Core Info§r");
 
         provider.add("astrogreg.machine.faraday_generator_description.tooltip", "§fConverts rotational force into EU");
-        provider.add("astrogreg.machine.faraday_generator_expanding.tooltip", "§eBase Production:§r§f 4096 EU/t (2A §5EV§r) per Coil Row.");
-        provider.add("astrogreg.machine.faraday_generator_magnets.tooltip", "Higher tiers of §bFaraday Generator Magnet§r rows multiply EU output by 4x for that row.");
+        provider.add("astrogreg.machine.faraday_generator_expanding.tooltip",
+                "§eBase Production:§r§f 4096 EU/t (§a2A§r §5EV§r) §7per§r §eCoil Row§r.");
+        provider.add("astrogreg.machine.faraday_generator_magnets.tooltip",
+                "Higher tiers of §bFaraday Generator Magnet§r rows multiplies EU/t by 4 for that §r§eCoil Row§r.");
+        provider.add("astrogreg.machine.faraday_generator_fluids.tooltip",
+                "Consumes 1mB §6Lubricant§r §7and either§r§f 100mB §r§bLiquid Oxygen§r§7 or§r 25mB §eLiquid Helium§r per second for each §eCoil Row§r.");
+        provider.add("astrogreg.machine.faraday_generator_returns.tooltip",
+                "Returns 40%§7 of §rCoolant§7 back in§r Gaseous §7form.");
         provider.add("astrogreg.machine.faraday_generator_max_length.tooltip", "§aMax Length:§r§e 64 Coil Rows");
 
         provider.add("astrogreg.machine.large_miner.zpm.tooltip", "Planetary Depletion Apparatus");
