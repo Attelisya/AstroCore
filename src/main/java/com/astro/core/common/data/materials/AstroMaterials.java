@@ -533,7 +533,7 @@ public class AstroMaterials {
 
         LIQUID_URANUS_AIR = new Material.Builder(
                 AstroCore.id("liquid_uranus_air"))
-                .langValue("Uranus Air")
+                .langValue("Liquid Uranian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
                 // .components()
@@ -565,7 +565,7 @@ public class AstroMaterials {
 
         LIQUID_JUPITER_AIR = new Material.Builder(
                 AstroCore.id("liquid_jupiter_air"))
-                .langValue("Jovian Air")
+                .langValue("Liquid Jovian Air")
                 .liquid(new FluidBuilder().customStill().temperature(36))
                 .flags(DISABLE_DECOMPOSITION)
                 // .components()
