@@ -33,6 +33,7 @@ import java.util.List;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+@SuppressWarnings("all")
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class ExpandedPatternBufferProxyPartMachine extends TieredIOPartMachine

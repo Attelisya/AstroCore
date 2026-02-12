@@ -15,6 +15,7 @@ import java.util.*;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.BORDERLESS_LAMPS;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.LAMPS;
 
+@SuppressWarnings("all")
 public class AstroPredicates {
 
     @SafeVarargs

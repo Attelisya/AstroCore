@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("all")
 public final class ExpandedProxySlotRecipeHandler {
 
     @Getter

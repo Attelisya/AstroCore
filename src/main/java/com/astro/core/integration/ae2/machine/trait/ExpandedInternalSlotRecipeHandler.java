@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("all")
 public final class ExpandedInternalSlotRecipeHandler {
 
     @Getter

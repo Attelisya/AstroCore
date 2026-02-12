@@ -15,6 +15,7 @@ import java.util.function.BiFunction;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 
+@SuppressWarnings("all")
 public class AstroMachineUtils {
 
     /**
@@ -29,7 +30,7 @@ public class AstroMachineUtils {
     public static Pair<MachineDefinition, MachineDefinition> registerSteamMachines(
                                                                                    String name,
                                                                                    BiFunction<IMachineBlockEntity, Boolean, MetaMachine> factory,
-                                                                                   BiFunction<Boolean, MachineBuilder<MachineDefinition>, MachineDefinition> builder) {
+                                                                                   BiFunction<Boolean, MachineBuilder<MachineDefinition, ?>, MachineDefinition> builder) {
         return registerSteamMachines(REGISTRATE, name, factory, builder);
     }
 
@@ -37,7 +38,7 @@ public class AstroMachineUtils {
                                                                                    GTRegistrate registrate,
                                                                                    String name,
                                                                                    BiFunction<IMachineBlockEntity, Boolean, MetaMachine> factory,
-                                                                                   BiFunction<Boolean, MachineBuilder<MachineDefinition>, MachineDefinition> builder) {
+                                                                                   BiFunction<Boolean, MachineBuilder<MachineDefinition, ?>, MachineDefinition> builder) {
         MachineDefinition lowTier = builder.apply(false,
                 registrate.machine("lp_%s".formatted(name), holder -> factory.apply(holder, false))
                         .langValue("Low Pressure " + FormattingUtil.toEnglishName(name))
@@ -54,7 +55,7 @@ public class AstroMachineUtils {
     public static MachineDefinition[] registerTieredMachines(
                                                              String name,
                                                              BiFunction<IMachineBlockEntity, Integer, MetaMachine> factory,
-                                                             BiFunction<Integer, MachineBuilder<MachineDefinition>, MachineDefinition> builder,
+                                                             BiFunction<Integer, MachineBuilder<MachineDefinition, ?>, MachineDefinition> builder,
                                                              int... tiers) {
         return registerTieredMachines(REGISTRATE, name, factory, builder, tiers);
     }
@@ -63,7 +64,7 @@ public class AstroMachineUtils {
                                                              GTRegistrate registrate,
                                                              String name,
                                                              BiFunction<IMachineBlockEntity, Integer, MetaMachine> factory,
-                                                             BiFunction<Integer, MachineBuilder<MachineDefinition>, MachineDefinition> builder,
+                                                             BiFunction<Integer, MachineBuilder<MachineDefinition, ?>, MachineDefinition> builder,
                                                              int... tiers) {
         MachineDefinition[] definitions = new MachineDefinition[GTValues.TIER_COUNT];
 

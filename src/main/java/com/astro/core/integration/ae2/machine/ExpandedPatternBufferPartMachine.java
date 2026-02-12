@@ -80,6 +80,7 @@ import java.util.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+@SuppressWarnings("all")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ExpandedPatternBufferPartMachine extends MEBusPartMachine
