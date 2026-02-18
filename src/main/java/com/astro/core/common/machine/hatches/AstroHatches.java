@@ -43,7 +43,6 @@ public class AstroHatches {
     public static final MachineDefinition WATER_HATCH = REGISTRATE
             .machine("water_input_hatch", AstroWaterHatch::new)
             .rotationState(RotationState.ALL)
-            .abilities(PartAbility.IMPORT_FLUIDS)
             .overlaySteamHullModel("water_hatch")
             .modelProperty(IS_FORMED, false)
             .tooltips(Component.translatable("gtceu.universal.tooltip.fluid_storage_capacity",

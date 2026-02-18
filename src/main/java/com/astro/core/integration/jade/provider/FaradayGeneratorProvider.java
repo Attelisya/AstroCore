@@ -1,6 +1,7 @@
 package com.astro.core.integration.jade.provider;
 
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
+import com.gregtechceu.gtceu.api.fluids.store.FluidStorageKeys;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
@@ -32,7 +33,7 @@ public class FaradayGeneratorProvider implements IBlockComponentProvider, IServe
 
         CompoundTag data = accessor.getServerData();
 
-        if (!data.contains("formed")) return;
+        if (!data.contains("formed") || !data.getBoolean("formed")) return;
 
         int magnetRows = data.getInt("magnetRows");
         int coolantUsage = data.getInt("coolantUsage");
@@ -63,9 +64,13 @@ public class FaradayGeneratorProvider implements IBlockComponentProvider, IServe
                 compoundTag.putInt("magnetRows", machine.getMagnetRows());
                 compoundTag.putBoolean("isActive", machine.isActive());
 
-                boolean usingHelium = RecipeHelper.matchRecipe(machine,
-                        GTRecipeBuilder.ofRaw().inputFluids(GTMaterials.Helium.getFluid(1)).buildRawRecipe())
-                        .isSuccess();
+                boolean usingHelium =
+                        RecipeHelper.matchRecipe(machine, GTRecipeBuilder.ofRaw()
+                                .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1))
+                                .buildRawRecipe()).isSuccess() ||
+                                RecipeHelper.matchRecipe(machine, GTRecipeBuilder.ofRaw()
+                                        .inputFluids(GTMaterials.Helium.getFluid(1))
+                                        .buildRawRecipe()).isSuccess();
 
                 int coolantAmount = usingHelium ? machine.getMagnetRows() * 25 : machine.getMagnetRows() * 100;
                 String coolantName = usingHelium ? "Liquid Helium" : "Liquid Oxygen";

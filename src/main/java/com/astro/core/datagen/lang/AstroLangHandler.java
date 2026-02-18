@@ -36,11 +36,10 @@ public class AstroLangHandler {
 
         provider.add("astrogreg.machine.industrial_core.tooltip",
                 "Maximum EU/t for this machine is limited by the tier of its §bIndustrial Processing Core§r.");
-        provider.add("astrogreg.machine.processing_core.core", "§aProcessing Core:§r %s");
-        provider.add("astrogreg.machine.processing_core.max_eut", "§aMax EU/t:§r §f%s (%s)");
+        provider.add("astrogreg.machine.processing_core.core", "§bProcessing Core:§r %s");
+        provider.add("astrogreg.machine.processing_core.max_eut", "§eMax EU/t:§r§f %s (%s)");
         provider.add("config.jade.plugin_astrogreg.processing_core_info", "§aIndustrial Processing Core Info§r");
 
-        provider.add("astrogreg.machine.faraday_generator_description.tooltip", "§fConverts rotational force into EU");
         provider.add("astrogreg.machine.faraday_generator_expanding.tooltip",
                 "§eBase Production:§r§f 4096 EU/t (§a2A§r §5EV§r) §7per§r §eMagnet Ring§r.");
         provider.add("astrogreg.machine.faraday_generator_magnets.tooltip",
@@ -49,6 +48,8 @@ public class AstroLangHandler {
                 "Consumes 1mB §6Lubricant§r §7and either§r§f 100mB §r§bLiquid Oxygen§r§7 or§r 25mB §eLiquid Helium§r per second for each §eMagnet Ring§r.");
         provider.add("astrogreg.machine.faraday_generator_returns.tooltip",
                 "Returns 40%§7 of §rCoolant§7 back in§r Gaseous §7form.");
+        provider.add("astrogreg.machine.faraday_generator_springs.tooltip",
+                "§dCompressed Superconductor Springs§r above §9IV§r §7increase§r the EU/t output by §a5%§r per tier.");
         provider.add("astrogreg.machine.faraday_generator_max_length.tooltip", "§aMax Length:§r§e 64 Magnet Rings");
         provider.add("astrogreg.machine.faraday_generator.magnet_rows", "Magnet Rings: %s");
         provider.add("astrogreg.machine.faraday_generator.hold_shift", "§o§7Hold Shift for details");

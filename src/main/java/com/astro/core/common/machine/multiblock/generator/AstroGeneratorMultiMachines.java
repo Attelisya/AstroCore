@@ -51,6 +51,7 @@ public class AstroGeneratorMultiMachines {
 
         FARADAY_GENERATOR = REGISTRATE
                 .multiblock("faraday_electromagnetic_generator", FaradayGeneratorMachine::new)
+                .langValue("§bFaraday Electromagnetic Generator")
                 .rotationState(ALL)
                 .allowExtendedFacing(true)
                 .recipeType(AstroRecipeTypes.FARADAY_GENERATOR_RECIPES)
@@ -86,9 +87,9 @@ public class AstroGeneratorMultiMachines {
                 .workableCasingModel(GTCEu.id("block/casings/gcym/nonconducting_casing"),
                         AstroCore.id("block/multiblock/faraday_electromagnetic_generator"))
                 .tooltipBuilder((stack, tooltip) -> {
-                    tooltip.add(Component.translatable("astrogreg.machine.faraday_generator_description.tooltip"));
                     tooltip.add(Component.translatable("astrogreg.machine.faraday_generator_expanding.tooltip"));
                     tooltip.add(Component.translatable("astrogreg.machine.faraday_generator_magnets.tooltip"));
+                    tooltip.add(Component.translatable("astrogreg.machine.faraday_generator_springs.tooltip"));
                     tooltip.add(Component.translatable("astrogreg.machine.faraday_generator_fluids.tooltip"));
                     tooltip.add(Component.translatable("astrogreg.machine.faraday_generator_returns.tooltip"));
                     tooltip.add(Component.translatable("astrogreg.machine.faraday_generator_max_length.tooltip"));

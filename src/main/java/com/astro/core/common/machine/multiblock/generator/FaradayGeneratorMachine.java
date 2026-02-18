@@ -1,9 +1,11 @@
 package com.astro.core.common.machine.multiblock.generator;
 
+import com.astro.core.AstroCore;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.IEnergyContainer;
 import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
+import com.gregtechceu.gtceu.api.fluids.store.FluidStorageKeys;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
@@ -13,7 +15,6 @@ import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMa
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
-import com.gregtechceu.gtceu.api.recipe.content.ContentModifier;
 import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
 import com.gregtechceu.gtceu.common.data.GCYMBlocks;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
@@ -34,6 +35,7 @@ import net.minecraft.world.level.block.Block;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -82,10 +84,12 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
 
     private int tickCounter = 0;
     private int targetSpinupTicks = 0;
+    private static final int SPINUP_UPDATE_INTERVAL = 5;
 
     public FaradayGeneratorMachine(IMachineBlockEntity holder) {
         super(holder);
     }
+
 
     @Override
     public void onStructureFormed() {
@@ -98,6 +102,9 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
         calculateMagnetRows();
         detectDynamoTier();
         targetSpinupTicks = (BASE_SPINUP_TIME + magnetRows) * 20;
+
+        AstroCore.LOGGER.info("Structure formed: magnetRows={}, maxOutput={}, targetSpinupTicks={}",
+                magnetRows, maxOutput, targetSpinupTicks);
     }
 
     private void detectDynamoTier() {
@@ -207,10 +214,128 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
 
     private GTRecipe getCoolantRecipe() {
         if (RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
-                .inputFluids(GTMaterials.Helium.getFluid(1)).buildRawRecipe()).isSuccess()) {
-            return GTRecipeBuilder.ofRaw().inputFluids(GTMaterials.Helium.getFluid(magnetRows * 25)).buildRawRecipe();
+                .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1)).buildRawRecipe()).isSuccess()) {
+            return GTRecipeBuilder.ofRaw()
+                    .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, magnetRows * 25))
+                    .buildRawRecipe();
         }
-        return GTRecipeBuilder.ofRaw().inputFluids(GTMaterials.Oxygen.getFluid(magnetRows * 100)).buildRawRecipe();
+        if (RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
+                .inputFluids(GTMaterials.Helium.getFluid(1)).buildRawRecipe()).isSuccess()) {
+            return GTRecipeBuilder.ofRaw()
+                    .inputFluids(GTMaterials.Helium.getFluid(magnetRows * 25))
+                    .buildRawRecipe();
+        }
+        if (RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
+                .inputFluids(GTMaterials.Oxygen.getFluid(FluidStorageKeys.LIQUID, 1)).buildRawRecipe()).isSuccess()) {
+            return GTRecipeBuilder.ofRaw()
+                    .inputFluids(GTMaterials.Oxygen.getFluid(FluidStorageKeys.LIQUID, magnetRows * 100))
+                    .buildRawRecipe();
+        }
+        return GTRecipeBuilder.ofRaw()
+                .inputFluids(GTMaterials.Oxygen.getFluid(magnetRows * 100))
+                .buildRawRecipe();
+    }
+
+    private void updateCurrentOutput() {
+        currentOutput = (long) ((double) currentRPM / MAX_RPM * maxOutput);
+    }
+
+    @Override
+    public void onWaiting() {
+        super.onWaiting();
+        if (tickCounter % SPINUP_UPDATE_INTERVAL == 0) {
+            currentRPM = Math.max(0, currentRPM - getSpinupIncrement());
+            updateCurrentOutput();
+        }
+    }
+
+    private int getSpinupIncrement() {
+        int totalSeconds = BASE_SPINUP_TIME + magnetRows;
+        int incrementsPerSecond = 20 / SPINUP_UPDATE_INTERVAL;
+        return MAX_RPM / (totalSeconds * incrementsPerSecond);
+    }
+
+    @Override
+    public boolean beforeWorking(@Nullable GTRecipe recipe) {
+        if (recipe == null) return false;
+
+        if (!RecipeHelper.matchRecipe(this, getLubricantRecipe()).isSuccess()) {
+            AstroCore.LOGGER.info("beforeWorking: No lubricant - preventing recipe start");
+            return false;
+        }
+
+        if (!RecipeHelper.matchRecipe(this, getCoolantRecipe()).isSuccess()) {
+            AstroCore.LOGGER.info("beforeWorking: No coolant - preventing recipe start");
+            return false;
+        }
+
+        return super.beforeWorking(recipe);
+    }
+
+    @Override
+    public boolean onWorking() {
+        boolean value = super.onWorking();
+
+        if (recipeLogic.getLastRecipe() != null) {
+            AstroCore.LOGGER.info("onWorking: Last recipe EU = {}",
+                    recipeLogic.getLastRecipe().getOutputEUt().getTotalEU());
+        }
+
+        if (tickCounter % SPINUP_UPDATE_INTERVAL == 0) {
+            boolean usingLiquidHelium = RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
+                    .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1)).buildRawRecipe()).isSuccess();
+            boolean usingGasHelium = !usingLiquidHelium && RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
+                    .inputFluids(GTMaterials.Helium.getFluid(1)).buildRawRecipe()).isSuccess();
+            boolean usingHelium = usingLiquidHelium || usingGasHelium;
+
+            if (tickCounter % 20 == 0) {
+                if (!RecipeHelper.handleRecipeIO(this, getLubricantRecipe(), IO.IN,
+                        this.recipeLogic.getChanceCaches()).isSuccess()) {
+                    AstroCore.LOGGER.info("Lubricant consumption failed during recipe");
+                    currentRPM = Math.max(0, currentRPM - getSpinupIncrement());
+                    updateCurrentOutput();
+                    return false;
+                }
+
+                if (!RecipeHelper.handleRecipeIO(this, getCoolantRecipe(), IO.IN,
+                        this.recipeLogic.getChanceCaches()).isSuccess()) {
+                    AstroCore.LOGGER.info("Coolant consumption failed during recipe");
+                    currentRPM = Math.max(0, currentRPM - getSpinupIncrement());
+                    updateCurrentOutput();
+                    return false;
+                }
+
+                int coolantAmount = usingHelium ? magnetRows * 25 : magnetRows * 100;
+                int returnAmount = (int) (coolantAmount * 0.4);
+
+                GTRecipe returnRecipe;
+                if (usingLiquidHelium) {
+                    returnRecipe = GTRecipeBuilder.ofRaw()
+                            .outputFluids(GTMaterials.Helium.getFluid(returnAmount))
+                            .buildRawRecipe();
+                } else if (usingGasHelium) {
+                    returnRecipe = GTRecipeBuilder.ofRaw()
+                            .outputFluids(GTMaterials.Helium.getFluid(returnAmount))
+                            .buildRawRecipe();
+                } else {
+                    returnRecipe = GTRecipeBuilder.ofRaw()
+                            .outputFluids(GTMaterials.Oxygen.getFluid(returnAmount))
+                            .buildRawRecipe();
+                }
+
+                RecipeHelper.handleRecipeIO(this, returnRecipe, IO.OUT, this.recipeLogic.getChanceCaches());
+            }
+
+            if (currentRPM < MAX_RPM) {
+                currentRPM = Math.min(MAX_RPM, currentRPM + getSpinupIncrement());
+                updateCurrentOutput();
+            }
+        }
+
+        tickCounter++;
+        if (tickCounter > 72000) tickCounter %= 72000;
+
+        return value;
     }
 
     public static ModifierFunction recipeModifier(@NotNull MetaMachine machine, @NotNull GTRecipe recipe) {
@@ -222,11 +347,8 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
             return ModifierFunction.IDENTITY;
         }
 
-        if (!RecipeHelper.matchRecipe(generatorMachine, generatorMachine.getLubricantRecipe()).isSuccess()) {
-            return ModifierFunction.IDENTITY;
-        }
-
-        if (!RecipeHelper.matchRecipe(generatorMachine, generatorMachine.getCoolantRecipe()).isSuccess()) {
+        long recipeEU = recipe.getOutputEUt().getTotalEU();
+        if (recipeEU <= 0) {
             return ModifierFunction.IDENTITY;
         }
 
@@ -234,118 +356,80 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
             return ModifierFunction.IDENTITY;
         }
 
+        double multiplier = (double) generatorMachine.currentOutput / recipeEU;
+
         return ModifierFunction.builder()
-                .inputModifier(ContentModifier.multiplier(1))
-                .outputModifier(ContentModifier.multiplier(1))
-                .eutMultiplier(generatorMachine.currentOutput / (double) recipe.getOutputEUt().getTotalEU())
+                .eutMultiplier(multiplier)
                 .build();
     }
 
     @Override
-    public boolean onWorking() {
-        boolean value = super.onWorking();
-
-        if (tickCounter % 20 == 0) {
-            if (!RecipeHelper.handleRecipeIO(this, getLubricantRecipe(), IO.IN,
-                    this.recipeLogic.getChanceCaches()).isSuccess()) {
-                recipeLogic.interruptRecipe();
-                currentRPM = Math.max(0, currentRPM - (MAX_RPM / targetSpinupTicks) * 20);
-                updateCurrentOutput();
-                return false;
-            }
-
-            boolean usingHelium = RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
-                    .inputFluids(GTMaterials.Helium.getFluid(1)).buildRawRecipe()).isSuccess();
-
-            if (!RecipeHelper.handleRecipeIO(this, getCoolantRecipe(), IO.IN,
-                    this.recipeLogic.getChanceCaches()).isSuccess()) {
-                recipeLogic.interruptRecipe();
-                currentRPM = Math.max(0, currentRPM - (MAX_RPM / targetSpinupTicks) * 20);
-                updateCurrentOutput();
-                return false;
-            }
-
-            int coolantAmount = usingHelium ? magnetRows * 25 : magnetRows * 100;
-            int returnAmount = (int) (coolantAmount * 0.4);
-
-            GTRecipe returnRecipe = usingHelium ?
-                    GTRecipeBuilder.ofRaw().outputFluids(GTMaterials.Helium.getFluid(returnAmount)).buildRawRecipe() :
-                    GTRecipeBuilder.ofRaw().outputFluids(GTMaterials.Oxygen.getFluid(returnAmount)).buildRawRecipe();
-
-            RecipeHelper.handleRecipeIO(this, returnRecipe, IO.OUT, this.recipeLogic.getChanceCaches());
-
-            if (currentRPM < MAX_RPM) {
-                currentRPM = Math.min(MAX_RPM, currentRPM + (MAX_RPM / targetSpinupTicks) * 20);
-            }
-            updateCurrentOutput();
-        }
-
-        tickCounter++;
-        if (tickCounter > 72000) tickCounter %= 72000;
-
-        return value;
-    }
-
-    @Override
-    public void onWaiting() {
-        super.onWaiting();
-        if (tickCounter % 20 == 0) {
-            currentRPM = Math.max(0, currentRPM - (MAX_RPM / targetSpinupTicks) * 20);
-            updateCurrentOutput();
-        }
-    }
-
-    private void updateCurrentOutput() {
-        currentOutput = (long) ((double) currentRPM / MAX_RPM * maxOutput);
-    }
-
-    @Override
     public long getOverclockVoltage() {
-        return currentOutput;
+        long voltage = currentOutput;
+        if (voltage > 0) {
+            AstroCore.LOGGER.info("getOverclockVoltage returning: {}", voltage);
+        }
+        return voltage;
     }
 
     @Override
     public void addDisplayText(List<Component> textList) {
-        MultiblockDisplayText.Builder builder = MultiblockDisplayText.builder(textList, isFormed())
+        if (!isFormed()) {
+            MultiblockDisplayText.builder(textList, false).addWorkingStatusLine();
+            return;
+        }
+
+        MultiblockDisplayText.Builder builder = MultiblockDisplayText.builder(textList, true)
                 .setWorkingStatus(recipeLogic.isWorkingEnabled(), recipeLogic.isActive());
 
-        if (isFormed()) {
-            int displayTier = dynamoTier;
-            if (maxHatchOutput > 0 && dynamoTier > GTValues.ULV) {
-                long baseVoltage = GTValues.V[dynamoTier];
-                long amperage = maxHatchOutput / baseVoltage;
-                if (amperage == 4) {
-                    displayTier = Math.min(GTValues.MAX, dynamoTier + 1);
-                } else if (amperage >= 16) {
-                    displayTier = Math.min(GTValues.MAX, dynamoTier + 2);
-                }
+        if (magnetRows == 0) {
+            textList.add(Component.translatable("astrogreg.machine.faraday_generator.conflicting_coils")
+                    .withStyle(ChatFormatting.RED));
+        }
+
+        int displayTier = dynamoTier;
+        if (maxHatchOutput > 0 && dynamoTier > GTValues.ULV) {
+            long baseVoltage = GTValues.V[dynamoTier];
+            long amperage = maxHatchOutput / baseVoltage;
+            if (amperage == 4) {
+                displayTier = Math.min(GTValues.MAX, dynamoTier + 1);
+            } else if (amperage >= 16) {
+                displayTier = Math.min(GTValues.MAX, dynamoTier + 2);
             }
+        }
 
-            textList.add(Component.translatable("astrogreg.machine.faraday_generator.max_eu_per_tick",
-                    FormattingUtil.formatNumbers(maxHatchOutput), GTValues.VNF[displayTier])
-                    .withStyle(ChatFormatting.GRAY));
+        textList.add(Component.translatable("astrogreg.machine.faraday_generator.max_eu_per_tick",
+                        FormattingUtil.formatNumbers(maxHatchOutput), GTValues.VNF[displayTier])
+                .withStyle(ChatFormatting.GRAY));
 
-            textList.add(Component.translatable("astrogreg.machine.faraday_generator.max_recipe_tier",
-                    GTValues.VNF[displayTier])
-                    .withStyle(ChatFormatting.GRAY));
+        textList.add(Component.translatable("astrogreg.machine.faraday_generator.max_recipe_tier",
+                        GTValues.VNF[displayTier])
+                .withStyle(ChatFormatting.GRAY));
 
-            textList.add(Component.translatable("astrogreg.machine.faraday_generator.energy_output",
-                    FormattingUtil.formatNumbers(currentOutput), FormattingUtil.formatNumbers(maxOutput))
-                    .withStyle(ChatFormatting.WHITE));
+        textList.add(Component.translatable("astrogreg.machine.faraday_generator.energy_output",
+                        FormattingUtil.formatNumbers(currentOutput), FormattingUtil.formatNumbers(maxOutput))
+                .withStyle(ChatFormatting.WHITE));
 
-            textList.add(Component.translatable("astrogreg.machine.faraday_generator.rotation_speed",
-                    FormattingUtil.formatNumbers(currentRPM), FormattingUtil.formatNumbers(MAX_RPM))
-                    .withStyle(ChatFormatting.WHITE));
+        textList.add(Component.translatable("astrogreg.machine.faraday_generator.rotation_speed",
+                        FormattingUtil.formatNumbers(currentRPM), FormattingUtil.formatNumbers(MAX_RPM))
+                .withStyle(ChatFormatting.WHITE));
 
-            textList.add(Component.translatable("astrogreg.machine.faraday_generator.magnet_rows", magnetRows)
-                    .withStyle(ChatFormatting.YELLOW));
+        textList.add(Component.translatable("astrogreg.machine.faraday_generator.magnet_rows", magnetRows)
+                .withStyle(ChatFormatting.YELLOW));
 
-            if (isActive()) {
-                textList.add(Component.translatable("gtceu.multiblock.work_paused")
-                        .append(Component.literal(": "))
-                        .append(Component.translatable("gtceu.multiblock.running"))
-                        .withStyle(ChatFormatting.GREEN));
-            }
+        if (isActive()) {
+            boolean usingHelium = RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
+                    .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1)).buildRawRecipe()).isSuccess() ||
+                    RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
+                            .inputFluids(GTMaterials.Helium.getFluid(1)).buildRawRecipe()).isSuccess();
+
+            textList.add(Component.translatable("astrogreg.machine.faraday_generator.lubricant_usage", magnetRows)
+                    .withStyle(ChatFormatting.GOLD));
+
+            int coolantAmount = usingHelium ? magnetRows * 25 : magnetRows * 100;
+            String coolantType = usingHelium ? "Liquid Helium" : "Liquid Oxygen";
+            textList.add(Component.translatable("astrogreg.machine.faraday_generator.coolant_usage", coolantAmount, coolantType)
+                    .withStyle(ChatFormatting.AQUA));
         }
 
         builder.addWorkingStatusLine();

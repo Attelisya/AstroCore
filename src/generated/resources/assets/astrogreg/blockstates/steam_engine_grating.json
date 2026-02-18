@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "astrogreg:block/steam_engine_grating"
+    }
+  }
+}
