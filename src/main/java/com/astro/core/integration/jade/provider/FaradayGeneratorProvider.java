@@ -64,13 +64,12 @@ public class FaradayGeneratorProvider implements IBlockComponentProvider, IServe
                 compoundTag.putInt("magnetRows", machine.getMagnetRows());
                 compoundTag.putBoolean("isActive", machine.isActive());
 
-                boolean usingHelium =
+                boolean usingHelium = RecipeHelper.matchRecipe(machine, GTRecipeBuilder.ofRaw()
+                        .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1))
+                        .buildRawRecipe()).isSuccess() ||
                         RecipeHelper.matchRecipe(machine, GTRecipeBuilder.ofRaw()
-                                .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1))
-                                .buildRawRecipe()).isSuccess() ||
-                                RecipeHelper.matchRecipe(machine, GTRecipeBuilder.ofRaw()
-                                        .inputFluids(GTMaterials.Helium.getFluid(1))
-                                        .buildRawRecipe()).isSuccess();
+                                .inputFluids(GTMaterials.Helium.getFluid(1))
+                                .buildRawRecipe()).isSuccess();
 
                 int coolantAmount = usingHelium ? machine.getMagnetRows() * 25 : machine.getMagnetRows() * 100;
                 String coolantName = usingHelium ? "Liquid Helium" : "Liquid Oxygen";

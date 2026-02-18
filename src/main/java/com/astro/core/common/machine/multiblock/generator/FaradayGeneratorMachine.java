@@ -1,6 +1,5 @@
 package com.astro.core.common.machine.multiblock.generator;
 
-import com.astro.core.AstroCore;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.IEnergyContainer;
 import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
@@ -33,6 +32,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 
+import com.astro.core.AstroCore;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -89,7 +89,6 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
     public FaradayGeneratorMachine(IMachineBlockEntity holder) {
         super(holder);
     }
-
 
     @Override
     public void onStructureFormed() {
@@ -399,19 +398,19 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
         }
 
         textList.add(Component.translatable("astrogreg.machine.faraday_generator.max_eu_per_tick",
-                        FormattingUtil.formatNumbers(maxHatchOutput), GTValues.VNF[displayTier])
+                FormattingUtil.formatNumbers(maxHatchOutput), GTValues.VNF[displayTier])
                 .withStyle(ChatFormatting.GRAY));
 
         textList.add(Component.translatable("astrogreg.machine.faraday_generator.max_recipe_tier",
-                        GTValues.VNF[displayTier])
+                GTValues.VNF[displayTier])
                 .withStyle(ChatFormatting.GRAY));
 
         textList.add(Component.translatable("astrogreg.machine.faraday_generator.energy_output",
-                        FormattingUtil.formatNumbers(currentOutput), FormattingUtil.formatNumbers(maxOutput))
+                FormattingUtil.formatNumbers(currentOutput), FormattingUtil.formatNumbers(maxOutput))
                 .withStyle(ChatFormatting.WHITE));
 
         textList.add(Component.translatable("astrogreg.machine.faraday_generator.rotation_speed",
-                        FormattingUtil.formatNumbers(currentRPM), FormattingUtil.formatNumbers(MAX_RPM))
+                FormattingUtil.formatNumbers(currentRPM), FormattingUtil.formatNumbers(MAX_RPM))
                 .withStyle(ChatFormatting.WHITE));
 
         textList.add(Component.translatable("astrogreg.machine.faraday_generator.magnet_rows", magnetRows)
@@ -419,7 +418,8 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
 
         if (isActive()) {
             boolean usingHelium = RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
-                    .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1)).buildRawRecipe()).isSuccess() ||
+                    .inputFluids(GTMaterials.Helium.getFluid(FluidStorageKeys.LIQUID, 1)).buildRawRecipe())
+                    .isSuccess() ||
                     RecipeHelper.matchRecipe(this, GTRecipeBuilder.ofRaw()
                             .inputFluids(GTMaterials.Helium.getFluid(1)).buildRawRecipe()).isSuccess();
 
@@ -428,7 +428,8 @@ public class FaradayGeneratorMachine extends WorkableElectricMultiblockMachine i
 
             int coolantAmount = usingHelium ? magnetRows * 25 : magnetRows * 100;
             String coolantType = usingHelium ? "Liquid Helium" : "Liquid Oxygen";
-            textList.add(Component.translatable("astrogreg.machine.faraday_generator.coolant_usage", coolantAmount, coolantType)
+            textList.add(Component
+                    .translatable("astrogreg.machine.faraday_generator.coolant_usage", coolantAmount, coolantType)
                     .withStyle(ChatFormatting.AQUA));
         }
 

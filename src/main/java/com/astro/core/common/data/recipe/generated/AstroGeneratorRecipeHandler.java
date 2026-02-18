@@ -41,7 +41,7 @@ public class AstroGeneratorRecipeHandler {
         long baseEU = 4096;
         if (tier > GTValues.IV) {
             int tiersAboveIV = tier - GTValues.IV;
-            baseEU = (long)(4096 * Math.pow(1.05, tiersAboveIV));
+            baseEU = (long) (4096 * Math.pow(1.05, tiersAboveIV));
         }
 
         COMPRESSOR_RECIPES.recipeBuilder("compress_" + material.getName() + "_spring")
