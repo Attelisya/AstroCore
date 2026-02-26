@@ -86,6 +86,8 @@
   "astrogreg.machine.steam_blast_furnace.parallels": "Parallels: %s",
   "astrogreg.machine.steam_blast_furnace.steam_usage": "Using %s mB/t Steam (%s mB/t x %s)",
   "astrogreg.machine.water_hatch.tooltip": "§eAccepted Fluid:§r Water",
+  "astrogreg.recipe_condition.oxygenated.requires": "Requires Oxygenated Environment.",
+  "astrogreg.recipe_condition.oxygenated.requires_not": "Requires Unoxygenated Environment.",
   "block.astrogreg.aether_turbine": "§3Æther§r Engine",
   "block.astrogreg.alfsteel_firebox_casing": "§dAlfsteel§r Firebox Casing",
   "block.astrogreg.alfsteel_gearbox_casing": "§dAlfsteel§r Gearbox",

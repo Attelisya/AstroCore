@@ -7,7 +7,6 @@ import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import net.minecraft.data.recipes.FinishedRecipe;
 
 import com.astro.core.common.data.AstroBlocks;
-import com.astro.core.common.data.machine.AstroRecipeConditions;
 import com.astro.core.common.data.materials.AstroElements;
 import com.astro.core.common.data.recipe.AstroRecipes;
 import com.astro.core.common.data.recipe.generated.AstroGeneratorRecipeHandler;
@@ -33,7 +32,6 @@ public class AstroGregGTAddon implements IGTAddon {
     @Override
     public void initializeAddon() {
         AstroBlocks.init();
-        AstroRecipeConditions.init();
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEv
 import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.api.sound.SoundEntry;
 import com.gregtechceu.gtceu.common.data.GTCreativeModeTabs;
@@ -26,6 +27,7 @@ import com.astro.core.client.AstroSoundEntries;
 import com.astro.core.common.data.AstroBlocks;
 import com.astro.core.common.data.AstroItems;
 import com.astro.core.common.data.configs.AstroConfigs;
+import com.astro.core.common.data.machine.AstroRecipeConditions;
 import com.astro.core.common.data.materials.*;
 import com.astro.core.common.data.recipe.AstroRecipeTypes;
 import com.astro.core.common.machine.crates.AstroCrates;
@@ -73,6 +75,7 @@ public class AstroCore {
         modEventBus.addGenericListener(GTRecipeType.class, this::registerRecipeTypes);
         modEventBus.addGenericListener(SoundEntry.class, this::registerSounds);
         modEventBus.addGenericListener(MachineDefinition.class, this::registerMachines);
+        modEventBus.addGenericListener(RecipeConditionType.class, this::registerRecipeConditions);
 
         modEventBus.addListener(this::addMaterialRegistries);
         modEventBus.addListener(this::addMaterials);
@@ -122,6 +125,10 @@ public class AstroCore {
 
     private void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
         AstroRecipeTypes.init();
+    }
+
+    private void registerRecipeConditions(GTCEuAPI.RegisterEvent<String, RecipeConditionType<?>> event) {
+        AstroRecipeConditions.init();
     }
 
     private void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
