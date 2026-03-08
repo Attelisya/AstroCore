@@ -14,10 +14,7 @@
   "loader": "gtceu:machine",
   "machine": "astrogreg:inscription_matrix",
   "texture_overrides": {
-    "all": "astrogreg:block/casings/functional_casings/futura_computer_housing",
-    "bottom": "astrogreg:block/casings/functional_casings/futura_computer_housing",
-    "side": "astrogreg:block/casings/functional_casings/futura_computer_housing",
-    "top": "astrogreg:block/casings/functional_casings/futura_computer_housing"
+    "all": "astrogreg:block/casings/functional_casings/futura_computer_housing"
   },
   "variants": {
     "is_formed=false,recipe_logic_status=idle": {
@@ -54,7 +51,7 @@
       "model": {
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "astrogreg:block/casings/functional_casings/futura_computer_housing",
+          "all": "astrogreg:block/casings/functional_casings/futura_computer_housing_active",
           "overlay_front": "gtceu:block/machines/laser_engraver/overlay_front_active",
           "overlay_front_emissive": "gtceu:block/machines/laser_engraver/overlay_front_active_emissive"
         }
@@ -94,7 +91,7 @@
       "model": {
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "astrogreg:block/casings/functional_casings/futura_computer_housing",
+          "all": "astrogreg:block/casings/functional_casings/futura_computer_housing_active",
           "overlay_front": "gtceu:block/machines/laser_engraver/overlay_front_active",
           "overlay_front_emissive": "gtceu:block/machines/laser_engraver/overlay_front_active_emissive"
         }

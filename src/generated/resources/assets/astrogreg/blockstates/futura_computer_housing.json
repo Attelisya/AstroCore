@@ -1,28 +1,10 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "astrogreg:block/futura_computer_housing"
-      },
-      "when": {
-        "active": "false"
-      }
+  "variants": {
+    "active=false": {
+      "model": "astrogreg:block/futura_computer_housing"
     },
-    {
-      "apply": {
-        "model": "astrogreg:block/futura_computer_housing_active"
-      },
-      "when": {
-        "active": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "astrogreg:block/futura_computer_housing_active_emissive"
-      },
-      "when": {
-        "active": "true"
-      }
+    "active=true": {
+      "model": "astrogreg:block/futura_computer_housing_active"
     }
-  ]
+  }
 }

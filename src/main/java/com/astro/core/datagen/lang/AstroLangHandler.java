@@ -152,7 +152,7 @@ public class AstroLangHandler {
         provider.add("item.astrogreg.fluix_arithmetic_core.tooltip", "§7Arithmetic Processing Unit");
 
         provider.add("item.astrogreg.unfired_rune_tablet.tooltip", "§7Shaped Livingclay");
-        provider.add("item.astrogreg.rune_tablet.tooltip", "§7It's kind of like a Silicon Wafer but magical.§r");
+        provider.add("item.astrogreg.rune_tablet.tooltip", "§7Mystical Frisbee");
 
         // miscellaneous
         multilineLang(provider, "astrogreg.gui.configurator_slot.tooltip",

@@ -8,9 +8,9 @@ import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.client.model.machine.IControllerModelRenderer;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRender;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderType;
-import com.gregtechceu.gtceu.client.util.ModelUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.Codec;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -74,16 +74,25 @@ public class AEMultiPartRender extends DynamicRender<MultiblockControllerMachine
                                 Direction frontFacing, @Nullable Direction side, RandomSource rand,
                                 @NotNull ModelData modelData, @Nullable RenderType renderType) {
 
-        if (idleModel == null) idleModel = ModelUtils.getModelForState(idleState);
-        if (activeModel == null) activeModel = ModelUtils.getModelForState(activeState);
-
         boolean working = controller instanceof IRecipeLogicMachine rlm && rlm.getRecipeLogic().isWorking();
-        BakedModel model = working ? activeModel : idleModel;
         BlockState state = working ? activeState : idleState;
 
+        BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+
+        modelData = model.getModelData(
+                controller.self().getLevel(),
+                controller.self().getPos(),
+                state,
+                ModelData.EMPTY
+        );
+
+        List<BakedQuad> newQuads = model.getQuads(state, side, rand, ModelData.EMPTY, renderType);
+
         if (controller.self().getLevel() != null) {
-            modelData = model.getModelData(controller.self().getLevel(), part.self().getPos(), state, modelData);
+            newQuads = com.lowdragmc.lowdraglib.client.model.custommodel.CustomBakedModel
+                    .reBakeCustomQuads(newQuads, controller.self().getLevel(), part.self().getPos(), state, side, 0.0f);
         }
-        quads.addAll(model.getQuads(state, side, rand, modelData, renderType));
+
+        quads.addAll(newQuads);
     }
 }

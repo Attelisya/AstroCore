@@ -337,13 +337,11 @@ public class AstroBlocks {
                             .parent(new ModelFile.UncheckedModelFile(AstroCore.id("block/cube_emissive")))
                             .texture("all", funcTexEmissive.toString());
 
-                    prov.getMultipartBuilder(ctx.getEntry())
-                            .part().modelFile(inactive).addModel()
-                            .condition(GTBlockStateProperties.ACTIVE, false).end()
-                            .part().modelFile(active).addModel()
-                            .condition(GTBlockStateProperties.ACTIVE, true).end()
-                            .part().modelFile(emissive).addModel()
-                            .condition(GTBlockStateProperties.ACTIVE, true).end();
+                    prov.getVariantBuilder(ctx.getEntry())
+                            .partialState().with(GTBlockStateProperties.ACTIVE, false).modelForState()
+                            .modelFile(inactive).addModel()
+                            .partialState().with(GTBlockStateProperties.ACTIVE, true).modelForState()
+                            .modelFile(active).addModel();
                 })
                 .lang(name)
                 .item(BlockItem::new).build().register();

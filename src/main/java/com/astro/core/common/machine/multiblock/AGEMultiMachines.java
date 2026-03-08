@@ -1,5 +1,6 @@
 package com.astro.core.common.machine.multiblock;
 
+import com.astro.core.client.AstroMachineModels;
 import com.astro.core.client.renderer.machine.AEMultiPartRender;
 import com.astro.core.common.machine.multiblock.kinetic.KineticCombustionEngineMachine;
 import com.astro.core.common.machine.multiblock.kinetic.KineticParallelMultiblockMachine;
@@ -21,7 +22,6 @@ import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
 import com.gregtechceu.gtceu.common.data.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.steam.SteamParallelMultiblockMachine;
 
-import earth.terrarium.adastra.common.registry.ModBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.astro.core.common.data.AstroBlocks.*;
-import static com.astro.core.common.data.materials.AstroMaterials.FUTURA_ALLOY;
 import static com.astro.core.common.machine.hatches.AstroHatches.*;
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 import static com.gregtechceu.gtceu.api.machine.multiblock.PartAbility.*;
@@ -821,6 +820,50 @@ public class AGEMultiMachines {
                     AstroCore.id("block/multiblock/wiremill"))
             .register();
 
+//    public static final MultiblockMachineDefinition INDUSTRIAL_OBSERVATORY = REGISTRATE
+//            .multiblock("industrial_observatory", IndustrialObservatoryMachine::new)
+//            .langValue("Industrial Observatory")
+//            .rotationState(RotationState.NON_Y_AXIS)
+//            .allowFlip(false)
+//            .recipeModifier(IndustrialObservatoryMachine::recipeModifier, true)
+//            .appearanceBlock(CASING_STEEL_SOLID)
+//            .recipeType(OBSERVATORY_RECIPES)
+//            .pattern(definition -> FactoryBlockPattern.start()
+//                    .aisle("   XXXXX   ", "   CCCCC   ", "   CCCCC   ", "   CCCCC   ", "    CCC    ",
+//                            "           ", "           ", "           ", "           ")
+//                    .aisle("  XXXXXXX  ", "  C SIS X  ", "  C SIS X  ", "  C SXS X  ", "  CC   CC  ",
+//                            "  CCCTCCC  ", "   CCTCC   ", "           ", "           ")
+//                    .aisle(" XXXXXXXXX ", " C  SIS  C ", " C  SIS  C ", " C  SXS  C ", " C       C ",
+//                            " CC     CC ", "  C     C  ", "   CCTCC   ", "           ")
+//                    .aisle("XXXXXXXXXXX", "C  FSXSF  C", "C  FS@SF  C", "C  F   F  C", "C  F   F  C",
+//                            " C F   F C ", " C F   F C ", "  CC   CC  ", "    CTC    ")
+//                    .aisle("XXXXXXXXXXX", "C         C", "T         T", "T         T", "C         C",
+//                            "C         C", " C       C ", "  C     C  ", "   CCTCC   ")
+//                    .aisle("XXXXXXXXXXX", "C         C", "T         T", "T         T", "C         C",
+//                            "C         C", " C       C ", "  C     C  ", "   CCTCC   ")
+//                    .aisle("XXXXXXXXXXX", "C         C", "T         T", "T         T", "C         C",
+//                            "C         C", " C       C ", "  C     C  ", "   CCTCC   ")
+//                    .aisle("XXXXXXXXXXX", "C  F   F  C", "C  F   F  C", "C  F   F  C", "C  F   F  C",
+//                            " C F   F C ", " C F   F C ", "  CC   CC  ", "    CTC    ")
+//                    .aisle(" XXXXXXXXX ", " C       C ", " C       C ", " C       C ", " C       C ",
+//                            "  C     C  ", "   CCTCC   ", "           ", "           ")
+//                    .aisle("  XXXXXXX  ", "  C     C  ", "  C     C  ", "  C     C  ", "  CC   CC  ",
+//                            "   CCTCC   ", "   CCTCC   ", "           ", "           ")
+//                    .aisle("   XXXXX   ", "   CC CC   ", "   CC CC   ", "   CCCCC   ", "    CCC    ",
+//                            "           ", "           ", "           ", "           ")
+//                    .where("@", controller(blocks(definition.get())))
+//                    .where("X", blocks(CASING_STEEL_SOLID.get()))
+//                    .where("F", frames(GTMaterials.Steel))
+//                    .where("T", blocks(CASING_TEMPERED_GLASS.get()))
+//                    .where("I", blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
+//                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
+//                            .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
+//                    .where("S", blocks(CASING_STAINLESS_CLEAN.get()))
+//                    .where("C", blockTag(CustomTags.CONCRETE_BLOCK))
+//                    .where(" ", any())
+//                    .build())
+//            .register();
+
 //    public static final MultiblockMachineDefinition INDUSTRIAL_ASTROPORT = REGISTRATE
 //            .multiblock("industrial_astroport", IndustrialAstroPortMachine::new)
 //            .langValue("Industrial Astroport")
@@ -984,20 +1027,18 @@ public class AGEMultiMachines {
                             .or(abilities(IMPORT_FLUIDS).setPreviewCount(1))
                             .or(abilities(INPUT_ENERGY).setPreviewCount(1).setExactLimit(1))
                             .or(abilities(MAINTENANCE).setExactLimit(1)))
-                    .where('F', frames(FUTURA_ALLOY))
+                    .where('F', frames(GTMaterials.StainlessSteel))
                     .where('P', blocks(CASING_STEEL_PIPE.get()))
                     .where('#', any())
                     .build())
             .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
             .tooltips(Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
-            .model(createWorkableCasingMachineModel(
-                    AstroCore.id("block/casings/functional_casings/futura_computer_housing"),
-                    GTCEu.id("block/machines/laser_engraver"))
-                    .andThen(b -> b
-                    .addTextureOverride("side", AstroCore.id("block/casings/functional_casings/futura_computer_housing"))
-                    .addTextureOverride("top", AstroCore.id("block/casings/functional_casings/futura_computer_housing"))
-                    .addTextureOverride("bottom", AstroCore.id("block/casings/functional_casings/futura_computer_housing"))
-                    .addDynamicRenderer(() -> new AEMultiPartRender(FUTURA_COMPUTER_CASING))))
+            .model(AstroMachineModels.createActiveCasingMachineModel(
+                            AstroCore.id("block/casings/functional_casings/futura_computer_housing"),
+                            AstroCore.id("block/casings/functional_casings/futura_computer_housing_active"),
+                            GTCEu.id("block/machines/laser_engraver"))
+                    .andThen(b -> b.addDynamicRenderer(() ->
+                            new AEMultiPartRender(FUTURA_COMPUTER_CASING))))
             .register();
 
     public static final MultiblockMachineDefinition FLUID_DRILLING_RIG_IV = REGISTRATE
