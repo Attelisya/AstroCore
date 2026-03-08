@@ -3,10 +3,7 @@ package com.astro.core.common.data.recipe;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
-
-import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -101,7 +98,7 @@ public class AstroRecipeTypes {
                 .setProgressBar(GuiTextures.PROGRESS_BAR_MAGNET, LEFT_TO_RIGHT)
                 .setSound(GTSoundEntries.REPLICATOR)
                 .setEUIO(IO.OUT);
-        
+
         KINETIC_COMBUSTION_RECIPES = register("kinetic_combustion_generator", MULTIBLOCK)
                 .setMaxIOSize(0, 0, 1, 0)
                 .setSlotOverlay(false, true, true, GuiTextures.FURNACE_OVERLAY_2)
@@ -110,7 +107,7 @@ public class AstroRecipeTypes {
                 .setEUIO(IO.OUT);
 
         CONCRETE_PLANT = register("concrete_plant", MULTIBLOCK)
-                .setMaxIOSize( 6, 1, 2, 1 )
+                .setMaxIOSize(6, 1, 2, 1)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_MIXER, LEFT_TO_RIGHT)
                 .setSound(GTSoundEntries.MIXER)
                 .setEUIO(IO.IN);
@@ -120,6 +117,5 @@ public class AstroRecipeTypes {
                 .setMaxIOSize(6, 1, 3, 0)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, LEFT_TO_RIGHT)
                 .setSound(GTSoundEntries.REPLICATOR);
-
     }
 }

@@ -1,6 +1,5 @@
 package com.astro.core.common.machine.trait.cwu;
 
-
 /**
  * Implemented by machines that provide CWU/t directly to an adjacent
  * CWUInputHatch without using the optical fiber network.

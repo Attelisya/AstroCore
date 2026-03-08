@@ -94,8 +94,10 @@ public class AstroLangHandler {
         provider.add("config.jade.plugin_astrogreg.kinetic_steam_engine_info", "Kinetic Steam Engine Info");
 
         provider.add("astrogreg.machine.kinetic_combustion_engine.tooltip_0", "Combustion Torque Generator");
-        provider.add("astrogreg.machine.kinetic_combustion_engine.tooltip_1", "§eBase Production:§r 450,000 §6Stress Units");
-        provider.add("astrogreg.machine.kinetic_combustion_engine.tooltip_2", "Supply 20mB/s §7of Oxygen to produce up to§r 1,000,000 §6Stress Units§r§7 at§r 2x §7fuel consumption.");
+        provider.add("astrogreg.machine.kinetic_combustion_engine.tooltip_1",
+                "§eBase Production:§r 450,000 §6Stress Units");
+        provider.add("astrogreg.machine.kinetic_combustion_engine.tooltip_2",
+                "Supply 20mB/s §7of Oxygen to produce up to§r 1,000,000 §6Stress Units§r§7 at§r 2x §7fuel consumption.");
         provider.add("config.jade.plugin_astrogreg.kinetic_combustion_engine_info", "Kinetic Combustion Engine Info");
 
         provider.add("astrogreg.machine.overdrive_combustion_engine.tooltip", "Overdriven Chemical Ignition Manifold");

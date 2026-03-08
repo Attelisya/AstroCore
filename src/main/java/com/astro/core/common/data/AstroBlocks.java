@@ -199,7 +199,6 @@ public class AstroBlocks {
         ULTIMATE_INTAKE_CASING = createFunctionalCasing("machine_casing_ultimate_engine_intake",
                 "astrogreg:functional_casings/machine_casing_ultimate_engine_intake", "Ultimate Engine Intake Casing");
 
-
         // 6. Solar Cells
         SOLAR_CELL = createSolar("solar_cell_silver", "Solar Cell MK I");
         SOLAR_CELL_ETRIUM = createSolar("solar_cell_etrium", "Solar Cell MK II");
@@ -299,11 +298,13 @@ public class AstroBlocks {
                 .addLayer(() -> RenderType::cutoutMipped)
                 .blockstate((ctx, prov) -> {
                     ModelFile inactive = prov.models()
-                            .cube(ctx.getName(), side, AstroCore.id("block/casings/functional_casings/" + id), side, side, side, side)
+                            .cube(ctx.getName(), side, AstroCore.id("block/casings/functional_casings/" + id), side,
+                                    side, side, side)
                             .texture("particle", side);
                     ModelFile active = prov.models()
                             .cube(ctx.getName() + "_active", side,
-                                    AstroCore.id("block/casings/functional_casings/" + id + "_active"), side, side, side, side)
+                                    AstroCore.id("block/casings/functional_casings/" + id + "_active"), side, side,
+                                    side, side)
                             .texture("particle", side);
                     prov.getVariantBuilder(ctx.getEntry())
                             .partialState().with(GTBlockStateProperties.ACTIVE, false).modelForState()

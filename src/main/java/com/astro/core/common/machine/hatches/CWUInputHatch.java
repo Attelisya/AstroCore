@@ -1,8 +1,5 @@
 package com.astro.core.common.machine.hatches;
 
-import com.astro.core.api.capabilities.AstroCapabilities;
-import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
-
 import com.gregtechceu.gtceu.api.capability.IOpticalComputationProvider;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
@@ -14,6 +11,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 
+import com.astro.core.api.capabilities.AstroCapabilities;
+import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

@@ -17,9 +17,9 @@ public class AstroMachineModels {
      * texture to {@code activeCasingTexture} when the machine is in the working state.
      */
     public static MachineBuilder.ModelInitializer createActiveCasingMachineModel(
-            ResourceLocation idleCasingTexture,
-            ResourceLocation activeCasingTexture,
-            ResourceLocation overlayDir) {
+                                                                                 ResourceLocation idleCasingTexture,
+                                                                                 ResourceLocation activeCasingTexture,
+                                                                                 ResourceLocation overlayDir) {
         return (ctx, prov, builder) -> {
             WorkableOverlays overlays = WorkableOverlays.get(overlayDir, prov.getExistingFileHelper());
 

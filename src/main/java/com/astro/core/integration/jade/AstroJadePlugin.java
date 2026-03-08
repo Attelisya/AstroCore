@@ -1,10 +1,10 @@
 package com.astro.core.integration.jade;
 
-import com.astro.core.integration.jade.provider.*;
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
 
 import net.minecraft.world.level.block.Block;
 
+import com.astro.core.integration.jade.provider.*;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;

@@ -8,8 +8,7 @@ import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.client.model.machine.IControllerModelRenderer;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRender;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderType;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.serialization.Codec;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -21,6 +20,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.ModelData;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.serialization.Codec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,12 +31,12 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("all")
 public class AEMultiPartRender extends DynamicRender<MultiblockControllerMachine, AEMultiPartRender>
-        implements IControllerModelRenderer {
+                               implements IControllerModelRenderer {
 
-    public static final Codec<AEMultiPartRender> CODEC =
-            BlockState.CODEC.xmap(AEMultiPartRender::new, r -> r.idleState);
-    public static final DynamicRenderType<MultiblockControllerMachine, AEMultiPartRender> TYPE =
-            new DynamicRenderType<>(CODEC);
+    public static final Codec<AEMultiPartRender> CODEC = BlockState.CODEC.xmap(AEMultiPartRender::new,
+            r -> r.idleState);
+    public static final DynamicRenderType<MultiblockControllerMachine, AEMultiPartRender> TYPE = new DynamicRenderType<>(
+            CODEC);
 
     private final BlockState idleState;
     private final BlockState activeState;
@@ -73,7 +75,6 @@ public class AEMultiPartRender extends DynamicRender<MultiblockControllerMachine
     public void renderPartModel(List<BakedQuad> quads, IMultiController controller, IMultiPart part,
                                 Direction frontFacing, @Nullable Direction side, RandomSource rand,
                                 @NotNull ModelData modelData, @Nullable RenderType renderType) {
-
         boolean working = controller instanceof IRecipeLogicMachine rlm && rlm.getRecipeLogic().isWorking();
         BlockState state = working ? activeState : idleState;
 
@@ -83,8 +84,7 @@ public class AEMultiPartRender extends DynamicRender<MultiblockControllerMachine
                 controller.self().getLevel(),
                 controller.self().getPos(),
                 state,
-                ModelData.EMPTY
-        );
+                ModelData.EMPTY);
 
         List<BakedQuad> newQuads = model.getQuads(state, side, rand, ModelData.EMPTY, renderType);
 

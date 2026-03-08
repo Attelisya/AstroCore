@@ -1,7 +1,5 @@
 package com.astro.core.common.machine.singleblock;
 
-import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
-
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
@@ -14,8 +12,8 @@ import com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableEnergyContainer;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
-
 import com.gregtechceu.gtceu.common.data.GTMaterials;
+
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 
@@ -25,6 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
+import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
 import lombok.Getter;
 
 import javax.annotation.Nullable;
@@ -34,9 +33,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class CWUGeneratorMachine extends MetaMachine implements ILocalCWUProvider, IUIMachine {
 
-    private static final int[] CWU_PER_TICK   = { 0, 0,  1, 2, 4 };
+    private static final int[] CWU_PER_TICK = { 0, 0, 1, 2, 4 };
     private static final int[] LUBE_PER_CYCLE = { 0, 0, 20, 80, 160 };
-    private static final int[] LUBE_TANK_MB   = { 0, 0, 12000, 16000, 32000 };
+    private static final int[] LUBE_TANK_MB = { 0, 0, 12000, 16000, 32000 };
 
     private static final String[] TIER_COLOR = { "§8", "§7", "§b", "§6", "§5", "§9", "§d", "§c", "§3", "§4" };
 
@@ -61,9 +60,9 @@ public class CWUGeneratorMachine extends MetaMachine implements ILocalCWUProvide
         return tier < TIER_COLOR.length ? TIER_COLOR[tier] : "";
     }
 
-    private final int  tier;
-    private final int  cwuPerTick;
-    private final int  lubePerCycle;
+    private final int tier;
+    private final int cwuPerTick;
+    private final int lubePerCycle;
     private final long euPerTick;
 
     private int tickBudget = 0;
@@ -75,14 +74,14 @@ public class CWUGeneratorMachine extends MetaMachine implements ILocalCWUProvide
     private TickableSubscription tickSub;
 
     private final NotifiableEnergyContainer energyContainer;
-    private final NotifiableFluidTank       lubeTank;
+    private final NotifiableFluidTank lubeTank;
 
     public CWUGeneratorMachine(IMachineBlockEntity holder, int tier) {
         super(holder);
-        this.tier         = tier;
-        this.cwuPerTick   = getCWUForTier(tier);
+        this.tier = tier;
+        this.cwuPerTick = getCWUForTier(tier);
         this.lubePerCycle = tier < LUBE_PER_CYCLE.length ? LUBE_PER_CYCLE[tier] : 0;
-        this.euPerTick    = GTValues.VA[tier];
+        this.euPerTick = GTValues.VA[tier];
 
         this.energyContainer = NotifiableEnergyContainer.receiverContainer(
                 this,
@@ -128,20 +127,18 @@ public class CWUGeneratorMachine extends MetaMachine implements ILocalCWUProvide
         if (getOffsetTimer() % 20 == 0) {
             boolean hasEnergy = energyContainer.getEnergyStored() >= euPerTick * 20L;
             FluidStack inTank = lubeTank.getFluidInTank(0);
-            boolean hasLube = !inTank.isEmpty()
-                    && inTank.isFluidEqual(new FluidStack(GTMaterials.Lubricant.getFluid(), 1))
-                    && inTank.getAmount() >= lubePerCycle;
+            boolean hasLube = !inTank.isEmpty() &&
+                    inTank.isFluidEqual(new FluidStack(GTMaterials.Lubricant.getFluid(), 1)) &&
+                    inTank.getAmount() >= lubePerCycle;
 
-            System.out.println("[CWU] energy=" + energyContainer.getEnergyStored()
-                    + " needed=" + (euPerTick * 20L)
-                    + " hasEnergy=" + hasEnergy
-                    + " lubeAmt=" + inTank.getAmount()
-                    + " lubeFluid=" + (inTank.isEmpty() ? "empty" : inTank.getFluid().toString())
-                    + " hasLube=" + hasLube);
+            System.out.println("[CWU] energy=" + energyContainer.getEnergyStored() + " needed=" + (euPerTick * 20L) +
+                    " hasEnergy=" + hasEnergy + " lubeAmt=" + inTank.getAmount() + " lubeFluid=" +
+                    (inTank.isEmpty() ? "empty" : inTank.getFluid().toString()) + " hasLube=" + hasLube);
 
             if (hasEnergy && hasLube) {
                 energyContainer.removeEnergy(euPerTick * 20L);
-                lubeTank.drain(lubePerCycle, IFluidHandler.FluidAction.EXECUTE);
+                lubeTank.drain(new FluidStack(inTank.getFluid(), lubePerCycle), IFluidHandler.FluidAction.EXECUTE);  // <--
+                                                                                                                     // fix
                 setActive(true);
                 tickBudget = cwuPerTick;
             } else {
@@ -185,15 +182,19 @@ public class CWUGeneratorMachine extends MetaMachine implements ILocalCWUProvide
                     } else {
                         boolean noEnergy = energyContainer.getEnergyStored() < euPerTick * 20L;
                         FluidStack tank = lubeTank.getFluidInTank(0);
-                        boolean noLube = tank.isEmpty()
-                                || !tank.isFluidEqual(new FluidStack(com.gregtechceu.gtceu.common.data.GTMaterials.Lubricant.getFluid(), 1))
-                                || tank.getAmount() < lubePerCycle;
+                        boolean noLube = tank.isEmpty() ||
+                                !tank.isFluidEqual(new FluidStack(
+                                        com.gregtechceu.gtceu.common.data.GTMaterials.Lubricant.getFluid(), 1)) ||
+                                tank.getAmount() < lubePerCycle;
                         if (noEnergy && noLube)
-                            return Component.translatable("astrogreg.machine.cwu_generator.inactive.no_power_lube").getString();
+                            return Component.translatable("astrogreg.machine.cwu_generator.inactive.no_power_lube")
+                                    .getString();
                         if (noEnergy)
-                            return Component.translatable("astrogreg.machine.cwu_generator.inactive.no_power").getString();
+                            return Component.translatable("astrogreg.machine.cwu_generator.inactive.no_power")
+                                    .getString();
                         if (noLube)
-                            return Component.translatable("astrogreg.machine.cwu_generator.inactive.no_lube").getString();
+                            return Component.translatable("astrogreg.machine.cwu_generator.inactive.no_lube")
+                                    .getString();
                         return Component.translatable("gtceu.multiblock.idling").getString();
                     }
                 }))

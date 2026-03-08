@@ -1,13 +1,13 @@
 package com.astro.core.common.machine.singleblock;
 
-import com.astro.core.AstroCore;
-
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 
 import net.minecraft.network.chat.Component;
+
+import com.astro.core.AstroCore;
 
 import static com.astro.core.common.AstroMachineUtils.registerTieredMachines;
 import static com.gregtechceu.gtceu.api.GTValues.*;

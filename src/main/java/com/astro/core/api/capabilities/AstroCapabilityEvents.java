@@ -1,10 +1,5 @@
 package com.astro.core.api.capabilities;
 
-
-import com.astro.core.AstroCore;
-import com.astro.core.common.machine.singleblock.CWUGeneratorMachine;
-import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
-
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 
 import net.minecraft.core.Direction;
@@ -17,6 +12,9 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import com.astro.core.AstroCore;
+import com.astro.core.common.machine.singleblock.CWUGeneratorMachine;
+import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,16 +31,15 @@ public class AstroCapabilityEvents {
         if (!(holder.getMetaMachine() instanceof CWUGeneratorMachine generator)) return;
 
         event.addCapability(LOCAL_CWU_KEY, new ICapabilityProvider() {
-            private final LazyOptional<ILocalCWUProvider> opt =
-                    LazyOptional.of(() -> generator);
+
+            private final LazyOptional<ILocalCWUProvider> opt = LazyOptional.of(() -> generator);
 
             @NotNull
             @Override
             public <T> LazyOptional<T> getCapability(
-                    @NotNull Capability<T> cap, @Nullable Direction side) {
-                return cap == AstroCapabilities.LOCAL_CWU_PROVIDER
-                        ? AstroCapabilities.LOCAL_CWU_PROVIDER.orEmpty(cap, opt)
-                        : LazyOptional.empty();
+                                                     @NotNull Capability<T> cap, @Nullable Direction side) {
+                return cap == AstroCapabilities.LOCAL_CWU_PROVIDER ?
+                        AstroCapabilities.LOCAL_CWU_PROVIDER.orEmpty(cap, opt) : LazyOptional.empty();
             }
         });
     }

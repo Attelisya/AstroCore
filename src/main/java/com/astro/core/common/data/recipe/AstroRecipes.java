@@ -1,6 +1,5 @@
 package com.astro.core.common.data.recipe;
 
-import com.astro.core.common.data.AstroItems;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
@@ -22,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import static com.astro.core.common.data.recipe.AstroRecipeTypes.INSCRIPTION;
 import static com.astro.core.common.data.recipe.AstroRecipeTypes.KINETIC_COMBUSTION_RECIPES;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.CRYSTALLIZABLE;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;

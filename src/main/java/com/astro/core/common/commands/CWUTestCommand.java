@@ -1,13 +1,6 @@
 package com.astro.core.common.commands;
 
-import com.astro.core.api.capabilities.AstroCapabilities;
-import com.astro.core.common.machine.singleblock.CWUGeneratorMachine;
-import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
-
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
-
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -18,6 +11,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import com.astro.core.api.capabilities.AstroCapabilities;
+import com.astro.core.common.machine.singleblock.CWUGeneratorMachine;
+import com.astro.core.common.machine.trait.cwu.ILocalCWUProvider;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.context.CommandContext;
 
 @SuppressWarnings("all")
 @Mod.EventBusSubscriber
@@ -55,7 +54,8 @@ public class CWUTestCommand {
         }
         source.sendSuccess(() -> Component.literal(
                 "[CWUTest] IMachineBlockEntity confirmed. MetaMachine: " +
-                        holder.getMetaMachine().getClass().getSimpleName()), false);
+                        holder.getMetaMachine().getClass().getSimpleName()),
+                false);
 
         if (!(holder.getMetaMachine() instanceof CWUGeneratorMachine generator)) {
             source.sendFailure(Component.literal(
@@ -92,12 +92,14 @@ public class CWUTestCommand {
         source.sendSuccess(() -> Component.literal(
                 "[CWUTest] Provider state — active: " + active +
                         ", maxCWUt: " + maxCwu +
-                        ", simulated request(" + maxCwu + "): " + budget), false);
+                        ", simulated request(" + maxCwu + "): " + budget),
+                false);
 
         if (!active) {
             source.sendSuccess(() -> Component.literal(
                     "[CWUTest] NOTE: Generator is inactive. Give it power and lubricant " +
-                            "and wait one second for the first 20-tick cycle to complete."), false);
+                            "and wait one second for the first 20-tick cycle to complete."),
+                    false);
         }
 
         source.sendSuccess(() -> Component.literal(

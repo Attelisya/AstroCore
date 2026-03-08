@@ -1,6 +1,5 @@
 package com.astro.core.common.machine.multiblock.kinetic;
 
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
@@ -49,12 +48,12 @@ public class KineticCombustionEngineMachine extends WorkableMultiblockMachine im
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             KineticCombustionEngineMachine.class, WorkableMultiblockMachine.MANAGED_FIELD_HOLDER);
 
-    public static final float BASE_OUTPUT_SU    = 450_000f;
+    public static final float BASE_OUTPUT_SU = 450_000f;
     public static final float BOOSTED_OUTPUT_SU = 1_000_000f;
-    public static final float CAPACITY_PER_RPM  = BOOSTED_OUTPUT_SU / 256f;
+    public static final float CAPACITY_PER_RPM = BOOSTED_OUTPUT_SU / 256f;
 
     private static final int OXYGEN_MB_PER_TICK = 1;
-    public  static final int LUBRICANT_MB_PER_HOUR = 1_000;
+    public static final int LUBRICANT_MB_PER_HOUR = 1_000;
 
     @Getter
     @Persisted
@@ -236,7 +235,7 @@ public class KineticCombustionEngineMachine extends WorkableMultiblockMachine im
             textList.add(Component.translatable("gtceu.multiblock.large_combustion_engine.oxygen_boosted"));
         } else {
             textList.add(Component.translatable(
-                            "gtceu.multiblock.large_combustion_engine.supply_oxygen_to_boost")
+                    "gtceu.multiblock.large_combustion_engine.supply_oxygen_to_boost")
                     .withStyle(ChatFormatting.GRAY));
         }
 
