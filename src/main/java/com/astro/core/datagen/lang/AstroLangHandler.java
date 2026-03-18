@@ -6,9 +6,12 @@ import com.tterrag.registrate.providers.RegistrateLangProvider;
 public class AstroLangHandler {
 
     public static void init(RegistrateLangProvider provider) {
+
         // recipe types
         provider.add("gtceu.kinetic_combustion_generator", "Kinetic Combustion");
         provider.add("gtceu.concrete_plant", "Concrete Plant");
+        provider.add("gtceu.astroport", "Astroport");
+        provider.add("gtceu.observatory", "Observatory");
 
         // multiblock tooltips
         provider.add("astrogreg.machine.recipe_progress.tooltip", "Progress: %1$ss / %2$ss (%3$s%%)");

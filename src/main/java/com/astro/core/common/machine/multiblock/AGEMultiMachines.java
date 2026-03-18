@@ -18,7 +18,6 @@ import com.gregtechceu.gtceu.client.renderer.machine.impl.BoilerMultiPartRender;
 import com.gregtechceu.gtceu.common.block.BoilerFireboxType;
 import com.gregtechceu.gtceu.common.data.*;
 import com.gregtechceu.gtceu.common.machine.multiblock.steam.SteamParallelMultiblockMachine;
-import com.gregtechceu.gtceu.data.recipe.CustomTags;
 
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -858,41 +857,38 @@ public class AGEMultiMachines {
             .appearanceBlock(CASING_STEEL_SOLID)
             .recipeType(OBSERVATORY_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
-                    .aisle("   XXXXX   ", "   CCCCC   ", "   CCCCC   ", "   CCCCC   ", "    CCC    ",
-                            "           ", "           ", "           ", "           ")
-                    .aisle("  XXXXXXX  ", "  C SIS C  ", "  C SIS C  ", "  C SXS C  ", "  CC   CC  ",
-                            "  CCCTCCC  ", "   CCTCC   ", "           ", "           ")
-                    .aisle(" XXXXXXXXX ", " C  SIS  C ", " C  SIS  C ", " C  SXS  C ", " C       C ",
-                            " CC     CC ", "  C     C  ", "   CCTCC   ", "           ")
-                    .aisle("XXXXXXXXXXX", "C  FSOSF  C", "C  FS@SF  C", "C  F   F  C", "C  F   F  C",
-                            " C F   F C ", " C F   F C ", "  CC   CC  ", "    CTC    ")
-                    .aisle("XXXXXXXXXXX", "C         C", "T         T", "T         T", "C         C",
-                            "C         C", " C       C ", "  C     C  ", "   CCTCC   ")
-                    .aisle("XXXXXXXXXXX", "C         C", "T         T", "T         T", "C         C",
-                            "C         C", " C       C ", "  C     C  ", "   CCTCC   ")
-                    .aisle("XXXXXXXXXXX", "C         C", "T         T", "T         T", "C         C",
-                            "C         C", " C       C ", "  C     C  ", "   CCTCC   ")
-                    .aisle("XXXXXXXXXXX", "C  F   F  C", "C  F   F  C", "C  F   F  C", "C  F   F  C",
-                            " C F   F C ", " C F   F C ", "  CC   CC  ", "    CTC    ")
-                    .aisle(" XXXXXXXXX ", " C       C ", " C       C ", " C       C ", " C       C ",
-                            "  C     C  ", "  C     C  ", "   CCTCC   ", "           ")
-                    .aisle("  XXXXXXX  ", "  C     C  ", "  C     C  ", "  C     C  ", "  CC   CC  ",
-                            "   CCTCC   ", "   CCTCC   ", "           ", "           ")
-                    .aisle("   XXXXX   ", "   CC CC   ", "   CC CC   ", "   CCCCC   ", "    CCC    ",
-                            "           ", "           ", "           ", "           ")
+                    .aisle(" XXXXXXX ", " SSSSSSS ", " XXXXXXX ", "  XXXXX  ", "         ", "         ", "         ",
+                            "         ", "         ", "   TST   ", "  TTSTT  ", "         ", "         ")
+                    .aisle("XXXXXXXXX", "SSX   XSS", "XYX   XYX", " YXXXXXY ", "  YYYYY  ", "         ", "         ",
+                            "         ", "   TST   ", "  TTSTT  ", " T     T ", "         ", "         ")
+                    .aisle("XXXYYYXXX", "SX     XS", "XX     XX", "XX     XX", " YYTXTYY ", "    X    ", "    X    ",
+                            "   XXX   ", "  TSSST  ", " T     T ", "T       T", "         ", "         ")
+                    .aisle("XXYYXYYXX", "S       S", "X       X", "XX     XX", " YTTXTTY ", "         ", "         ",
+                            "  XTXTX  ", " TSISIST ", "TT     TT", "T       T", "         ", "         ")
+                    .aisle("XXYXXXYXX", "S   O   S", "X   @   X", "XX  X  XX", " YXXXXXY ", "  X   X  ", "  X   X  ",
+                            "  XXXXX  ", " SSSFSSS ", "SS  F  SS", "S   F   S", "    F    ", "    E    ")
+                    .aisle("XXYYXYYXX", "S       S", "X       X", "XX     XX", " YTTXTTY ", "         ", "         ",
+                            "  XTXTX  ", " TSISIST ", "TT     TT", "T       T", "         ", "         ")
+                    .aisle("XXXYYYXXX", "SX     XS", "XX     XX", "XX     XX", " YYTXTYY ", "    X    ", "    X    ",
+                            "   XXX   ", "  TSSST  ", " T     T ", "T       T", "         ", "         ")
+                    .aisle("XXXXXXXXX", "SSX   XSS", "XYX   XYX", " YXXXXXY ", "  YYYYY  ", "         ", "         ",
+                            "         ", "   TST   ", "  TTSTT  ", " T     T ", "         ", "         ")
+                    .aisle(" XXXXXXX ", " SSX XSS ", " XXX XXX ", "  XXXXX  ", "         ", "         ", "         ",
+                            "         ", "         ", "   TST   ", "  TTSTT  ", "         ", "         ")
                     .where("@", controller(blocks(definition.get())))
                     .where("X", blocks(CASING_STEEL_SOLID.get())
                             .or(abilities(MAINTENANCE).setExactLimit(1))
                             .or(abilities(INPUT_ENERGY).setPreviewCount(2).setMinGlobalLimited(1)
                                     .setMaxGlobalLimited(2))
                             .or(abilities(AstroPartAbility.IMPORT_CWU).setExactLimit(1)))
+                    .where("Y", blocks(CASING_STAINLESS_CLEAN.get()))
+                    .where("E", blocks(Blocks.EMERALD_BLOCK))
                     .where("F", frames(GTMaterials.Steel))
                     .where("T", blocks(CASING_TEMPERED_GLASS.get()))
                     .where("I", blocks(INDUSTRIAL_PROCESSING_CORE_MK1.get())
                             .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK2.get()))
                             .or(blocks(INDUSTRIAL_PROCESSING_CORE_MK3.get())))
                     .where("S", blocks(STEEL_CONTROL_CASING.get()))
-                    .where("C", blockTag(CustomTags.CONCRETE_BLOCK))
                     .where("O", blocks(OBSERVATORY_DATA_HOLDER.get()))
                     .where(" ", any())
                     .build())
@@ -1409,6 +1405,41 @@ public class AGEMultiMachines {
                     AstroCore.id("block/casings/functional_casings/futura_computer_housing_active"),
                     GTCEu.id("block/machines/laser_engraver"))
                     .andThen(b -> b.addDynamicRenderer(() -> new AEMultiPartRender(FUTURA_COMPUTER_CASING))))
+            .register();
+
+    public static final MultiblockMachineDefinition LARGE_GAS_COLLECTOR = REGISTRATE
+            .multiblock("large_gas_collector", WorkableElectricMultiblockMachine::new)
+            .rotationState(RotationState.ALL)
+            .langValue("Large Gas Collection Unit")
+            .recipeTypes(GTRecipeTypes.GAS_COLLECTOR_RECIPES, GTRecipeTypes.AIR_SCRUBBER_RECIPES)
+            .recipeModifier(BATCH_MODE)
+            .tooltips(Component.translatable("gtceu.multiblock.parallelizable.tooltip"))
+            .tooltips(Component.translatable("gtceu.machine.available_recipe_map_2.tooltip",
+                            Component.translatable("gtceu.gas_collector"), Component.translatable("gtceu.air_scrubber")))
+            .tooltips(Component.translatable("gtceu.multiblock.exact_hatch_1.tooltip"))
+            .appearanceBlock(CASING_HSSE_STURDY)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle(" F F ", " XXX ", " XCX ", " XCX ", " XXX ", "  X  ")
+                    .aisle("F   F", "XXXXX", "X###X", "X###X", "X###X", " XXX ")
+                    .aisle("     ", "XXXXX", "C#P#C", "C#P#C", "X#P#X", "XX@XX")
+                    .aisle("F   F", "XXXXX", "X###X", "X###X", "X###X", " XXX ")
+                    .aisle(" F F ", " XXX ", " XCX ", " XCX ", " XXX ", "  X  ")
+                    .where("@", controller(blocks(definition.get())))
+                    .where("X", blocks(CASING_HSSE_STURDY.get()).setMinGlobalLimited(45)
+                            .or(abilities(INPUT_ENERGY).setExactLimit(1))
+                            .or(abilities(IMPORT_ITEMS))
+                            .or(abilities(IMPORT_FLUIDS))
+                            .or(abilities(EXPORT_FLUIDS))
+                            .or(abilities(PartAbility.PARALLEL_HATCH).setMaxGlobalLimited(1))
+                            .or(abilities(MAINTENANCE).setExactLimit(1)))
+                    .where("P", blocks(CASING_TUNGSTENSTEEL_PIPE.get()))
+                    .where("C", blocks(FILTER_CASING.get()))
+                    .where("F", frames(GTMaterials.HSSG))
+                    .where(" ", any())
+                    .where("#", air())
+                    .build())
+            .workableCasingModel(GTCEu.id("block/casings/solid/machine_casing_sturdy_hsse"),
+                    GTCEu.id("block/multiblock/cleanroom"))
             .register();
 
     public static final MultiblockMachineDefinition FLUID_DRILLING_RIG_IV = REGISTRATE

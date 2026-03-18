@@ -38,6 +38,11 @@ public class AstroItems {
             .lang("Rune Tablet")
             .register();
 
+    public static ItemEntry<AstroItem> SHIMMERBRICK = REGISTRATE
+            .item("shimmerbrick", AstroItem::new)
+            .lang("Shimmerbrick")
+            .register();
+
     public static ItemEntry<DataDiskItem> DATA_DISK = REGISTRATE
             .item("data_disk", DataDiskItem::new)
             .lang("Data Disk")

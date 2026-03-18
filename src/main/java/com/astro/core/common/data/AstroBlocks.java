@@ -25,6 +25,8 @@ public class AstroBlocks {
 
     public static BlockEntry<Block> ASTEROID_STONE;
     public static BlockEntry<Block> HARD_ASTEROID_STONE;
+    public static BlockEntry<Block> LIVINGBRICKS;
+    public static BlockEntry<Block> SHIMMERBRICKS;
 
     public static BlockEntry<Block> MACHINE_CASING_KINETIC;
 
@@ -43,6 +45,10 @@ public class AstroBlocks {
     public static BlockEntry<Block> ALFSTEEL_PIPE_CASING;
     public static BlockEntry<Block> ALFSTEEL_GEARBOX_CASING;
     public static BlockEntry<ActiveBlock> FIREBOX_ALFSTEEL;
+
+    public static BlockEntry<Block> MACHINE_CASING_GAIASTEEL;
+    public static BlockEntry<Block> GAIASTEEL_CASING_PIPE;
+    public static BlockEntry<Block> GAIASTEEL_CASING_GEARBOX;
 
     public static BlockEntry<Block> STEEL_CONTROL_CASING;
     public static BlockEntry<Block> TUNGSTENSTEEL_CONTROL_CASING;
@@ -96,12 +102,15 @@ public class AstroBlocks {
 
     public static void init() {
         REGISTRATE.creativeModeTab(() -> AstroCore.ASTRO_CREATIVE_TAB);
-
         // 1. Stones
         ASTEROID_STONE = createStone("asteroid_stone", "Asteroid Stone", "rocks/asteroid_stone",
                 MapColor.TERRACOTTA_PURPLE, 2.0F);
         HARD_ASTEROID_STONE = createStone("hard_asteroid_stone", "Hard Asteroid Stone", "rocks/hard_asteroid_stone",
                 MapColor.TERRACOTTA_PURPLE, 4.0F);
+        LIVINGBRICKS = createStone("livingbricks", "Livingbricks", "casings/livingbricks",
+                MapColor.TERRACOTTA_LIGHT_GRAY, 1.2F);
+        SHIMMERBRICKS = createStone("shimmerbricks", "Shimmerbricks", "casings/shimmerbricks",
+                MapColor.TERRACOTTA_WHITE, 10.0F);
 
         // 2. Machine Casings & Gearboxes
         MACHINE_CASING_KINETIC = createCasing("machine_casing_kinetic",
@@ -114,6 +123,8 @@ public class AstroBlocks {
                 "Solid §2Terrasteel§r Casing");
         ALFSTEEL_MACHINE_CASING = createCasing("machine_casing_alfsteel",
                 "generators/machine_casing_solid_alfsteel", "Solid §dAlfsteel§r Casing");
+        MACHINE_CASING_GAIASTEEL = createCasing("machine_casing_gaiasteel",
+                "casings/machine_casing_gaiasteel", "§cGaiasteel§r-Plated Brick Casing");
         MACHINE_CASING_STYRENE_BUTADIENE = createCasing("industrial_styrene_butadiene_rubber_casing",
                 "casings/industrial_casings/machine_casing_styrene_butadiene_rubber",
                 "Industrial Styrene Butadiene Rubber Coated Casing");
@@ -154,7 +165,9 @@ public class AstroBlocks {
         MACHINE_CASING_PAI = createCasing("machine_casing_super_inert_pai",
                 "casings/machine_casing_super_inert_pai", "Thermochemically Stable PAI Machine Casing");
         ALFSTEEL_GEARBOX_CASING = createCasing("alfsteel_gearbox_casing",
-                "generators/machine_casing_gearbox_alfsteel", "§dAlfsteel§r Gearbox");
+                "generators/machine_casing_gearbox_alfsteel", "§dAlfsteel§r Gearbox Casing");
+        GAIASTEEL_CASING_GEARBOX = createCasing( "gaiasteel_gearbox_casing",
+                "generators/machine_casing_gearbox_gaiasteel", "§cGaiasteel§r Gearbox Casing");
         GEARBOX_CASING_RHODIUM_PLATED_PALLADIUM = createCasing("gearbox_casing_rhodium_plated_palladium",
                 "casings/gearbox_casing_pristine_rhodium_plated_palladium", "Rhodium Plated Palladium Gearbox Casing");
         GEARBOX_CASING_NAQUADAH_ALLOY = createCasing("gearbox_casing_invariant_naquadah_alloy",
@@ -166,7 +179,7 @@ public class AstroBlocks {
                 "Rhodium Plated Palladium Turbine Casing");
         TURBINE_CASING_NAQUADAH_ALLOY = createCasing("machine_casing_turbine_naquadah_alloy",
                 "generators/machine_casing_turbine_naquadah_alloy", "Naquadah Alloy Turbine Casing");
-        // EXAMPLE_CASING = createCasing( "", "", "");
+//        _CASING = createCasing( "", "", "");
 
         // 3. Pipe Casings
         MANASTEEL_PIPE_CASING = createCasing("manasteel_pipe_casing",
@@ -175,6 +188,8 @@ public class AstroBlocks {
                 "generators/machine_casing_pipe_terrasteel", "§2Terrasteel§r Pipe Casing");
         ALFSTEEL_PIPE_CASING = createCasing("alfsteel_pipe_casing",
                 "generators/machine_casing_pipe_alfsteel", "§dAlfsteel§r Pipe Casing");
+        GAIASTEEL_CASING_PIPE = createCasing( "gaiasteel_pipe_casing",
+                "generators/machine_casing_pipe_gaiasteel", "§cGaiasteel§r Pipe Casing");
         PIPE_CASING_RHODIUM_PLATED_PALLADIUM = createCasing("pipe_casing_rhodium_plated_palladium",
                 "casings/pipe_casing_pristine_rhodium_plated_palladium", "Rhodium Plated Palladium Pipe Casing");
         PIPE_CASING_NAQUADAH_ALLOY = createCasing("pipe_casing_invariant_naquadah_alloy",

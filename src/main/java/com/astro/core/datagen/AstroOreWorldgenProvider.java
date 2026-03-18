@@ -31,20 +31,21 @@ public class AstroOreWorldgenProvider implements DataProvider {
                         .biome("ad_astra:kuiper_asteroids")
                         .predicateBlock("astrogreg:asteroid_stone")
                         .predicateBlock("astrogreg:hard_asteroid_stone")
-                        .ore("gtceu:copper", 8, 40)
                         .ore("gtceu:iron", 6, 65)
-                        .ore("gtceu:redstone", 9, 30)
-                        .ore("gtceu:garnierite", 7, 10)
-                        .ore("gtceu:silver", 5, 15)
-                        .ore("gtceu:sphalerite", 5, 25)
+                        .ore("gtceu:copper", 8, 40)
                         .ore("astrogreg:desh", 5, 40)
-                        .ore("gtceu:gold", 7, 5)
-                        .ore("gtceu:diamond", 6, 3)
-                        .ore("gtceu:emerald", 4, 2)
-                        .ore("gtceu:sapphire", 6, 10)
-                        .ore("gtceu:ruby", 5, 10)
+                        .ore("gtceu:redstone", 9, 30)
+                        .ore("gtceu:sphalerite", 5, 25)
                         .ore("gtceu:nether_quartz", 8, 25)
-                        .ore("gtceu:galena", 5, 20));
+                        .ore("gtceu:galena", 5, 20)
+                        .ore("gtceu:silver", 5, 15)
+                        .ore("gtceu:garnierite", 7, 10)
+                        .ore("gtceu:pyrolusite", 6, 10)
+                        .ore("gtceu:ruby", 5, 10)
+                        .ore("gtceu:sapphire", 6, 10)
+                        .ore("gtceu:gold", 7,   5)
+                        .ore("gtceu:diamond", 6, 3)
+                        .ore("gtceu:emerald", 4, 2));
 
         event.getGenerator().addProvider(event.includeServer(), provider);
     }

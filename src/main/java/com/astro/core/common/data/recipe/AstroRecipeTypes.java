@@ -143,7 +143,7 @@ public class AstroRecipeTypes {
                 .setMaxTooltips(4)
                 .setSound(GTSoundEntries.COMPUTATION);
 
-        ASTROPORT_RECIPES = register("astroport", ELECTRIC)
+        ASTROPORT_RECIPES = register("astroport", MULTIBLOCK)
                 .setEUIO(IO.IN)
                 .setMaxIOSize(16, 1, 4, 0)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, LEFT_TO_RIGHT)
@@ -179,8 +179,8 @@ public class AstroRecipeTypes {
             ItemStackHandler phantom = new ItemStackHandler(1);
             phantom.setStackInSlot(0, ResearchManager.getDefaultScannerItem());
 
-            SlotWidget planetarySlot = new SlotWidget(phantom, 0, 152, 36, false, false)
-                    .setBackgroundTexture(GuiTextures.SLOT)
+            SlotWidget planetarySlot = new SlotWidget(phantom, 0, 130, 22, false, false)
+                    .setBackgroundTexture(GuiTextures.DATA_ORB_OVERLAY)
                     .setOnAddedTooltips((w, tooltips) -> tooltips.add(Component.translatable(
                             "astrogreg.recipe.condition.planetary_research_slot.tooltip",
                             planetId)));
