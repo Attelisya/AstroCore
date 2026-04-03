@@ -79,10 +79,10 @@ public class AstroPlanetaryRecipes {
                 .outputItems(TIER_2_ROCKET)
                 .duration(900)
                 .EUt(VA[EV])
-                 .scannerResearch(b -> b
-                 .researchStack(new ItemStack(TIER_1_ROCKET.get()))
-                 .dataStack(TOOL_DATA_STICK.asStack())
-                 .EUt(VA[HV]))
+                .scannerResearch(b -> b
+                        .researchStack(new ItemStack(TIER_1_ROCKET.get()))
+                        .dataStack(TOOL_DATA_STICK.asStack())
+                        .EUt(VA[HV]))
                 .addCondition(new PlanetaryResearchCondition().setPlanetId(NEPTUNE_ID))
                 .addData(PlanetaryResearchCondition.RECIPE_DATA_KEY, NEPTUNE_ID);
         ObservatoryResearchBuilder.applyTo(tier2Builder, b -> b
@@ -95,7 +95,8 @@ public class AstroPlanetaryRecipes {
         tier2Builder.save(provider);
 
         var tier3Builder = AstroRecipeTypes.ASTROPORT_RECIPES.recipeBuilder("tier_3_rocket")
-                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("astrogreg", "advanced_rocket_nose_cone")))
+                .inputItems(
+                        ForgeRegistries.ITEMS.getValue(new ResourceLocation("astrogreg", "advanced_rocket_nose_cone")))
                 .inputItems(GTBlocks.CASING_TEMPERED_GLASS.asStack(), 2)
                 .inputItems(frameGt, StainlessSteel, 8)
                 .inputItems(plateDouble, Titanium, 24)
