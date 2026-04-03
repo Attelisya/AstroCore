@@ -18,6 +18,7 @@ import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
+import static com.gregtechceu.gtceu.common.data.GTItems.TOOL_DATA_ORB;
 import static com.gregtechceu.gtceu.common.data.GTItems.TOOL_DATA_STICK;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static earth.terrarium.adastra.common.registry.ModItems.TIER_1_ROCKET;
@@ -74,7 +75,7 @@ public class AstroPlanetaryRecipes {
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("astrogreg", "basic_rocket_fin")), 4)
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("astrogreg", "hv_rocket_engine")), 1)
                 .inputItems(CustomTags.HV_CIRCUITS, 4)
-                .inputItems(cableGtSingle, Gold, 32)
+                .inputItems(cableGtSingle, Gold, 24)
                 .inputFluids(SolderingAlloy.getFluid(L * 12))
                 .outputItems(TIER_2_ROCKET)
                 .duration(900)
@@ -99,12 +100,12 @@ public class AstroPlanetaryRecipes {
                         ForgeRegistries.ITEMS.getValue(new ResourceLocation("astrogreg", "advanced_rocket_nose_cone")))
                 .inputItems(GTBlocks.CASING_TEMPERED_GLASS.asStack(), 2)
                 .inputItems(frameGt, StainlessSteel, 8)
-                .inputItems(plateDouble, Titanium, 24)
-                .inputItems(plate, Titanium, 48)
+                .inputItems(plateDouble, Titanium, 32)
+                .inputItems(plate, Titanium, 64)
                 .inputItems(GTBlocks.HERMETIC_CASING_EV.asStack(), 4)
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("astrogreg", "advanced_rocket_fin")), 4)
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("astrogreg", "ev_rocket_engine")), 1)
-                .inputItems(CustomTags.EV_CIRCUITS, 4)
+                .inputItems(CustomTags.EV_CIRCUITS, 8)
                 .inputItems(cableGtSingle, Aluminium, 32)
                 .inputFluids(SolderingAlloy.getFluid(L * 15))
                 .outputItems(ModItems.TIER_3_ROCKET)
@@ -112,12 +113,12 @@ public class AstroPlanetaryRecipes {
                 .EUt(VA[IV])
                 .scannerResearch(b -> b
                         .researchStack(new ItemStack(TIER_2_ROCKET.get()))
-                        .dataStack(TOOL_DATA_STICK.asStack())
+                        .dataStack(TOOL_DATA_ORB.asStack())
                         .EUt(VA[EV]))
                 .addCondition(new PlanetaryResearchCondition().setPlanetId(URANUS_ID))
                 .addData(PlanetaryResearchCondition.RECIPE_DATA_KEY, URANUS_ID);
         ObservatoryResearchBuilder.applyTo(tier2Builder, b -> b
-                .researchStack(GTItems.SENSOR_HV.asStack())
+                .researchStack(GTItems.SENSOR_EV.asStack())
                 .CWUt(4, 2000)
                 .EUt(VA[IV])
                 .planetName("Uranus")

@@ -208,6 +208,9 @@ public class AstroLangHandler {
         provider.add("item.astrogreg.arc_chip.tooltip", "Acausal Recursive Circuit");
         provider.add("item.astrogreg.arc_wafer.tooltip", "Raw Paradox Circuit");
 
+        // mobs
+        provider.add("entity.astrogreg.kuiper_slime", "Kuiper Slime");
+
         // miscellaneous
         multilineLang(provider, "astrogreg.gui.configurator_slot.tooltip",
                 "§fConfigurator Slot§r\n§7Place a §6Programmed Circuit§7 in this slot to\n§7change its configured value.\n§aA Programmed Circuit in this slot is also valid for recipe inputs.§r");

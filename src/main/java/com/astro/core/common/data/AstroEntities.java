@@ -1,0 +1,40 @@
+package com.astro.core.common.data;
+
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+import com.astro.core.AstroCore;
+import com.astro.core.common.entity.KuiperSlimeEntity;
+
+@Mod.EventBusSubscriber(modid = AstroCore.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class AstroEntities {
+
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
+            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, AstroCore.MOD_ID);
+
+    public static final RegistryObject<EntityType<KuiperSlimeEntity>> KUIPER_SLIME =
+            ENTITY_TYPES.register("kuiper_slime",
+                    () -> EntityType.Builder.<KuiperSlimeEntity>of(KuiperSlimeEntity::new, MobCategory.MONSTER)
+                            .sized(2.04F, 2.04F)
+                            .build("kuiper_slime"));
+
+    @SubscribeEvent
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        AttributeSupplier.Builder builder = new AttributeSupplier.Builder(Mob.createMobAttributes().build());
+        builder.add(Attributes.MAX_HEALTH, 1.0);
+        builder.add(Attributes.MOVEMENT_SPEED, 0.2);
+        builder.add(Attributes.ATTACK_DAMAGE, 0.0);
+        event.put(KUIPER_SLIME.get(), builder.build());
+    }
+
+    public static void init() {}
+}

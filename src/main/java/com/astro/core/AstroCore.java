@@ -1,5 +1,6 @@
 package com.astro.core;
 
+import com.astro.core.common.data.AstroEntities;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
@@ -77,6 +78,8 @@ public class AstroCore {
         modEventBus.addGenericListener(MachineDefinition.class, this::registerMachines);
         modEventBus.addGenericListener(RecipeConditionType.class, this::registerRecipeConditions);
 
+        AstroEntities.ENTITY_TYPES.register(modEventBus);
+
         modEventBus.addListener(this::addMaterialRegistries);
         modEventBus.addListener(this::addMaterials);
         modEventBus.addListener(this::modifyMaterials);
@@ -93,6 +96,7 @@ public class AstroCore {
         REGISTRATE.registerRegistrate();
         AstroBlocks.init();
         AstroItems.init();
+        AstroEntities.init();
         AstroMaterialFlags.init();
         AstroDatagen.init();
     }
