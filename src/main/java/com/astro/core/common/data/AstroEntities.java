@@ -32,7 +32,7 @@ public class AstroEntities {
         AttributeSupplier.Builder builder = new AttributeSupplier.Builder(Mob.createMobAttributes().build());
         builder.add(Attributes.MAX_HEALTH, 1.0);
         builder.add(Attributes.MOVEMENT_SPEED, 0.2);
-        builder.add(Attributes.ATTACK_DAMAGE, 0.0);
+        builder.add(Attributes.ATTACK_DAMAGE, 0.5);
         event.put(KUIPER_SLIME.get(), builder.build());
     }
 

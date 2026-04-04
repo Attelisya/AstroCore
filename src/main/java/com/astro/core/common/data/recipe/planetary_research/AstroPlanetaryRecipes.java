@@ -117,7 +117,7 @@ public class AstroPlanetaryRecipes {
                         .EUt(VA[EV]))
                 .addCondition(new PlanetaryResearchCondition().setPlanetId(URANUS_ID))
                 .addData(PlanetaryResearchCondition.RECIPE_DATA_KEY, URANUS_ID);
-        ObservatoryResearchBuilder.applyTo(tier2Builder, b -> b
+        ObservatoryResearchBuilder.applyTo(tier3Builder, b -> b
                 .researchStack(GTItems.SENSOR_EV.asStack())
                 .CWUt(4, 2000)
                 .EUt(VA[IV])

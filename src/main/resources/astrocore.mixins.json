@@ -6,6 +6,7 @@
   "mixins": [
     "accessor.BotaniaEmiRecipeAccessor",
     "accessor.RunicAltarBlockEntityAccessor",
+    "DataItemBehaviorMixin",
     "DataItemRenderMixin",
     "FluidHatchesBlacklistMixin",
     "GasTankItemMixin",
