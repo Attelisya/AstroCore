@@ -4,12 +4,12 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.level.Level;
+
 import org.joml.Vector3f;
 
 public class SpigEntity extends Hoglin {
 
-    private static final DustParticleOptions PARTICLE =
-            new DustParticleOptions(new Vector3f(0.7f, 0.5f, 1.0f), 1.0f);
+    private static final DustParticleOptions PARTICLE = new DustParticleOptions(new Vector3f(0.7f, 0.5f, 1.0f), 1.0f);
 
     public SpigEntity(EntityType<? extends Hoglin> type, Level level) {
         super(type, level);

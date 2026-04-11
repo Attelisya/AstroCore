@@ -20,7 +20,7 @@ public class PlutonianShrubBlock extends CropBlock {
 
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
 
-    private static final VoxelShape[] SHAPES = new VoxelShape[]{
+    private static final VoxelShape[] SHAPES = new VoxelShape[] {
             Block.box(0, 0, 0, 16, 4, 16),
             Block.box(0, 0, 0, 16, 8, 16),
             Block.box(0, 0, 0, 16, 12, 16),

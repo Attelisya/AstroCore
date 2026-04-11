@@ -1,7 +1,9 @@
 package com.astro.core.mixin;
 
-import java.util.function.Predicate;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 
+import com.astro.core.common.data.tag.AstroBlockTags;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -10,10 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
-
-import com.astro.core.common.data.tag.AstroBlockTags;
+import java.util.function.Predicate;
 
 @Mixin(value = Heightmap.Types.class, remap = true)
 public class HeightmapTypesMixin {

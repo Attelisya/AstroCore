@@ -1,21 +1,34 @@
 package com.astro.core.common.entity;
 
 public enum GlaciodilloState {
+
     IDLE(false, 0) {
+
         @Override
-        public boolean shouldHideInShell(long ticks) { return false; }
+        public boolean shouldHideInShell(long ticks) {
+            return false;
+        }
     },
     ROLLING(true, 10) {
+
         @Override
-        public boolean shouldHideInShell(long ticks) { return ticks > 5L; }
+        public boolean shouldHideInShell(long ticks) {
+            return ticks > 5L;
+        }
     },
     SCARED(true, 50) {
+
         @Override
-        public boolean shouldHideInShell(long ticks) { return true; }
+        public boolean shouldHideInShell(long ticks) {
+            return true;
+        }
     },
     UNROLLING(true, 30) {
+
         @Override
-        public boolean shouldHideInShell(long ticks) { return ticks < 26L; }
+        public boolean shouldHideInShell(long ticks) {
+            return ticks < 26L;
+        }
     };
 
     private final boolean isThreatened;
@@ -27,5 +40,8 @@ public enum GlaciodilloState {
     }
 
     public abstract boolean shouldHideInShell(long ticks);
-    public int animationDuration() { return animationDuration; }
+
+    public int animationDuration() {
+        return animationDuration;
+    }
 }

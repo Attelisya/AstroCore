@@ -1,7 +1,5 @@
 package com.astro.core.client.model;
 
-import com.astro.core.client.animation.GlaciodilloAnimation;
-import com.astro.core.common.entity.GlaciodilloEntity;
 import net.minecraft.client.model.AgeableHierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -9,6 +7,9 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import com.astro.core.client.animation.GlaciodilloAnimation;
+import com.astro.core.common.entity.GlaciodilloEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class GlaciodilloModel extends AgeableHierarchicalModel<GlaciodilloEntity> {

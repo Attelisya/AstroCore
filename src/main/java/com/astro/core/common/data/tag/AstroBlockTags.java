@@ -15,5 +15,4 @@ public class AstroBlockTags {
     public static final TagKey<Block> HEIGHTMAP_IGNORE = TagKey.create(
             Registries.BLOCK,
             AstroCore.id("heightmap_ignore"));
-
 }

@@ -1,8 +1,5 @@
 package com.astro.core;
 
-import com.astro.core.common.data.worldgen.AstroBiomes;
-import com.astro.core.common.data.worldgen.AstroFeatures;
-import com.astro.core.common.data.worldgen.AstroWorldgen;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
@@ -18,7 +15,6 @@ import com.lowdragmc.lowdraglib.Platform;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.level.levelgen.feature.BasaltColumnsFeature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +31,9 @@ import com.astro.core.common.data.configs.AstroConfigs;
 import com.astro.core.common.data.machine.AstroRecipeConditions;
 import com.astro.core.common.data.materials.*;
 import com.astro.core.common.data.recipe.AstroRecipeTypes;
+import com.astro.core.common.data.worldgen.AstroBiomes;
+import com.astro.core.common.data.worldgen.AstroFeatures;
+import com.astro.core.common.data.worldgen.AstroWorldgen;
 import com.astro.core.common.machine.crates.AstroCrates;
 import com.astro.core.common.machine.drums.AstroDrums;
 import com.astro.core.common.machine.integration.AstroAEMachines;

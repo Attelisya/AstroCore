@@ -1,6 +1,5 @@
 package com.astro.core.events;
 
-import com.astro.core.AstroCore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -15,15 +14,16 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import com.astro.core.AstroCore;
+
 import java.util.function.Function;
 
 @Mod.EventBusSubscriber(modid = AstroCore.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerSpawnHandler {
 
     private static final ResourceKey<Level> KUIPER_BELT = ResourceKey.create(
-        Registries.DIMENSION,
-        new ResourceLocation("ad_astra", "kuiper_belt")
-    );
+            Registries.DIMENSION,
+            new ResourceLocation("ad_astra", "kuiper_belt"));
 
     private static final int SPAWN_SEARCH_RADIUS = 100;
 
@@ -37,11 +37,13 @@ public class PlayerSpawnHandler {
 
         ServerLevel kuiperLevel = server.getLevel(KUIPER_BELT);
         if (kuiperLevel == null) {
-            AstroCore.LOGGER.warn("Kuiper Belt dimension not found, cannot teleport player {}", player.getName().getString());
+            AstroCore.LOGGER.warn("Kuiper Belt dimension not found, cannot teleport player {}",
+                    player.getName().getString());
             return;
         }
 
         player.changeDimension(kuiperLevel, new ITeleporter() {
+
             @Override
             public Entity placeEntity(Entity entity, ServerLevel currentLevel, ServerLevel destLevel,
                                       float yaw, Function<Boolean, Entity> repositionEntity) {
@@ -51,7 +53,8 @@ public class PlayerSpawnHandler {
                 if (spawnPos != null) {
                     entity.teleportTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
                 } else {
-                    AstroCore.LOGGER.warn("Could not find valid spawn position for player {}", entity.getName().getString());
+                    AstroCore.LOGGER.warn("Could not find valid spawn position for player {}",
+                            entity.getName().getString());
                 }
 
                 return entity;
@@ -81,9 +84,8 @@ public class PlayerSpawnHandler {
                         BlockPos feet = ground.above();
                         BlockPos head = feet.above();
 
-                        if (y + 2 < maxHeight
-                                && level.getBlockState(feet).isAir()
-                                && level.getBlockState(head).isAir()) {
+                        if (y + 2 < maxHeight && level.getBlockState(feet).isAir() &&
+                                level.getBlockState(head).isAir()) {
                             return feet;
                         }
                     }

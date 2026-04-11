@@ -1,8 +1,5 @@
 package com.astro.core.common.data.worldgen.feature;
 
-import com.astro.core.AstroCore;
-import com.google.common.collect.ImmutableList;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -14,16 +11,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-import javax.annotation.Nullable;
+import com.astro.core.AstroCore;
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
+
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class StoneColumnsFeature extends Feature<StoneColumnsConfiguration> {
 
     private static final ImmutableList<Block> ALWAYS_CANNOT_PLACE_ON = ImmutableList.of(
             Blocks.LAVA, Blocks.BEDROCK, Blocks.MAGMA_BLOCK, Blocks.SOUL_SAND,
             Blocks.NETHER_BRICKS, Blocks.NETHER_BRICK_FENCE, Blocks.NETHER_BRICK_STAIRS,
-            Blocks.NETHER_WART, Blocks.CHEST, Blocks.SPAWNER
-    );
+            Blocks.NETHER_WART, Blocks.CHEST, Blocks.SPAWNER);
 
     public StoneColumnsFeature(Codec<StoneColumnsConfiguration> codec) {
         super(codec);

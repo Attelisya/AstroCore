@@ -1,8 +1,5 @@
 package com.astro.core.common.data;
 
-import com.astro.core.common.data.block.foliage.CryoGrassBlock;
-import com.astro.core.common.data.block.foliage.PlutonianShrubBlock;
-import com.astro.core.common.data.block.foliage.ScorchGrassBlock;
 import com.gregtechceu.gtceu.api.block.ActiveBlock;
 import com.gregtechceu.gtceu.api.block.property.GTBlockStateProperties;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
@@ -33,7 +30,10 @@ import net.minecraftforge.common.Tags;
 import com.astro.core.AstroCore;
 import com.astro.core.common.data.block.AstroFallingBlock;
 import com.astro.core.common.data.block.KuiperSlimeBlock;
+import com.astro.core.common.data.block.foliage.CryoGrassBlock;
+import com.astro.core.common.data.block.foliage.PlutonianShrubBlock;
 import com.astro.core.common.data.block.foliage.ResinwortBlock;
+import com.astro.core.common.data.block.foliage.ScorchGrassBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
@@ -366,7 +366,7 @@ public class AstroBlocks {
                 .register();
 
         PLUTONIAN_SHRUB = REGISTRATE.block("plutonian_shrub",
-                        p -> new PlutonianShrubBlock(p, () -> AstroItems.PLUTONIAN_SHRUB_SEEDS.get()))
+                p -> new PlutonianShrubBlock(p, () -> AstroItems.PLUTONIAN_SHRUB_SEEDS.get()))
                 .initialProperties(() -> Blocks.DEAD_BUSH)
                 .blockstate((ctx, prov) -> {
                     for (int i = 0; i <= 2; i++) {

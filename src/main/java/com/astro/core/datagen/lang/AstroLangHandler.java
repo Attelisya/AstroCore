@@ -221,11 +221,11 @@ public class AstroLangHandler {
         provider.add("gtceu.jei.ore_vein.chromium_manganese_vein_pluto", "Pluto Grossular Vein");
 
         // biomes
-        provider.add("biome.astrogreg.plutonian_mountains",       "Plutonian Mountains");
-        provider.add("biome.astrogreg.plutonian_rocky_plains",    "Plutonian Rocky Plains");
-        provider.add("biome.astrogreg.plutonian_deep_canyons",    "Plutonian Deep Canyons");
+        provider.add("biome.astrogreg.plutonian_mountains", "Plutonian Mountains");
+        provider.add("biome.astrogreg.plutonian_rocky_plains", "Plutonian Rocky Plains");
+        provider.add("biome.astrogreg.plutonian_deep_canyons", "Plutonian Deep Canyons");
         provider.add("biome.astrogreg.plutonian_mushroom_forest", "Plutonian Mushroom Forest");
-        provider.add("biome.astrogreg.pluto_ice_river",           "Plutonian Frozen River");
+        provider.add("biome.astrogreg.pluto_ice_river", "Plutonian Frozen River");
 
         // miscellaneous
         multilineLang(provider, "astrogreg.gui.configurator_slot.tooltip",

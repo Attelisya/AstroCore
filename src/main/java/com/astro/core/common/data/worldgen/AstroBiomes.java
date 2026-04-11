@@ -1,7 +1,5 @@
 package com.astro.core.common.data.worldgen;
 
-import com.astro.core.AstroCore;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -10,36 +8,37 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
+import com.astro.core.AstroCore;
+
 @SuppressWarnings("all")
 @Mod.EventBusSubscriber(modid = AstroCore.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AstroBiomes {
 
-    public static final DeferredRegister<Biome> BIOMES =
-            DeferredRegister.create(Registries.BIOME, AstroCore.MOD_ID);
+    public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(Registries.BIOME, AstroCore.MOD_ID);
 
-    //  Pluto biomes
-    public static final RegistryObject<Biome> PLUTONIAN_MOUNTAINS =
-            BIOMES.register("plutonian_mountains", AstroBiomes::makePlutoBiome);
+    // Pluto biomes
+    public static final RegistryObject<Biome> PLUTONIAN_MOUNTAINS = BIOMES.register("plutonian_mountains",
+            AstroBiomes::makePlutoBiome);
 
-    public static final RegistryObject<Biome> PLUTONIAN_ROCKY_PLAINS =
-            BIOMES.register("plutonian_rocky_plains", AstroBiomes::makePlutoBiome);
+    public static final RegistryObject<Biome> PLUTONIAN_ROCKY_PLAINS = BIOMES.register("plutonian_rocky_plains",
+            AstroBiomes::makePlutoBiome);
 
-    public static final RegistryObject<Biome> PLUTONIAN_DEEP_CANYONS =
-            BIOMES.register("plutonian_deep_canyons", AstroBiomes::makePlutoBiome);
+    public static final RegistryObject<Biome> PLUTONIAN_DEEP_CANYONS = BIOMES.register("plutonian_deep_canyons",
+            AstroBiomes::makePlutoBiome);
 
-    public static final RegistryObject<Biome> PLUTONIAN_MUSHROOM_FOREST =
-            BIOMES.register("plutonian_mushroom_forest", AstroBiomes::makePlutoBiome);
+    public static final RegistryObject<Biome> PLUTONIAN_MUSHROOM_FOREST = BIOMES.register("plutonian_mushroom_forest",
+            AstroBiomes::makePlutoBiome);
 
-    public static final RegistryObject<Biome> PLUTO_ICE_RIVER =
-            BIOMES.register("pluto_ice_river", AstroBiomes::makePlutoBiome);
+    public static final RegistryObject<Biome> PLUTO_ICE_RIVER = BIOMES.register("pluto_ice_river",
+            AstroBiomes::makePlutoBiome);
 
-    public static final ResourceKey<Biome> KEY_PLUTONIAN_MOUNTAINS      = key("plutonian_mountains");
-    public static final ResourceKey<Biome> KEY_PLUTONIAN_ROCKY_PLAINS   = key("plutonian_rocky_plains");
-    public static final ResourceKey<Biome> KEY_PLUTONIAN_DEEP_CANYONS   = key("plutonian_deep_canyons");
+    public static final ResourceKey<Biome> KEY_PLUTONIAN_MOUNTAINS = key("plutonian_mountains");
+    public static final ResourceKey<Biome> KEY_PLUTONIAN_ROCKY_PLAINS = key("plutonian_rocky_plains");
+    public static final ResourceKey<Biome> KEY_PLUTONIAN_DEEP_CANYONS = key("plutonian_deep_canyons");
     public static final ResourceKey<Biome> KEY_PLUTONIAN_MUSHROOM_FOREST = key("plutonian_mushroom_forest");
-    public static final ResourceKey<Biome> KEY_PLUTO_ICE_RIVER          = key("pluto_ice_river");
+    public static final ResourceKey<Biome> KEY_PLUTO_ICE_RIVER = key("pluto_ice_river");
 
-    //  Helpers
+    // Helpers
     private static ResourceKey<Biome> key(String name) {
         return ResourceKey.create(Registries.BIOME, new ResourceLocation(AstroCore.MOD_ID, name));
     }
@@ -63,6 +62,5 @@ public class AstroBiomes {
                 .build();
     }
 
-    public static void init() {
-    }
+    public static void init() {}
 }

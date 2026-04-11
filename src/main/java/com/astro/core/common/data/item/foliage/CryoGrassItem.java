@@ -1,6 +1,5 @@
 package com.astro.core.common.data.item.foliage;
 
-import com.astro.core.common.data.AstroBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
@@ -8,6 +7,8 @@ import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
+import com.astro.core.common.data.AstroBlocks;
 
 @SuppressWarnings("all")
 public class CryoGrassItem extends ItemNameBlockItem {

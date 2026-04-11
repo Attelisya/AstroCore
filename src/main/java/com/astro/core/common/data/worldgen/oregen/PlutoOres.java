@@ -1,10 +1,8 @@
 package com.astro.core.common.data.worldgen.oregen;
 
-import com.astro.core.common.data.worldgen.AstroWorldGenLayers;
 import com.gregtechceu.gtceu.api.data.worldgen.GTLayerPattern;
 import com.gregtechceu.gtceu.api.data.worldgen.GTOreDefinition;
 import com.gregtechceu.gtceu.api.data.worldgen.IWorldGenLayer;
-import com.gregtechceu.gtceu.api.data.worldgen.WorldGeneratorUtils;
 import com.gregtechceu.gtceu.api.data.worldgen.generator.indicators.SurfaceIndicatorGenerator;
 import com.gregtechceu.gtceu.api.data.worldgen.generator.veins.DikeVeinGenerator.DikeBlockDefinition;
 import com.gregtechceu.gtceu.api.data.worldgen.generator.veins.NoopVeinGenerator;
@@ -19,6 +17,8 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 
+import com.astro.core.common.data.worldgen.AstroWorldGenLayers;
+
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -31,7 +31,6 @@ import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 public class PlutoOres {
 
     public static void init() {
-
         create("chromium_manganese_vein_pluto", vein -> vein
                 .clusterSize(UniformInt.of(38, 50)).density(0.6f).weight(30)
                 .layer(AstroWorldGenLayers.PLUTO_STONE)

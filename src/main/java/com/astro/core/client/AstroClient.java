@@ -1,9 +1,5 @@
 package com.astro.core.client;
 
-import com.astro.core.client.model.GlaciodilloModel;
-import com.astro.core.client.renderer.entity.GlaciodilloModelLayers;
-import com.astro.core.client.renderer.entity.GlaciodilloRenderer;
-import com.astro.core.client.renderer.entity.SpigRenderer;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderManager;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,7 +9,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import com.astro.core.AstroCore;
+import com.astro.core.client.model.GlaciodilloModel;
+import com.astro.core.client.renderer.entity.GlaciodilloModelLayers;
+import com.astro.core.client.renderer.entity.GlaciodilloRenderer;
 import com.astro.core.client.renderer.entity.KuiperSlimeRenderer;
+import com.astro.core.client.renderer.entity.SpigRenderer;
 import com.astro.core.client.renderer.machine.AEMultiPartRender;
 import com.astro.core.client.renderer.machine.AstroBoilerMultiPartRender;
 import com.astro.core.client.renderer.machine.AstroFluidRender;

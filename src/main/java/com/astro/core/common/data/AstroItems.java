@@ -1,6 +1,5 @@
 package com.astro.core.common.data;
 
-import com.astro.core.common.data.item.foliage.*;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -8,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
+import com.astro.core.common.data.item.foliage.*;
 import com.astro.core.common.data.item.research.DataDiskItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import org.jetbrains.annotations.Nullable;

@@ -1,7 +1,6 @@
 package com.astro.core.common.entity;
 
-import com.astro.core.client.AstroSoundEntries;
-import com.astro.core.common.data.AstroEntities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -21,15 +20,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
+
+import com.astro.core.client.AstroSoundEntries;
+import com.astro.core.common.data.AstroEntities;
 
 import javax.annotation.Nullable;
 
 @SuppressWarnings("all")
 public class GlaciodilloEntity extends Animal {
 
-    private static final EntityDataAccessor<String> STATE =
-            SynchedEntityData.defineId(GlaciodilloEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<String> STATE = SynchedEntityData.defineId(GlaciodilloEntity.class,
+            EntityDataSerializers.STRING);
 
     private long inStateTicks = 0L;
     public final AnimationState rollOutAnimationState = new AnimationState();
@@ -90,8 +91,7 @@ public class GlaciodilloEntity extends Animal {
     }
 
     public boolean canStayRolledUp() {
-        return !this.isInWater() && !this.isLeashed()
-                && !this.isPassenger() && !this.isVehicle();
+        return !this.isInWater() && !this.isLeashed() && !this.isPassenger() && !this.isVehicle();
     }
 
     public void rollUp() {
@@ -170,24 +170,24 @@ public class GlaciodilloEntity extends Animal {
         if (!level().isClientSide()) {
             if (getGlaciodilloState() == GlaciodilloState.IDLE) {
                 level().getEntitiesOfClass(LivingEntity.class,
-                                getBoundingBox().inflate(7.0F, 2.0F, 7.0F),
-                                e -> e != this && isScaredBy(e))
-                        .stream().findFirst().ifPresent(e -> rollUp());
-            } else if (getGlaciodilloState() == GlaciodilloState.ROLLING
-                    && inStateTicks > GlaciodilloState.ROLLING.animationDuration()) {
-                switchToState(GlaciodilloState.SCARED);
-            } else if (getGlaciodilloState() == GlaciodilloState.SCARED) {
-                boolean threatGone = level().getEntitiesOfClass(LivingEntity.class,
                         getBoundingBox().inflate(7.0F, 2.0F, 7.0F),
-                        e -> e != this && isScaredBy(e)).isEmpty()
-                        && getLastHurtByMob() == null;
-                if (threatGone) {
-                    switchToState(GlaciodilloState.UNROLLING);
-                }
-            } else if (getGlaciodilloState() == GlaciodilloState.UNROLLING
-                    && inStateTicks > GlaciodilloState.UNROLLING.animationDuration()) {
-                switchToState(GlaciodilloState.IDLE);
-            }
+                        e -> e != this && isScaredBy(e))
+                        .stream().findFirst().ifPresent(e -> rollUp());
+            } else if (getGlaciodilloState() == GlaciodilloState.ROLLING &&
+                    inStateTicks > GlaciodilloState.ROLLING.animationDuration()) {
+                        switchToState(GlaciodilloState.SCARED);
+                    } else
+                if (getGlaciodilloState() == GlaciodilloState.SCARED) {
+                    boolean threatGone = level().getEntitiesOfClass(LivingEntity.class,
+                            getBoundingBox().inflate(7.0F, 2.0F, 7.0F),
+                            e -> e != this && isScaredBy(e)).isEmpty() && getLastHurtByMob() == null;
+                    if (threatGone) {
+                        switchToState(GlaciodilloState.UNROLLING);
+                    }
+                } else if (getGlaciodilloState() == GlaciodilloState.UNROLLING &&
+                        inStateTicks > GlaciodilloState.UNROLLING.animationDuration()) {
+                            switchToState(GlaciodilloState.IDLE);
+                        }
         }
         super.customServerAiStep();
     }
@@ -228,9 +228,8 @@ public class GlaciodilloEntity extends Animal {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return isScared()
-                ? AstroSoundEntries.GLACIODILLO_HURT_REDUCED.getMainEvent()
-                : AstroSoundEntries.GLACIODILLO_HURT.getMainEvent();
+        return isScared() ? AstroSoundEntries.GLACIODILLO_HURT_REDUCED.getMainEvent() :
+                AstroSoundEntries.GLACIODILLO_HURT.getMainEvent();
     }
 
     @Override
@@ -248,6 +247,7 @@ public class GlaciodilloEntity extends Animal {
     @Override
     protected BodyRotationControl createBodyControl() {
         return new BodyRotationControl(this) {
+
             @Override
             public void clientTick() {
                 if (!GlaciodilloEntity.this.isScared()) {
