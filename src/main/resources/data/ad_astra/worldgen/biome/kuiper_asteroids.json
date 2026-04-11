@@ -23,6 +23,12 @@
         "weight": 100,
         "minCount": 2,
         "maxCount": 4
+      },
+      {
+        "type": "minecraft:enderman",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "creature": [],
