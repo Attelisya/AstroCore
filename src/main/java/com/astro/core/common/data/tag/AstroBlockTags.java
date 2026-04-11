@@ -11,4 +11,9 @@ public class AstroBlockTags {
     public static final TagKey<Block> SURVIVES_IN_SPACE = TagKey.create(
             Registries.BLOCK,
             AstroCore.id("survives_in_space"));
+
+    public static final TagKey<Block> HEIGHTMAP_IGNORE = TagKey.create(
+            Registries.BLOCK,
+            AstroCore.id("heightmap_ignore"));
+
 }

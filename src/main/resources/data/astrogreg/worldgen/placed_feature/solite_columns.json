@@ -1,7 +1,7 @@
 {
-  "feature": "astrogreg:strophar_mushroom_large_configured",
+  "feature": "astrogreg:solite_columns",
   "placement": [
-    { "type": "minecraft:count", "count": 1 },
+    { "type": "minecraft:rarity_filter", "chance": 75 },
     { "type": "minecraft:in_square" },
     { "type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG" },
     { "type": "minecraft:biome" }

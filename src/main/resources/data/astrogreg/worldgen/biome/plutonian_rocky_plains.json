@@ -42,9 +42,7 @@
       "astrogreg:strophar_mushroom_large_configured_sparse"
     ],
     [], [],
-    [
-      "astrogreg:desert_pillar"
-    ]
+    ["astrogreg:solite_columns"]
   ],
   "spawners": {
     "creature": [

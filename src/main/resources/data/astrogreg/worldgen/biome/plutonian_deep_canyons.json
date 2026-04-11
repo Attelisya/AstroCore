@@ -26,13 +26,18 @@
   },
   "features": [
     [],
-    ["astrogreg:topaz_geode"],
+    [
+      "astrogreg:pluto_boulder",
+      "astrogreg:topaz_geode"
+    ],
     [], [], [],
     [
       "astrogreg:scorch_grass_patch",
-      "astrogreg:dead_bush"
+      "astrogreg:dead_bush",
+      "astrogreg:cryo_grass_patch"
     ],
-    [], [], [], [], []
+    [], [], [], [],
+    ["astrogreg:solite_columns"]
   ],
   "spawners": {
     "creature": [],

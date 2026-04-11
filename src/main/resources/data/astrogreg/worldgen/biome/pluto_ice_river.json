@@ -28,7 +28,8 @@
     [], [], [],
     [
       "astrogreg:pluto_ice_river_surface",
-      "astrogreg:dead_bush"
+      "astrogreg:dead_bush",
+      "astrogreg:cryo_grass_patch"
     ],
     [], [], [], [], []
   ],

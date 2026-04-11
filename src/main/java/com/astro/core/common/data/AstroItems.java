@@ -1,8 +1,6 @@
 package com.astro.core.common.data;
 
-import com.astro.core.common.data.item.foliage.PlutonianShrubItem;
-import com.astro.core.common.data.item.foliage.PlutonianShrubSeedsItem;
-import com.astro.core.common.data.item.foliage.ScorchGrassItem;
+import com.astro.core.common.data.item.foliage.*;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -11,7 +9,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import com.astro.core.common.data.item.research.DataDiskItem;
-import com.astro.core.common.data.item.foliage.ResinwortSeedsItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +48,11 @@ public class AstroItems {
     public static ItemEntry<ScorchGrassItem> SCORCH_GRASS = REGISTRATE
             .item("scorch_grass", ScorchGrassItem::new)
             .lang("Scorch Grass")
+            .register();
+
+    public static ItemEntry<CryoGrassItem> CRYO_GRASS = REGISTRATE
+            .item("cryo_grass", CryoGrassItem::new)
+            .lang("Cryo Grass")
             .register();
 
     public static ItemEntry<AstroItem> KUIPER_SLIME_BALL = REGISTRATE

@@ -25,7 +25,10 @@
   },
   "features": [
     [],
-    ["astrogreg:topaz_geode"],
+    [
+      "astrogreg:pluto_boulder",
+      "astrogreg:topaz_geode"
+    ],
     [], [], [],
     [
       "astrogreg:plutonian_shrub",

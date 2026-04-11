@@ -213,6 +213,13 @@ public class AstroLangHandler {
         provider.add("entity.astrogreg.glaciodillo", "Glaciodillo");
         provider.add("entity.astrogreg.spig", "Spig");
 
+        // ore veins
+        provider.add("gtceu.jei.ore_vein.topaz_vein_pluto", "Pluto Topaz Vein");
+        provider.add("gtceu.jei.ore_vein.bauxite_ilmenite_vein_pluto", "Pluto Bauxite Vein");
+        provider.add("gtceu.jei.ore_vein.desh_ostrum_vein_pluto", "Pluto Desh Vein");
+        provider.add("gtceu.jei.ore_vein.carnotite_vein_pluto", "Pluto Carnotite Vein");
+        provider.add("gtceu.jei.ore_vein.chromium_manganese_vein_pluto", "Pluto Grossular Vein");
+
         // biomes
         provider.add("biome.astrogreg.plutonian_mountains",       "Plutonian Mountains");
         provider.add("biome.astrogreg.plutonian_rocky_plains",    "Plutonian Rocky Plains");

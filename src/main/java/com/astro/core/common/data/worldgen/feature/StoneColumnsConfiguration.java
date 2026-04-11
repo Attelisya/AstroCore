@@ -8,20 +8,31 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public record FungalPillarConfiguration(Block block, IntProvider reach, IntProvider height) implements FeatureConfiguration {
+import java.util.List;
 
-    public static final Codec<FungalPillarConfiguration> CODEC = RecordCodecBuilder.create(instance ->
+public record StoneColumnsConfiguration(
+        Block block,
+        IntProvider reach,
+        IntProvider height,
+        List<Block> canPlaceOn
+) implements FeatureConfiguration {
+
+    public static final Codec<StoneColumnsConfiguration> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     ForgeRegistries.BLOCKS.getCodec()
                             .fieldOf("block")
-                            .forGetter(FungalPillarConfiguration::block),
+                            .forGetter(StoneColumnsConfiguration::block),
                     IntProvider.CODEC
                             .fieldOf("reach")
-                            .forGetter(FungalPillarConfiguration::reach),
+                            .forGetter(StoneColumnsConfiguration::reach),
                     IntProvider.CODEC
                             .fieldOf("height")
-                            .forGetter(FungalPillarConfiguration::height)
-            ).apply(instance, FungalPillarConfiguration::new)
+                            .forGetter(StoneColumnsConfiguration::height),
+                    ForgeRegistries.BLOCKS.getCodec()
+                            .listOf()
+                            .fieldOf("can_place_on")
+                            .forGetter(StoneColumnsConfiguration::canPlaceOn)
+            ).apply(instance, StoneColumnsConfiguration::new)
     );
 
     public BlockState blockState() {

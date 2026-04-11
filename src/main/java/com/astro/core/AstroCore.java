@@ -2,6 +2,7 @@ package com.astro.core;
 
 import com.astro.core.common.data.worldgen.AstroBiomes;
 import com.astro.core.common.data.worldgen.AstroFeatures;
+import com.astro.core.common.data.worldgen.AstroWorldgen;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
@@ -102,14 +103,15 @@ public class AstroCore {
         AstroBlocks.init();
         AstroItems.init();
         AstroEntities.init();
-        AstroBiomes.init();
         AstroMaterialFlags.init();
         AstroDatagen.init();
-        AstroFeatures.init();
+        AstroWorldgen.init();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(AstroKineticMachineUtils::registerAllStressValues);
+        event.enqueueWork(() -> {
+            AstroKineticMachineUtils.registerAllStressValues();
+        });
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {}

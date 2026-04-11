@@ -1,8 +1,8 @@
 package com.astro.core.common.data.worldgen;
 
 import com.astro.core.AstroCore;
-import com.astro.core.common.data.worldgen.feature.FungalPillarConfiguration;
-import com.astro.core.common.data.worldgen.feature.FungalPillarFeature;
+import com.astro.core.common.data.worldgen.feature.StoneColumnsConfiguration;
+import com.astro.core.common.data.worldgen.feature.StoneColumnsFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -13,9 +13,9 @@ public class AstroFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES =
             DeferredRegister.create(ForgeRegistries.FEATURES, AstroCore.MOD_ID);
 
-    public static final RegistryObject<Feature<FungalPillarConfiguration>> FUNGAL_PILLAR =
-            FEATURES.register("fungal_pillar",
-                    () -> new FungalPillarFeature(FungalPillarConfiguration.CODEC));
+    public static final RegistryObject<Feature<StoneColumnsConfiguration>> STONE_COLUMNS =
+            FEATURES.register("stone_columns",
+                    () -> new StoneColumnsFeature(StoneColumnsConfiguration.CODEC));
 
     public static void init() {}
 }

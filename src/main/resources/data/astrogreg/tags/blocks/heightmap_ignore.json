@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "ad_astra:aeronos_cap",
+    "ad_astra:aeronos_stem",
+    "ad_astra:strophar_cap",
+    "ad_astra:strophar_stem"
+  ]
+}

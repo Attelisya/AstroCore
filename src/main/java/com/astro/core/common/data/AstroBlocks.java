@@ -1,5 +1,6 @@
 package com.astro.core.common.data;
 
+import com.astro.core.common.data.block.foliage.CryoGrassBlock;
 import com.astro.core.common.data.block.foliage.PlutonianShrubBlock;
 import com.astro.core.common.data.block.foliage.ScorchGrassBlock;
 import com.gregtechceu.gtceu.api.block.ActiveBlock;
@@ -130,6 +131,7 @@ public class AstroBlocks {
     public static BlockEntry<ResinwortBlock> RESINWORT;
     public static BlockEntry<PlutonianShrubBlock> PLUTONIAN_SHRUB;
     public static BlockEntry<ScorchGrassBlock> SCORCH_GRASS;
+    public static BlockEntry<CryoGrassBlock> CRYO_GRASS;
 
     public static void init() {
         REGISTRATE.creativeModeTab(() -> AstroCore.ASTRO_CREATIVE_TAB);
@@ -421,6 +423,23 @@ public class AstroBlocks {
                                     .add(LootItem.lootTableItem(AstroItems.SCORCH_GRASS.get()))));
                 })
                 .lang("Scorch Grass")
+                .register();
+
+        CRYO_GRASS = REGISTRATE.block("cryo_grass", CryoGrassBlock::new)
+                .initialProperties(() -> Blocks.DEAD_BUSH)
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
+                        prov.models()
+                                .cross("cryo_grass", AstroCore.id("block/crops/cryo_grass"))
+                                .renderType("cutout")))
+                .addLayer(() -> RenderType::cutout)
+                .loot((tables, block) -> {
+                    tables.add(block, LootTable.lootTable()
+                            .withPool(LootPool.lootPool()
+                                    .when(MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                            .of(net.minecraftforge.common.Tags.Items.SHEARS)))
+                                    .add(LootItem.lootTableItem(AstroItems.CRYO_GRASS.get()))));
+                })
+                .lang("Cryo Grass")
                 .register();
     }
 

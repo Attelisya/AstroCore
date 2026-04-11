@@ -16,6 +16,7 @@ import com.astro.core.common.data.recipe.planetary_research.AstroPlanetaryRecipe
 import com.astro.core.common.data.recipe.run.AstroSleeveRecipeRunner;
 import com.astro.core.common.data.recipe.run.AstroWireRecipeRunner;
 import com.astro.core.common.data.tag.AstroTagPrefix;
+import com.astro.core.common.data.worldgen.AstroWorldgen;
 import com.astro.core.common.machine.part.AstroHatchesAndBuses;
 import com.astro.core.common.registry.AstroRegistry;
 
@@ -40,6 +41,11 @@ public class AstroGregGTAddon implements IGTAddon {
         AstroTagPrefix.init();
     }
 
+    @Override
+    public void registerOreVeins() {
+        AstroWorldgen.lateInit();
+    }
+
     public String addonModId() {
         return AstroCore.MOD_ID;
     }
@@ -61,18 +67,4 @@ public class AstroGregGTAddon implements IGTAddon {
         IGTAddon.super.registerElements();
         AstroElements.init();
     }
-
-    // If you have custom ingredient types, uncomment this & change to match your capability.
-    // KubeJS WILL REMOVE YOUR RECIPES IF THESE ARE NOT REGISTERED.
-    /*
-     * public static final ContentJS<Double> PRESSURE_IN = new ContentJS<>(NumberComponent.ANY_DOUBLE,
-     * CustomRecipeCapabilities.PRESSURE, false);
-     * public static final ContentJS<Double> PRESSURE_OUT = new ContentJS<>(NumberComponent.ANY_DOUBLE,
-     * CustomRecipeCapabilities.PRESSURE, true);
-     *
-     * @Override
-     * public void registerRecipeKeys(KJSRecipeKeyEvent event) {
-     * event.registerKey(CustomRecipeCapabilities.PRESSURE, Pair.of(PRESSURE_IN, PRESSURE_OUT));
-     * }
-     */
 }
