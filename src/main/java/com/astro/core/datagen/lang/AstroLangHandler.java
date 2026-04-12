@@ -175,6 +175,9 @@ public class AstroLangHandler {
 
         provider.add("astrogreg.machine.observatory_object_holder.tooltip", "Holding Mechanism for Observatories");
 
+        provider.add("astrogreg.machine.oxygenated_maintenance_hatch.tooltip",
+                "For automatically maintaining multiblocks while providing an oxygenated environment!");
+
         // cwu generator tooltips
         provider.add("astrogreg.machine.cwu_generator.tooltip.0", "§7Generates Computational Work Units");
         provider.add("astrogreg.machine.cwu_generator.tooltip.1", "§9Computation:§r %s CWU/t");

@@ -1,0 +1,7 @@
+{
+  "parent": "gtceu:block/overlay/2_layer/front_emissive",
+  "textures": {
+    "overlay": "astrogreg:block/machines/hatches/maintenance_hatch_oxygen/overlay_front",
+    "overlay_emissive": "astrogreg:block/machines/hatches/maintenance_hatch_oxygen/overlay_front_emissive"
+  }
+}

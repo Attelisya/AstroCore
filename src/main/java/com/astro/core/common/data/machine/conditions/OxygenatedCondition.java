@@ -11,20 +11,43 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
 import com.astro.core.common.data.machine.AstroRecipeConditions;
+import com.astro.core.common.machine.trait.OxygenatedProviderTrait;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import earth.terrarium.adastra.api.systems.OxygenApi;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A recipe condition that checks whether the machine is in an oxygenated
- * or non-oxygenated environment, using Ad Astra's OxygenApi.
  * Oxygen is checked on all six adjacent faces of the machine block.
- * - requiresOxygen = true → recipe runs only when oxygen is present nearby.
- * - requiresOxygen = false → recipe runs only when no oxygen is present nearby.
- * Inspired by TerraFirmaGreg's OxygenatedCondition.
+ * - requiresOxygen = true -> recipe runs only when oxygen is present nearby.
+ * - requiresOxygen = false -> recipe runs only when no oxygen is present nearby.
+ * Inspired by TFG's OxygenatedCondition.
  */
+
+@SuppressWarnings("all")
 public class OxygenatedCondition extends RecipeCondition<OxygenatedCondition> {
+
+    @Override
+    public boolean testCondition(@NotNull GTRecipe recipe, @NotNull RecipeLogic recipeLogic) {
+        var machine = recipeLogic.machine.self();
+        var level = machine.getLevel();
+
+        if (!(level instanceof ServerLevel serverLevel)) return false;
+
+        if (requiresOxygen) {
+            boolean providedByHatch = machine.getTraits().stream()
+                    .filter(OxygenatedProviderTrait.class::isInstance)
+                    .map(OxygenatedProviderTrait.class::cast)
+                    .findFirst()
+                    .map(OxygenatedProviderTrait::isActive)
+                    .orElse(false);
+            if (providedByHatch) return true;
+        }
+
+        BlockPos pos = machine.getPos();
+        boolean hasAdjacentOxygen = hasOxygenOnAnySide(serverLevel, pos);
+        return requiresOxygen == hasAdjacentOxygen;
+    }
 
     public static final Codec<OxygenatedCondition> CODEC = RecordCodecBuilder
             .create(instance -> RecipeCondition.isReverse(instance)
@@ -62,20 +85,6 @@ public class OxygenatedCondition extends RecipeCondition<OxygenatedCondition> {
         return Component.translatable(
                 requiresOxygen ? "astrogreg.recipe_condition.oxygenated.requires" :
                         "astrogreg.recipe_condition.oxygenated.requires_not");
-    }
-
-    @Override
-    public boolean testCondition(@NotNull GTRecipe recipe, @NotNull RecipeLogic recipeLogic) {
-        var machine = recipeLogic.machine.self();
-        var level = machine.getLevel();
-
-        if (!(level instanceof ServerLevel serverLevel)) return false;
-
-        BlockPos pos = machine.getPos();
-        boolean hasAdjacentOxygen = hasOxygenOnAnySide(serverLevel, pos);
-        boolean passes = requiresOxygen == hasAdjacentOxygen;
-
-        return isReverse != passes;
     }
 
     /** Returns true if any of the six adjacent blocks has oxygen according to Ad Astra. */

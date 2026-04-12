@@ -141,6 +141,17 @@ public class AstroHatches {
                     }))
             .register();
 
+    public static final MachineDefinition OXYGENATED_MAINTENANCE_HATCH = REGISTRATE
+            .machine("oxygenated_maintenance_hatch", OxygenatedMaintenanceHatch::new)
+            .langValue("Oxygenated Maintenance Hatch")
+            .rotationState(RotationState.ALL)
+            .abilities(PartAbility.MAINTENANCE)
+            .modelProperty(IS_FORMED, false)
+            .tooltips(Component.translatable("gtceu.part_sharing.disabled"))
+            .overlayTieredHullModel(AstroCore.id("block/machine/part/maintenance_hatch_oxygen"))
+            .tier(EV)
+            .register();
+
     public static final MachineDefinition[] PARALLEL_HATCH = registerTieredMachines("parallel_hatch",
             ParallelHatchPartMachine::new,
             (tier, builder) -> builder
