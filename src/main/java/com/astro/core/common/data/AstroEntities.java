@@ -6,7 +6,6 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -37,6 +36,7 @@ public class AstroEntities {
             () -> EntityType.Builder.<SpigEntity>of(SpigEntity::new, MobCategory.MONSTER)
                     .sized(1.3964844F, 1.4F)
                     .build("spig"));
+
     public static final RegistryObject<EntityType<GlaciodilloEntity>> GLACIODILLO = ENTITY_TYPES.register("glaciodillo",
             () -> EntityType.Builder.<GlaciodilloEntity>of(GlaciodilloEntity::new, MobCategory.CREATURE)
                     .sized(0.7F, 0.6F)
@@ -49,8 +49,6 @@ public class AstroEntities {
         builder.add(Attributes.MOVEMENT_SPEED, 0.2);
         builder.add(Attributes.ATTACK_DAMAGE, 0.5);
         event.put(KUIPER_SLIME.get(), builder.build());
-        event.put(SPIG.get(), Hoglin.createAttributes().build());
-        event.put(GLACIODILLO.get(), GlaciodilloEntity.createAttributes().build());
     }
 
     @SubscribeEvent

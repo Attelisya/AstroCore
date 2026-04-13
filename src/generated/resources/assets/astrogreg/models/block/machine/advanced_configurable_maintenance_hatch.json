@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "astrogreg:advanced_configurable_maintenance_hatch",
+  "replaceable_textures": [
+    "bottom",
+    "top",
+    "side"
+  ],
+  "variants": {
+    "is_formed=false,taped=false": {
+      "model": {
+        "parent": "astrogreg:block/machine/part/advanced_configurable_maintenance_hatch",
+        "textures": {
+          "bottom": "gtceu:block/casings/voltage/uv/bottom",
+          "side": "gtceu:block/casings/voltage/uv/side",
+          "top": "gtceu:block/casings/voltage/uv/top"
+        }
+      }
+    },
+    "is_formed=false,taped=true": {
+      "model": {
+        "parent": "astrogreg:block/machine/part/advanced_configurable_maintenance_hatch",
+        "textures": {
+          "bottom": "gtceu:block/casings/voltage/uv/bottom",
+          "overlay_2": "gtceu:block/overlay/machine/overlay_maintenance_taped",
+          "side": "gtceu:block/casings/voltage/uv/side",
+          "top": "gtceu:block/casings/voltage/uv/top"
+        }
+      }
+    },
+    "is_formed=true,taped=false": {
+      "model": {
+        "parent": "astrogreg:block/machine/part/advanced_configurable_maintenance_hatch",
+        "textures": {
+          "bottom": "gtceu:block/casings/voltage/uv/bottom",
+          "side": "gtceu:block/casings/voltage/uv/side",
+          "top": "gtceu:block/casings/voltage/uv/top"
+        }
+      }
+    },
+    "is_formed=true,taped=true": {
+      "model": {
+        "parent": "astrogreg:block/machine/part/advanced_configurable_maintenance_hatch",
+        "textures": {
+          "bottom": "gtceu:block/casings/voltage/uv/bottom",
+          "overlay_2": "gtceu:block/overlay/machine/overlay_maintenance_taped",
+          "side": "gtceu:block/casings/voltage/uv/side",
+          "top": "gtceu:block/casings/voltage/uv/top"
+        }
+      }
+    }
+  }
+}

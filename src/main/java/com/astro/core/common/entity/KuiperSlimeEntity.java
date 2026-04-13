@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 import org.joml.Vector3f;
@@ -24,6 +25,11 @@ public class KuiperSlimeEntity extends Slime {
     @MethodsReturnNonnullByDefault
     public ParticleOptions getParticleType() {
         return new DustParticleOptions(new Vector3f(0.4f, 0.2f, 0.8f), 1.0f);
+    }
+
+    @Override
+    public boolean checkSpawnObstruction(LevelReader level) {
+        return true;
     }
 
     public static boolean checkSlimeSpawnRules(EntityType<KuiperSlimeEntity> type,

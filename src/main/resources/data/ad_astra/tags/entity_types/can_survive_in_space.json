@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "astrogreg:spig",
+    "astrogreg:glaciodillo",
+    "astrogreg:kuiper_slime",
+    "minecraft:enderman",
+    "ad_astra:glacian_ram"
+  ]
+}

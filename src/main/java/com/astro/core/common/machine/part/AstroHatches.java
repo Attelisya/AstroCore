@@ -23,6 +23,7 @@ import static com.astro.core.common.AstroMachineUtils.registerTieredMachines;
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties.IS_FORMED;
+import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createMaintenanceModel;
 import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createWorkableTieredHullMachineModel;
 
 @SuppressWarnings("all")
@@ -150,6 +151,21 @@ public class AstroHatches {
             .tooltips(Component.translatable("gtceu.part_sharing.disabled"))
             .overlayTieredHullModel(AstroCore.id("block/machine/part/maintenance_hatch_oxygen"))
             .tier(EV)
+            .register();
+
+    public static final MachineDefinition ADVANCED_CONFIGURABLE_MAINTENANCE_HATCH = REGISTRATE
+            .machine("advanced_configurable_maintenance_hatch", AdvancedConfigurableMaintenanceHatch::new)
+            .langValue("Advanced Configurable Maintenance Hatch")
+            .rotationState(RotationState.ALL)
+            .abilities(PartAbility.MAINTENANCE)
+            .modelProperty(IS_FORMED, false)
+            .modelProperty(GTMachineModelProperties.IS_TAPED, false)
+            .tooltips(
+                    Component.translatable("gtceu.machine.maintenance_hatch_configurable.tooltip.0"),
+                    Component.translatable("gtceu.machine.maintenance_hatch_configurable.tooltip.1"),
+                    Component.translatable("gtceu.part_sharing.disabled"))
+            .model(createMaintenanceModel(AstroCore.id("block/machine/part/advanced_configurable_maintenance_hatch")))
+            .tier(UV)
             .register();
 
     public static final MachineDefinition[] PARALLEL_HATCH = registerTieredMachines("parallel_hatch",

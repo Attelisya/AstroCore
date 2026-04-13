@@ -23,6 +23,7 @@ import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
 import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
@@ -359,7 +360,16 @@ public class AstroBlocks {
                                                     .hasProperty(ResinwortBlock.AGE, 5)))
                                     .add(LootItem.lootTableItem(AstroItems.RESINWORT_POD.get())
                                             .apply(SetItemCountFunction.setCount(
-                                                    UniformGenerator.between(2, 4))))));
+                                                    UniformGenerator.between(2, 4)))))
+                            .withPool(LootPool.lootPool()
+                                    .when(LootItemBlockStatePropertyCondition
+                                            .hasBlockStateProperties(block)
+                                            .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                    .hasProperty(ResinwortBlock.AGE, 5))
+                                            .invert())
+                                    .add(LootItem.lootTableItem(AstroItems.RESINWORT_SEEDS.get())
+                                            .apply(SetItemCountFunction.setCount(
+                                                    ConstantValue.exactly(1))))));
                 })
                 .addLayer(() -> RenderType::cutout)
                 .lang("Resinwort")
