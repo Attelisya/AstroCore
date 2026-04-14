@@ -1,7 +1,8 @@
 package com.astro.core.mixin;
 
-import earth.terrarium.adastra.common.blockentities.machines.SolarPanelBlockEntity;
 import net.minecraft.world.level.Level;
+
+import earth.terrarium.adastra.common.blockentities.machines.SolarPanelBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
