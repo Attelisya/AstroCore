@@ -26,6 +26,7 @@
     "RunicAltarEmiRecipeMixin",
     "RunicAltarHudMixin",
     "SlidingDoorBlockMixin",
+    "SolarPanelBlockEntityMixin",
     "SpaceSuitItemMixin",
     "WorkableBlockProviderMixin"
   ],
