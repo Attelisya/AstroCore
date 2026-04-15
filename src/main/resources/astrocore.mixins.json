@@ -28,6 +28,7 @@
     "SlidingDoorBlockMixin",
     "SolarPanelBlockEntityMixin",
     "SpaceSuitItemMixin",
+    "SteamSolarBoilerMixin",
     "WorkableBlockProviderMixin"
   ],
   "injectors": {
