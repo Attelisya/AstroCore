@@ -140,6 +140,10 @@ public class AstroBlocks {
     public static void init() {
         REGISTRATE.creativeModeTab(() -> AstroCore.ASTRO_CREATIVE_TAB);
         // 1. misc blocks
+        ASTEROID_STONE = createStone("asteroid_stone", "Asteroid Stone", "rocks/asteroid_stone",
+                MapColor.TERRACOTTA_PURPLE, 2.0F, COBBLED_ASTEROID_STONE);
+        HARD_ASTEROID_STONE = createStone("hard_asteroid_stone", "Hard Asteroid Stone", "rocks/hard_asteroid_stone",
+                MapColor.TERRACOTTA_PURPLE, 4.0F, COBBLED_ASTEROID_STONE);
         COBBLED_ASTEROID_STONE = REGISTRATE.block("cobbled_asteroid_stone", Block::new)
                 .initialProperties(() -> Blocks.COBBLESTONE)
                 .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(0.8F))
@@ -157,10 +161,25 @@ public class AstroBlocks {
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .lang("Smooth Asteroid Stone")
                 .item(BlockItem::new).build().register();
-        ASTEROID_STONE = createStone("asteroid_stone", "Asteroid Stone", "rocks/asteroid_stone",
-                MapColor.TERRACOTTA_PURPLE, 2.0F, COBBLED_ASTEROID_STONE);
-        HARD_ASTEROID_STONE = createStone("hard_asteroid_stone", "Hard Asteroid Stone", "rocks/hard_asteroid_stone",
-                MapColor.TERRACOTTA_PURPLE, 4.0F, COBBLED_ASTEROID_STONE);
+        ASTEROID_SAND = REGISTRATE.block("asteroid_sand", p -> new AstroFallingBlock(p, 0x8B7355))
+                .initialProperties(() -> Blocks.SAND)
+                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE)
+                        .strength(0.8F).sound(SoundType.SAND))
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
+                        prov.models().cubeAll(ctx.getName(), AstroCore.id("block/rocks/asteroid_sand"))))
+                .tag(BlockTags.SAND)
+                .tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .lang("Asteroid Sand")
+                .item(BlockItem::new).build().register();
+        ASTEROID_GRAVEL = REGISTRATE.block("asteroid_gravel", p -> new AstroFallingBlock(p, 0x7A6E6E))
+                .initialProperties(() -> Blocks.GRAVEL)
+                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE)
+                        .strength(0.8F).sound(SoundType.GRAVEL))
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
+                        prov.models().cubeAll(ctx.getName(), AstroCore.id("block/rocks/asteroid_gravel"))))
+                .tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .lang("Asteroid Gravel")
+                .item(BlockItem::new).build().register();
 
         KUIPER_SLIME = REGISTRATE.block("kuiper_slime_block", KuiperSlimeBlock::new)
                 .initialProperties(() -> Blocks.SLIME_BLOCK)

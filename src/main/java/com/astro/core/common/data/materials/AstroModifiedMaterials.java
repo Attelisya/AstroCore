@@ -128,6 +128,7 @@ public class AstroModifiedMaterials {
             case "samarium" -> Samarium;
             case "magsam" -> SamariumMagnetic;
             case "radium" -> Radium;
+            case "wrought_iron" -> WroughtIron;
             default -> null;
         };
     }
