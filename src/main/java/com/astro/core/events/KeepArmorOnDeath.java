@@ -28,7 +28,8 @@ public class KeepArmorOnDeath {
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             ItemStack stack = player.getItemBySlot(slot);
             if (!stack.isEmpty()) {
-                player.getPersistentData().put("saved_armor_" + slot.getName(), stack.save(new net.minecraft.nbt.CompoundTag()));
+                player.getPersistentData().put("saved_armor_" + slot.getName(),
+                        stack.save(new net.minecraft.nbt.CompoundTag()));
             }
         }
     }
