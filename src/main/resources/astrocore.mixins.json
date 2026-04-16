@@ -21,6 +21,7 @@
     "MultiblockInfoEmiCategoryMixin",
     "OxygenDistributorMixin",
     "OxygenLoaderMixin",
+    "RecipeLogicMixin",
     "RocketFuelMixin",
     "RunicAltarBlockEntityMixin",
     "RunicAltarEmiRecipeMixin",
