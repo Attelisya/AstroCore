@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Set;
 
+@SuppressWarnings("all")
 @Mixin(value = OxygenDistributorBlockEntity.class, remap = false)
 public abstract class OxygenDistributorMixin extends OxygenLoaderBlockEntity {
 
@@ -25,37 +26,20 @@ public abstract class OxygenDistributorMixin extends OxygenLoaderBlockEntity {
         super(pos, state, containerSize);
     }
 
-    @Shadow
-    private int shutDownTicks;
+    @Shadow private int shutDownTicks;
+    @Shadow protected abstract long calculateFluidPerTick();
+    @Shadow protected abstract boolean canCraftDistribution(long fluidAmount);
+    @Shadow protected abstract void consumeDistribution(long fluidAmount);
+    @Shadow protected abstract void tickOxygen(ServerLevel level, BlockPos pos, BlockState state);
+    @Final @Shadow private Set<BlockPos> lastDistributedBlocks;
+    @Shadow protected abstract void clearOxygenBlocks();
+    @Shadow private long energyPerTick;
+    @Shadow private float fluidPerTick;
+    @Shadow private int distributedBlocksCount;
 
-    @Shadow
-    protected abstract long calculateFluidPerTick();
-
-    @Shadow
-    protected abstract boolean canCraftDistribution(long fluidAmount);
-
-    @Shadow
-    protected abstract long calculateEnergyPerTick();
-
-    @Shadow
-    protected abstract void consumeDistribution(long fluidAmount);
-
-    @Shadow
-    protected abstract void tickOxygen(ServerLevel level, BlockPos pos, BlockState state);
-
-    @Final
-    @Shadow
-    private Set<BlockPos> lastDistributedBlocks;
-
-    @Shadow
-    protected abstract void clearOxygenBlocks();
-
-    @Shadow
-    private long energyPerTick;
-    @Shadow
-    private float fluidPerTick;
-    @Shadow
-    private int distributedBlocksCount;
+    private long nerfedEnergyPerTick() {
+        return Math.max(1, lastDistributedBlocks.size() / 500);
+    }
 
     @Overwrite
     public void serverTick(ServerLevel level, long time, BlockState state, BlockPos pos) {
@@ -66,9 +50,10 @@ public abstract class OxygenDistributorMixin extends OxygenLoaderBlockEntity {
         }
 
         long fluidPerTick = calculateFluidPerTick();
+        long energyNeeded = nerfedEnergyPerTick();
         boolean canDistribute = canCraftDistribution(Math.max(FluidConstants.fromMillibuckets(1), fluidPerTick));
         if (canFunction() && canDistribute) {
-            getEnergyStorage().internalExtract(calculateEnergyPerTick(), false);
+            getEnergyStorage().internalExtract(energyNeeded, false);
             setLit(true);
             consumeDistribution(FluidConstants.fromMillibuckets(Math.max(1, fluidPerTick)));
 
@@ -89,7 +74,7 @@ public abstract class OxygenDistributorMixin extends OxygenLoaderBlockEntity {
         }
 
         energyPerTick = (recipe != null && canCraft() ? recipe.energy() : 0) +
-                (canDistribute ? calculateEnergyPerTick() : 0);
+                (canDistribute ? energyNeeded : 0);
         this.fluidPerTick = canDistribute ? fluidPerTick : 0;
         distributedBlocksCount = canDistribute ? lastDistributedBlocks.size() : 0;
     }
