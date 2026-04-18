@@ -25,6 +25,7 @@ import static com.lowdragmc.lowdraglib.gui.texture.ProgressTexture.FillDirection
 @SuppressWarnings("all")
 public class AstroRecipeTypes {
 
+    public static GTRecipeType COMPOSTER_RECIPES;
     public static GTRecipeType AETHER_ENGINE_RECIPES;
     public static GTRecipeType MANA_BOILER_RECIPES;
     public static GTRecipeType DEIONIZATION_RECIPES;
@@ -49,6 +50,10 @@ public class AstroRecipeTypes {
     public static final String OBSERVATORY_RESEARCH_ITEM_TYPE_KEY = "observatory_research_item_type";
 
     public static void init() {
+        COMPOSTER_RECIPES = register("composter", MULTIBLOCK)
+                .setMaxIOSize(1, 1, 0, 0)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, LEFT_TO_RIGHT);
+
         AETHER_ENGINE_RECIPES = register("aether_engine", ELECTRIC)
                 .setMaxIOSize(0, 0, 1, 1)
                 .setSlotOverlay(false, false, GuiTextures.BOX_OVERLAY)

@@ -1,5 +1,6 @@
 package com.astro.core.common.machine.multiblock;
 
+import com.astro.core.common.machine.multiblock.primitive.PrimitiveComposterMachine;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
@@ -42,13 +43,13 @@ import com.astro.core.common.machine.multiblock.steam.SteamMinerMachine;
 import com.astro.core.common.machine.multiblock.steam.SteamWasher;
 import com.astro.core.common.machine.trait.AstroPartAbility;
 import earth.terrarium.adastra.common.registry.ModBlocks;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.astro.core.common.data.AstroBlocks.*;
-import static com.astro.core.common.data.recipe.AstroRecipeTypes.ASTROPORT_RECIPES;
-import static com.astro.core.common.data.recipe.AstroRecipeTypes.OBSERVATORY_RECIPES;
+import static com.astro.core.common.data.recipe.AstroRecipeTypes.*;
 import static com.astro.core.common.machine.part.AstroHatches.*;
 import static com.astro.core.common.registry.AstroRegistry.REGISTRATE;
 import static com.gregtechceu.gtceu.api.machine.multiblock.PartAbility.*;
@@ -62,6 +63,7 @@ import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.PARALLEL_HATCH
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.COKE_OVEN_RECIPES;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.DUMMY_RECIPES;
 import static com.gregtechceu.gtceu.common.data.machines.GTResearchMachines.DATA_ACCESS_HATCH;
+import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createSidedWorkableCasingMachineModel;
 import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createWorkableCasingMachineModel;
 import static com.gregtechceu.gtceu.utils.FormattingUtil.formatNumbers;
 
@@ -69,6 +71,41 @@ import static com.gregtechceu.gtceu.utils.FormattingUtil.formatNumbers;
 public class AGEMultiMachines {
 
     // Primitive Machines
+    public static final MultiblockMachineDefinition PRIMITIVE_COMPOSTER = REGISTRATE
+            .multiblock("large_primitive_composter", PrimitiveComposterMachine::new)
+            .langValue("Large Primitive Composter")
+            .rotationState(RotationState.NON_Y_AXIS)
+            .hasBER(true)
+            .allowFlip(false)
+            .recipeType(COMPOSTER_RECIPES)
+            .appearanceBlock(TREATED_WOOD_PLANK)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("AAA", "FBF")
+                    .aisle("AAA", "B B")
+                    .aisle("A@A", "FBF")
+                    .where("@", controller(blocks(definition.get())))
+                    .where("A", blocks(CASING_PUMP_DECK.get()))
+                    .where("B", blocks(TREATED_WOOD_PLANK.get())
+                            .or(abilities(IMPORT_ITEMS).setPreviewCount(0).setMaxGlobalLimited(1))
+                            .or(abilities(EXPORT_ITEMS).setPreviewCount(0).setMaxGlobalLimited(1)))
+                    .where("F", frames(GTMaterials.TreatedWood))
+                    .where(" ", air())
+                    .build())
+            .model(createSidedWorkableCasingMachineModel(
+                    GTCEu.id("block/casings/pump_deck"),
+                    AstroCore.id("block/multiblock/composter"))
+                    .andThen(builder -> {
+                        builder.replaceForAllStates((state, models) -> {
+                            for (int i = 0; i < models.length; i++) {
+                                models[i] = ConfiguredModel.builder()
+                                        .modelFile(models[i].model).uvLock(true)
+                                        .buildLast();
+                            }
+                            return models;
+                        });
+                    }))
+            .register();
+
     public static final MultiblockMachineDefinition COKE_OVEN = REGISTRATE
             .multiblock("coke_oven", CokeOvenMachine::new)
             .rotationState(RotationState.ALL)

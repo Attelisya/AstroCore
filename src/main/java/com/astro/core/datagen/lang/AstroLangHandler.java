@@ -11,6 +11,7 @@ public class AstroLangHandler {
         provider.add("gtceu.concrete_plant", "Concrete Plant");
         provider.add("gtceu.astroport", "Astroport");
         provider.add("gtceu.observatory", "Observatory");
+        provider.add("gtceu.composter", "Composting");
 
         // multiblock tooltips
         provider.add("astrogreg.machine.recipe_progress.tooltip", "Progress: %1$ss / %2$ss (%3$s%%)");
@@ -140,6 +141,8 @@ public class AstroLangHandler {
         provider.add("config.jade.plugin_astrogreg.kinetic_alternator_info", "Large Kinetic Alternator Info");
 
         provider.add("astrogreg.machine.overdrive_combustion_engine.tooltip", "Overdriven Chemical Ignition Manifold");
+
+        provider.add("astrogreg.machine.large_primitive_composter.tooltip", "§o§7A more efficient way to get bone meal.");
 
         // custom hatch tooltips
         provider.add("astrogreg.machine.water_hatch.tooltip", "§eAccepted Fluid:§r Water");
