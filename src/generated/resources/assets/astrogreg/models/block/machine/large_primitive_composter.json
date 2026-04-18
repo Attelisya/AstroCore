@@ -1,10 +1,5 @@
 {
   "parent": "minecraft:block/block",
-  "dynamic_renders": [
-    {
-      "type": "astrogreg:composter_render"
-    }
-  ],
   "loader": "gtceu:machine",
   "machine": "astrogreg:large_primitive_composter",
   "texture_overrides": {

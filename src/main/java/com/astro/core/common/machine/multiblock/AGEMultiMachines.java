@@ -91,8 +91,7 @@ public class AGEMultiMachines {
                     .where("F", frames(GTMaterials.TreatedWood))
                     .where(" ", air())
                     .build())
-            .model(createSidedWorkableCasingMachineModel(
-                    GTCEu.id("block/casings/pump_deck"),
+            .model(createSidedWorkableCasingMachineModel(GTCEu.id("block/casings/pump_deck"),
                     AstroCore.id("block/multiblock/composter"))
                     .andThen(builder -> {
                         builder.replaceForAllStates((state, models) -> {
