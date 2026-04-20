@@ -142,7 +142,8 @@ public class AstroBlocks {
         // 1. misc blocks
         ASTEROID_STONE = REGISTRATE.block("asteroid_stone", Block::new)
                 .initialProperties(() -> Blocks.STONE)
-                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(2.0F).sound(SoundType.STONE).requiresCorrectToolForDrops())
+                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(2.0F).sound(SoundType.STONE)
+                        .requiresCorrectToolForDrops())
                 .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
                         prov.models().cubeAll(ctx.getName(), AstroCore.id("block/rocks/asteroid_stone"))))
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -180,9 +181,11 @@ public class AstroBlocks {
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .tag(Tags.Blocks.STONE)
                 .lang("Cobbled Asteroid Stone")
-                .item(BlockItem::new).build().register();ASTEROID_STONE = REGISTRATE.block("asteroid_stone", Block::new)
+                .item(BlockItem::new).build().register();
+        ASTEROID_STONE = REGISTRATE.block("asteroid_stone", Block::new)
                 .initialProperties(() -> Blocks.STONE)
-                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(2.0F).sound(SoundType.STONE).requiresCorrectToolForDrops())
+                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(2.0F).sound(SoundType.STONE)
+                        .requiresCorrectToolForDrops())
                 .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
                         prov.models().cubeAll(ctx.getName(), AstroCore.id("block/rocks/asteroid_stone"))))
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
