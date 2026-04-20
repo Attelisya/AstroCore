@@ -5,6 +5,33 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "tag": "forge:tools/hammers"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "astrogreg:asteroid_gravel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "tag": "forge:tools/hammers"
+            }
+          }
+        },
+        {
           "condition": "minecraft:inverted",
           "term": {
             "condition": "minecraft:match_tool",
@@ -43,6 +70,15 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "tag": "forge:tools/hammers"
+            }
           }
         }
       ],

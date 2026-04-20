@@ -140,8 +140,36 @@ public class AstroBlocks {
     public static void init() {
         REGISTRATE.creativeModeTab(() -> AstroCore.ASTRO_CREATIVE_TAB);
         // 1. misc blocks
-        ASTEROID_STONE = createStone("asteroid_stone", "Asteroid Stone", "rocks/asteroid_stone",
-                MapColor.TERRACOTTA_PURPLE, 2.0F, COBBLED_ASTEROID_STONE);
+        ASTEROID_STONE = REGISTRATE.block("asteroid_stone", Block::new)
+                .initialProperties(() -> Blocks.STONE)
+                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(2.0F).sound(SoundType.STONE).requiresCorrectToolForDrops())
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
+                        prov.models().cubeAll(ctx.getName(), AstroCore.id("block/rocks/asteroid_stone"))))
+                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .loot((tables, block) -> tables.add(block, LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .when(MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                        .of(CustomTags.HAMMERS)))
+                                .add(LootItem.lootTableItem(ASTEROID_GRAVEL.get())))
+                        .withPool(LootPool.lootPool()
+                                .when(InvertedLootItemCondition.invert(
+                                        MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                                .of(CustomTags.HAMMERS))))
+                                .when(InvertedLootItemCondition.invert(
+                                        MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                                .hasEnchantment(new EnchantmentPredicate(
+                                                        Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))))))
+                                .add(LootItem.lootTableItem(COBBLED_ASTEROID_STONE.get())))
+                        .withPool(LootPool.lootPool()
+                                .when(MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                        .hasEnchantment(new EnchantmentPredicate(
+                                                Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))))
+                                .when(InvertedLootItemCondition.invert(
+                                        MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                                .of(CustomTags.HAMMERS))))
+                                .add(LootItem.lootTableItem(block)))))
+                .lang("Asteroid Stone")
+                .item(BlockItem::new).build().register();
         HARD_ASTEROID_STONE = createStone("hard_asteroid_stone", "Hard Asteroid Stone", "rocks/hard_asteroid_stone",
                 MapColor.TERRACOTTA_PURPLE, 4.0F, COBBLED_ASTEROID_STONE);
         COBBLED_ASTEROID_STONE = REGISTRATE.block("cobbled_asteroid_stone", Block::new)
@@ -152,6 +180,35 @@ public class AstroBlocks {
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .tag(Tags.Blocks.STONE)
                 .lang("Cobbled Asteroid Stone")
+                .item(BlockItem::new).build().register();ASTEROID_STONE = REGISTRATE.block("asteroid_stone", Block::new)
+                .initialProperties(() -> Blocks.STONE)
+                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(2.0F).sound(SoundType.STONE).requiresCorrectToolForDrops())
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
+                        prov.models().cubeAll(ctx.getName(), AstroCore.id("block/rocks/asteroid_stone"))))
+                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .loot((tables, block) -> tables.add(block, LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .when(MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                        .of(CustomTags.HAMMERS)))
+                                .add(LootItem.lootTableItem(ASTEROID_GRAVEL.get())))
+                        .withPool(LootPool.lootPool()
+                                .when(InvertedLootItemCondition.invert(
+                                        MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                                .of(CustomTags.HAMMERS))))
+                                .when(InvertedLootItemCondition.invert(
+                                        MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                                .hasEnchantment(new EnchantmentPredicate(
+                                                        Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))))))
+                                .add(LootItem.lootTableItem(COBBLED_ASTEROID_STONE.get())))
+                        .withPool(LootPool.lootPool()
+                                .when(MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                        .hasEnchantment(new EnchantmentPredicate(
+                                                Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))))
+                                .when(InvertedLootItemCondition.invert(
+                                        MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                                .of(CustomTags.HAMMERS))))
+                                .add(LootItem.lootTableItem(block)))))
+                .lang("Asteroid Stone")
                 .item(BlockItem::new).build().register();
         SMOOTH_ASTEROID_STONE = REGISTRATE.block("smooth_asteroid_stone", Block::new)
                 .initialProperties(() -> Blocks.STONE)
@@ -173,11 +230,20 @@ public class AstroBlocks {
                 .item(BlockItem::new).build().register();
         ASTEROID_GRAVEL = REGISTRATE.block("asteroid_gravel", p -> new AstroFallingBlock(p, 0x7A6E6E))
                 .initialProperties(() -> Blocks.GRAVEL)
-                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE)
-                        .strength(0.8F).sound(SoundType.GRAVEL))
+                .properties(p -> p.mapColor(MapColor.TERRACOTTA_PURPLE).strength(0.8F).sound(SoundType.GRAVEL))
                 .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(),
                         prov.models().cubeAll(ctx.getName(), AstroCore.id("block/rocks/asteroid_gravel"))))
                 .tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .loot((tables, block) -> tables.add(block, LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .when(MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                        .of(CustomTags.HAMMERS)))
+                                .add(LootItem.lootTableItem(ASTEROID_SAND.get())))
+                        .withPool(LootPool.lootPool()
+                                .when(InvertedLootItemCondition.invert(
+                                        MatchTool.toolMatches(ItemPredicate.Builder.item()
+                                                .of(CustomTags.HAMMERS))))
+                                .add(LootItem.lootTableItem(block)))))
                 .lang("Asteroid Gravel")
                 .item(BlockItem::new).build().register();
 
