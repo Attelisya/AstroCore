@@ -36,7 +36,7 @@ public class KuiperSlimeEntity extends Slime {
     public static boolean checkSlimeSpawnRules(EntityType<KuiperSlimeEntity> type,
                                                ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos,
                                                RandomSource random) {
-        return level.getBlockState(pos.below()).isSolidRender(level, pos.below())
-                && Monster.checkMonsterSpawnRules((EntityType<? extends Monster>) (EntityType<?>) type, level, spawnType, pos, random);
+        return level.getBlockState(pos.below()).isSolidRender(level, pos.below()) && Monster.checkMonsterSpawnRules(
+                (EntityType<? extends Monster>) (EntityType<?>) type, level, spawnType, pos, random);
     }
 }
